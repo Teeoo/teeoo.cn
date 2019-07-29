@@ -11,7 +11,7 @@
         nav
         rounded
       >
-        <v-list-item two-line>
+        <v-list-item>
           <v-list-item-avatar>
             <img src="http://q1.qlogo.cn/g?b=qq&nk=1982890538&s=100">
           </v-list-item-avatar>
@@ -38,7 +38,90 @@
             <v-list-item-title>{{data.text}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader>组成</v-subheader>
+        <v-subheader v-show="category.length!=0 || pages.length!=0 || links.length!=0">组成</v-subheader>
+        <!-- 分类 -->
+        <v-list-group
+          prepend-icon="bookmark"
+          no-action
+          v-if="!$apollo.queries.category.loading && category.length!=0"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>
+                分类
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+            link
+            :key="index"
+            v-for="(data,index) in category"
+            :to="data.slug"
+          >
+            <v-list-item-content>
+              <v-list-item-title>
+                {{data.label}}
+              </v-list-item-title>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-chip
+                color="pink"
+                label
+                text-color="white"
+                small
+              >
+                {{data.article_count}}
+              </v-chip>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-group>
+
+        <!-- 页面 -->
+        <v-list-group
+          prepend-icon="markunread_mailbox"
+          no-action
+          v-if="!$apollo.queries.pages.loading && pages.length!=0"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>
+                页面
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+            :key="index"
+            v-for="(data,index) in pages"
+            :to="pages.slug"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{data.title}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+        <!-- 友联 -->
+        <v-list-group
+          prepend-icon="link"
+          no-action
+          v-if="!$apollo.queries.links.loading && links.length!=0"
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>
+                友联
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+            :key="index"
+            v-for="(data,index) in links"
+          >
+            <v-list-item-content>
+              <v-list-item-title>{{data.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+
       </v-list>
       <template v-slot:append>
         <v-tooltip
@@ -72,7 +155,9 @@
     </v-app-bar>
     <v-content>
       <v-container>
-        <nuxt />
+        <transition>
+          <nuxt />
+        </transition>
       </v-container>
     </v-content>
     <v-footer
@@ -88,14 +173,50 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
 export default {
+  apollo: {
+    category: {
+      query: gql`
+        query {
+          category {
+            label
+            slug
+            article_count
+          }
+        }
+      `
+    },
+    pages: {
+      query: gql`
+        query {
+          pages {
+            title
+            slug
+          }
+        }
+      `
+    },
+    links: {
+      query: gql`
+        query {
+          links {
+            url
+            name
+            target
+          }
+        }
+      `
+    }
+  },
+  transition: "",
   data() {
     return {
       drawer: true,
       nav: [
         { icon: "home", text: "首页", link: "/" },
-        { icon: "bookmark", text: "分类", link: "category" },
-        { icon: "local_offer", text: "标签", link: "tags" }
+        { icon: "bookmark", text: "分类", link: "/category" },
+        { icon: "local_offer", text: "标签", link: "/tags" }
       ],
       rss: [
         {
@@ -113,3 +234,13 @@ export default {
   }
 };
 </script>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.4s linear;
+  -webkit-transition: all 0.4s linear;
+  -webkit-transform: translate3d(-20px, 0px, 0);
+  transform: translate3d(-20px, 0px, 0);
+}
+</style>
+

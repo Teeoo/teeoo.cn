@@ -1,5 +1,7 @@
 const colors = require('vuetify/es5/util/colors').default
 
+require('dotenv').config()
+
 module.exports = {
   mode: 'universal',
 
@@ -33,7 +35,7 @@ module.exports = {
    ** Customize the progress-bar color
    */
   loading: {
-    color: '#f3f'
+    color: '#ff5722'
   },
   /*
    ** Global CSS
@@ -56,7 +58,31 @@ module.exports = {
    */
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/apollo'
   ],
+
+  apollo: {
+    includeNodeModules: true,
+    defaultOptions: {
+      $query: {
+        loadingKey: 'loading',
+        fetchPolicy: 'cache-and-network',
+      },
+    },
+    errorHandler: '~/plugins/apollo-error.js',
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.HTTP_ENDPOINT,
+        httpLinkOptions: {
+          credentials: 'same-origin'
+        },
+        wsEndpoint: process.env.WS_ENDPOINT,
+        persisting: false,
+        websocketsOnly: false
+      },
+    }
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -89,11 +115,11 @@ module.exports = {
       commons: true
     },
     optimizeCSS: true,
-    cssSourceMap: false,
-    maxChunkSize: 100000,
+    cssSourceMap: true,
+    // maxChunkSize: 100000,
     extractCSS: true,
     optimization: {
-      minimize: true,
+      // minimize: true,
       splitChunks: {
         chunks: 'all',
         automaticNameDelimiter: '.',
@@ -102,7 +128,6 @@ module.exports = {
         minSize: 100000,
         maxSize: 100000
       },
-
     },
     /*
      ** You can extend webpack config here
