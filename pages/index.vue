@@ -17,18 +17,51 @@
           :key="index"
         >
           <v-img
+            v-show="data.cover"
             src="https://acg.toubiec.cn/random.php"
             :height="280"
           />
           <v-card-title>{{data.title}}</v-card-title>
           <v-card-text>
-
+            {{data.summary}} ...
           </v-card-text>
-          <v-card-text>
+          <!-- <v-card-text>
 
-          </v-card-text>
+          </v-card-text> -->
           <v-card-actions>
-
+            <v-layout align-center>
+              <v-btn
+                text
+                icon
+                small
+                color="blue lighten-2"
+              >
+                <v-icon small>message</v-icon>
+              </v-btn>
+              <span class="subheading mr-2 ">0</span>
+              <span class="mr-1">·</span>
+              <v-btn
+                text
+                small
+                icon
+                color="red lighten-2"
+              >
+                <v-icon small>timer</v-icon>
+              </v-btn>
+              <span class="subheading">
+                {{prettyDate(data.created_at)}}
+              </span>
+            </v-layout>
+            <v-layout
+              align-center
+              justify-end
+            >
+              <v-btn
+                text
+                small
+                color="pink"
+              >去围观</v-btn>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-flex>
