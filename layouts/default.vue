@@ -2,9 +2,9 @@
   <v-app dark>
     <v-navigation-drawer
       app
-      clipped
       floating
       v-model="drawer"
+      :mini-variant.sync="mini"
     >
       <v-list
         dense
@@ -22,6 +22,13 @@
               oo.ee.ooe.teeoo@gmail.com
             </v-list-item-subtitle>
           </v-list-item-content>
+          <v-btn
+            icon
+            @click.stop="mini = !mini"
+            small
+          >
+            <v-icon>chevron_left</v-icon>
+          </v-btn>
         </v-list-item>
         <v-subheader>导航</v-subheader>
         <v-list-item
@@ -66,7 +73,6 @@
             <v-list-item-action>
               <v-chip
                 color="pink"
-                label
                 text-color="white"
                 small
               >
@@ -146,12 +152,21 @@
       app
       dark
       elevate-on-scroll
-      clipped-left
       color="deep-purple accent-4"
+      prominent
+      shrink-on-scroll
     >
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Lee's Blog</v-toolbar-title>
+
+      <template v-slot:extension>
+        <v-tabs
+          align-with-title
+          background-color="transparent"
+        >
+        </v-tabs>
+      </template>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -212,6 +227,7 @@ export default {
   transition: "",
   data() {
     return {
+      mini: false,
       drawer: true,
       nav: [
         { icon: "home", text: "首页", link: "/" },
