@@ -17,12 +17,13 @@
     "cross-env": "^5.2.0",
     "fastify": "^2.7.0",
     "graphql-tag": "^2.10.1",
+    "jquery": "^3.4.1",
     "material-design-icons-iconfont": "^5.0.1",
     "nuxt": "^2.8.1",
     "roboto-fontface": "^0.10.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.2",
+    "@nuxtjs/vuetify": "^1.1.0",
     "nodemon": "^1.19.1"
   }
 }

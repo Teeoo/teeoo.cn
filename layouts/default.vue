@@ -184,12 +184,17 @@
     >
       <!-- TODO: -->
     </v-footer>
+    <live2d></live2d>
   </v-app>
 </template>
 
 <script>
 import gql from "graphql-tag";
+import live2d from "~/components/live2d";
 export default {
+  components: {
+    live2d
+  },
   apollo: {
     category: {
       query: gql`
@@ -227,8 +232,16 @@ export default {
   transition: "",
   data() {
     return {
+      mdata: {
+        name: "model0",
+        model: "/models/green2/model0.moc",
+        textures: ["/models/green2/model0.2048/texture_00.png"]
+      },
       mini: false,
-      drawer: true,
+      drawer: false,
+      pages: [],
+      links: [],
+      category: [],
       nav: [
         { icon: "home", text: "首页", link: "/" },
         { icon: "bookmark", text: "分类", link: "/category" },
@@ -247,6 +260,9 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    handleMove(live2dModel) {}
   }
 };
 </script>

@@ -2,6 +2,8 @@ const colors = require('vuetify/es5/util/colors').default
 
 require('dotenv').config()
 
+const webpack = require('webpack');
+
 module.exports = {
   mode: 'universal',
 
@@ -45,7 +47,15 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/vuetify.js'
+    '~/plugins/vuetify.js',
+    {
+      src: '~/plugins/live2d/live2d.js',
+      ssr: false
+    },
+    {
+      src: '~/plugins/live2d/waifu-tips.js',
+      ssr: false
+    },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -129,6 +139,11 @@ module.exports = {
         maxSize: 100000
       },
     },
+    plugins: [
+      new webpack.ProvidePlugin({
+        '$': 'jquery',
+      })
+    ],
     /*
      ** You can extend webpack config here
      */
