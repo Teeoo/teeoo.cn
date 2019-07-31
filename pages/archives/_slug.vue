@@ -1,75 +1,31 @@
 <template>
   <v-container>
-    <v-overlay v-if="$apollo.loading && article.length===0">
-      <v-progress-circular
-        indeterminate
-        size="64"
-      ></v-progress-circular>
-    </v-overlay>
     <v-layout
-      v-else
       row
       justify-center
       align-center
     >
+      <v-overlay v-if="!article">
+        <v-progress-circular
+          indeterminate
+          size="64"
+        ></v-progress-circular>
+      </v-overlay>
       <v-flex
+        v-else
         xs12
         sm8
         md6
       >
-        <v-card
-          hover
-          flat
-          v-for="(data,index) in article"
-          :key="index"
-        >
+        <v-card flat>
           <v-img
-            v-show="data.cover"
+            v-if="article.cover"
             src="https://acg.toubiec.cn/random.php"
             :height="280"
           />
-          <v-card-title>{{data.title}}</v-card-title>
-          <v-card-text>
-            {{data.summary}} ...
-          </v-card-text>
-          <!-- <v-card-text>
-          </v-card-text> -->
-          <v-card-actions>
-            <v-layout align-center>
-              <v-btn
-                text
-                icon
-                small
-                color="blue lighten-2"
-              >
-                <v-icon small>message</v-icon>
-              </v-btn>
-              <span class="subheading mr-2 ">0</span>
-              <span class="mr-1">·</span>
-              <v-btn
-                text
-                small
-                icon
-                color="red lighten-2"
-              >
-                <v-icon small>timer</v-icon>
-              </v-btn>
-              <span class="subheading">
-                {{prettyDate(data.created_at)}}
-              </span>
-            </v-layout>
-            <v-layout
-              align-center
-              justify-end
-            >
-              <v-btn
-                text
-                small
-                color="pink"
-                :to="`archives/${data.slug}`"
-              >去围观</v-btn>
-            </v-layout>
-          </v-card-actions>
+          <v-card-title>{{article.title}}</v-card-title>
+          <v-card-text v-html="article.html" />
+          <!-- getArticleBySlug -->
         </v-card>
       </v-flex>
     </v-layout>
@@ -81,17 +37,17 @@ import gql from "graphql-tag";
 export default {
   layout: "default",
   apollo: {
-    article() {
+    getArticleBySlug() {
       return {
         query: gql`
-          query {
-            article {
+          query($slug: String!) {
+            getArticleBySlug(slug: $slug) {
               id
               title
               slug
               cover
               summary
-              text
+              html
               order
               author {
                 uid
@@ -143,8 +99,13 @@ export default {
             }
           }
         `,
+        variables() {
+          return {
+            slug: String(this.$route.params.slug)
+          };
+        },
         result(result) {
-          this.article = result.data.article;
+          this.article = result.data.getArticleBySlug;
         },
         prefetch: true
       };
@@ -157,7 +118,10 @@ export default {
   },
   data() {
     return {
-      article: [],
+      article: undefined,
+      loading: 0,
+      getArticleBySlug: null,
+      getArticle: "",
       card_text: "Lorem i"
     };
   },

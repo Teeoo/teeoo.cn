@@ -45,12 +45,12 @@
             <v-list-item-title>{{data.text}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader v-show="category.length!=0 || pages.length!=0 || links.length!=0">组成</v-subheader>
+        <v-subheader v-show="!$apollo.loading && category.length !==0 || pages.length !==0 || links.length !==0">组成</v-subheader>
         <!-- 分类 -->
         <v-list-group
           prepend-icon="bookmark"
           no-action
-          v-if="!$apollo.queries.category.loading && category.length!=0"
+          v-if="!$apollo.loading && category.length !==0"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -86,7 +86,7 @@
         <v-list-group
           prepend-icon="markunread_mailbox"
           no-action
-          v-if="!$apollo.queries.pages.loading && pages.length!=0"
+          v-if="!$apollo.queries.pages.loading && pages.length !==0"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -109,7 +109,7 @@
         <v-list-group
           prepend-icon="link"
           no-action
-          v-if="!$apollo.queries.links.loading && links.length!=0"
+          v-if="!$apollo.loading && links.length !==0"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -127,7 +127,6 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
-
       </v-list>
       <template v-slot:append>
         <v-tooltip
@@ -205,7 +204,11 @@ export default {
             article_count
           }
         }
-      `
+      `,
+      result(result) {
+        this.category = result.data.category;
+      },
+      prefetch: true
     },
     pages: {
       query: gql`
@@ -215,33 +218,38 @@ export default {
             slug
           }
         }
-      `
+      `,
+      result(result) {
+        this.pages = result.data.pages;
+      },
+      prefetch: true
     },
-    links: {
-      query: gql`
-        query {
-          links {
-            url
-            name
-            target
+    links() {
+      return {
+        query: gql`
+          query {
+            links {
+              url
+              name
+              target
+            }
           }
-        }
-      `
+        `,
+        result(result) {
+          this.links = result.data.links;
+        },
+        prefetch: true
+      };
     }
   },
   transition: "",
   data() {
     return {
-      mdata: {
-        name: "model0",
-        model: "/models/green2/model0.moc",
-        textures: ["/models/green2/model0.2048/texture_00.png"]
-      },
-      mini: false,
-      drawer: false,
       pages: [],
       links: [],
       category: [],
+      mini: false,
+      drawer: false,
       nav: [
         { icon: "home", text: "首页", link: "/" },
         { icon: "bookmark", text: "分类", link: "/category" },
@@ -261,9 +269,7 @@ export default {
       ]
     };
   },
-  methods: {
-    handleMove(live2dModel) {}
-  }
+  methods: {}
 };
 </script>
 <style>
