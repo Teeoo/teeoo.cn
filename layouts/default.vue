@@ -98,7 +98,7 @@
           <v-list-item
             :key="index"
             v-for="(data,index) in pages"
-            :to="pages.slug"
+            :to="`/page/${data.template}/${data.slug}`"
           >
             <v-list-item-content>
               <v-list-item-title>{{data.title}}</v-list-item-title>
@@ -122,9 +122,18 @@
             :key="index"
             v-for="(data,index) in links"
           >
-            <v-list-item-content>
-              <v-list-item-title>{{data.name}}</v-list-item-title>
-            </v-list-item-content>
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <!-- <span v-on="on">This text has a tooltip</span> -->
+                <v-list-item-avatar v-on="on">
+                  <v-img :src="data.logo"></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content v-on="on">
+                  <v-list-item-title>{{data.name}}</v-list-item-title>
+                </v-list-item-content>
+              </template>
+              <span>{{data.desc}}</span>
+            </v-tooltip>
           </v-list-item>
         </v-list-group>
       </v-list>
@@ -234,6 +243,7 @@ export default {
           pages {
             title
             slug
+            template
           }
         }
       `
@@ -245,7 +255,9 @@ export default {
           links {
             url
             name
+            logo
             target
+            desc
           }
         }
       `
