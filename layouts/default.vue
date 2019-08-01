@@ -157,15 +157,27 @@
     >
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Lee's Blog</v-toolbar-title>
+      <v-toolbar-title>
+        {{ title }}
+
+      </v-toolbar-title>
 
       <template v-slot:extension>
-        <v-tabs
-          align-with-title
-          background-color="transparent"
-        >
-        </v-tabs>
+        <v-subheader class="white--text">{{subheader}}</v-subheader>
       </template>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        icon
+        v-show="qrcode"
+      >
+        <v-icon>cast</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>search</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -190,9 +202,17 @@
 <script>
 import gql from "graphql-tag";
 import live2d from "~/components/live2d";
+import { mapState } from "vuex";
 export default {
   components: {
     live2d
+  },
+  computed: {
+    ...mapState({
+      title: state => state.option.title,
+      subheader: state => state.option.subheader,
+      qrcode: state => state.option.qrcode
+    })
   },
   apollo: {
     category: {
@@ -254,8 +274,7 @@ export default {
         }
       ]
     };
-  },
-  methods: {}
+  }
 };
 </script>
 <style>

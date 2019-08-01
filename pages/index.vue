@@ -32,8 +32,6 @@
           <v-card-text>
             {{data.summary}} ...
           </v-card-text>
-          <!-- <v-card-text>
-          </v-card-text> -->
           <v-card-actions>
             <v-layout align-center>
               <v-btn
@@ -55,7 +53,7 @@
                 <v-icon small>timer</v-icon>
               </v-btn>
               <span class="subheading">
-                {{prettyDate(data.created_at)}}
+                {{data.created_at | prettyDate}}
               </span>
             </v-layout>
             <v-layout
@@ -78,6 +76,7 @@
 
 <script>
 import gql from "graphql-tag";
+import { mapMutations } from "vuex";
 export default {
   layout: "default",
   apollo: {
@@ -155,28 +154,13 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    prettyDate(dateString) {
-      const date = new Date(dateString);
-      const d = date.getDate();
-      const monthNames = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ];
-      const m = monthNames[date.getMonth()];
-      const y = date.getFullYear();
-      return d + " " + m + " " + y;
-    }
+  mounted() {
+    this.$store.commit("option/setTitle", "Lee's Blog");
+    this.$store.commit(
+      "option/setSubheader",
+      "迷失的人迷失了,相逢的人会再相逢"
+    );
+    this.$store.commit("option/setQrcode", false);
   }
 };
 </script>

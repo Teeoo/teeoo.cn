@@ -42,7 +42,9 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    '@/assets/style.styl'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -56,6 +58,7 @@ module.exports = {
       src: '~/plugins/live2d/waifu-tips.js',
       ssr: false
     },
+    '~plugins/filters.js',
   ],
   /*
    ** Nuxt.js dev-modules
@@ -69,7 +72,7 @@ module.exports = {
   modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
   ],
 
   apollo: {

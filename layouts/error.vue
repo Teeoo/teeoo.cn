@@ -1,84 +1,108 @@
-<template >
-  <v-app id="inspire">
-    <v-content>
-      <v-container
-        fluid
-        fill-height
-      >
-        <v-layout
-          align-center
-          justify-center
+
+<template>
+  <div id="appRoot">
+    <div
+      id="app"
+      data-app="true"
+      class="application theme--light"
+    >
+      <div class="application--wrap">
+        <div
+          id="error"
+          data-app="true"
+          class="application theme--light"
         >
-          <v-flex text-center>
-            <!-- <img
-              style="max-width: 400px"
-              src="~/assets/error/bad-luck.gif"
-            />
-            <h1 class="display-2 font-weight-thin mb-4">Oh no, bad luck!</h1>
-            <h4 class="subheading">The page you’re looking for could have been deleted or never have existed.</h4> -->
-            <v-card
-              class="mx-auto"
-              max-width="450"
-              flat
-            >
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/house.jpg"
-                :aspect-ratio="16/9"
-              >
-
-              </v-img>
-              <v-card-title>
+          <div class="application--wrap">
+            <div class="container fluid fill-height">
+              <div class="layout align-center justify-center row">
+                <div class="mr-3 hidden-sm-and-down">
+                  <img
+                    src="@/static/image/gif/NotFound.gif"
+                    alt="NotFound"
+                  />
+                </div>
                 <div
-                  text-center
-                  class="display-1 mb-2"
-                >Welcome Home...</div>
-                <div class="title font-weight-regular grey--text">Monday, 12:30 PM, Mostly Sunny</div>
-              </v-card-title>
-              <v-layout
-                align-center
-                px-4
-                grey--text
-              >
-                <v-avatar
-                  size="24"
-                  class="mr-4"
+                  v-if="error.statusCode === 404"
+                  class="text-md-center"
                 >
-                  <v-img
-                    src="https://cdn.vuetifyjs.com/images/weather/part-cloud-48px.png"
-                    contain
-                  ></v-img>
-                </v-avatar>
-
-                <span>81° / 62°</span>
-              </v-layout>
-
-              <v-divider class="mt-6 mx-4"></v-divider>
-
-              <v-card-text>
-                <v-chip class="mr-2">
-                  <v-icon left>mdi-brightness-5</v-icon>
-                  Turn on Lights
-                </v-chip>
-                <v-chip class="mr-2">
-                  <v-icon left>mdi-alarm-check</v-icon>
-                  Set alarm
-                </v-chip>
-                <v-chip>
-                  <v-icon left>mdi-blinds</v-icon>
-                  Close blinds
-                </v-chip>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </v-app>
+                  <h1>404</h1>
+                  <h2 class="my-3 headline ">
+                    抱歉, 再怎么找也找不到啦!
+                  </h2>
+                  <div>
+                    <button
+                      type="button"
+                      class="v-btn theme--light primary"
+                      @click="goHome"
+                    >
+                      <div class="v-btn__content">返回首页</div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  v-else-if="error.statusCode === 403"
+                  class="text-md-center"
+                >
+                  <h1>403</h1>
+                  <h2 class="my-3 headline ">
+                    抱歉, 您无权访问该资源哦!
+                  </h2>
+                  <div>
+                    <button
+                      type="button"
+                      class="v-btn theme--light primary"
+                      @click="goHome"
+                    >
+                      <div class="v-btn__content">返回首页</div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  v-else
+                  class="text-md-center"
+                >
+                  <h1>500</h1>
+                  <h2 class="my-3 headline ">
+                    抱歉, 服务器开小差了,稍后再试试哦!
+                  </h2>
+                  <div>
+                    <button
+                      type="button"
+                      class="v-btn theme--light primary"
+                      @click="goHome"
+                    >
+                      <div class="v-btn__content">返回首页</div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
-export default {};
+export default {
+  props: ["error"],
+  methods: {
+    goHome() {
+      this.$router.push({ path: "/" });
+    }
+  }
+};
 </script>
-
-<style scoped>
+<style scoped lang="css">
+h1 {
+  font-size: 150px !important;
+  line-height: 150px !important;
+  font-weight: 700;
+  color: #252932;
+  text-shadow: rgba(61, 61, 61, 0.3) 1px 1px, rgba(61, 61, 61, 0.2) 2px 2px,
+    rgba(61, 61, 61, 0.3) 3px 3px;
+}
+.application {
+  background: none !important;
+}
 </style>
