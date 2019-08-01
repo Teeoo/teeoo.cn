@@ -119,26 +119,26 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    splitChunks: {
-      layouts: true,
-      pages: true,
-      commons: true
-    },
-    optimizeCSS: true,
-    cssSourceMap: true,
-    // maxChunkSize: 100000,
-    extractCSS: true,
-    optimization: {
-      // minimize: true,
-      splitChunks: {
-        chunks: 'all',
-        automaticNameDelimiter: '.',
-        name: true,
-        cacheGroups: {},
-        minSize: 100000,
-        maxSize: 100000
-      },
-    },
+    // splitChunks: {
+    //   layouts: true,
+    //   pages: true,
+    //   commons: true
+    // },
+    // optimizeCSS: true,
+    // cssSourceMap: true,
+    // // maxChunkSize: 100000,
+    // extractCSS: true,
+    // optimization: {
+    //   // minimize: true,
+    //   splitChunks: {
+    //     chunks: 'all',
+    //     automaticNameDelimiter: '.',
+    //     name: true,
+    //     cacheGroups: {},
+    //     minSize: 100000,
+    //     maxSize: 100000
+    //   },
+    // },
     plugins: [
       new webpack.ProvidePlugin({
         '$': 'jquery',

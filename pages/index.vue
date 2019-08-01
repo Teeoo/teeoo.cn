@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <v-overlay v-if="$apollo.loading && article.length===0">
+    <v-overlay v-if="$apollo.queries.article.loading">
       <v-progress-circular
         indeterminate
         size="64"
       ></v-progress-circular>
     </v-overlay>
     <v-layout
-      v-else
+      v-if="!$apollo.queries.article.loading && article && article.length"
       row
       justify-center
       align-center
@@ -83,6 +83,7 @@ export default {
   apollo: {
     article() {
       return {
+        prefetch: true,
         query: gql`
           query {
             article {
@@ -142,11 +143,7 @@ export default {
               version
             }
           }
-        `,
-        result(result) {
-          this.article = result.data.article;
-        },
-        prefetch: true
+        `
       };
     }
   },
@@ -156,10 +153,7 @@ export default {
     };
   },
   data() {
-    return {
-      article: [],
-      card_text: "Lorem i"
-    };
+    return {};
   },
   methods: {
     prettyDate(dateString) {

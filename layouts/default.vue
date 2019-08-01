@@ -45,12 +45,12 @@
             <v-list-item-title>{{data.text}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-subheader v-show="!$apollo.loading && category.length !==0 || pages.length !==0 || links.length !==0">组成</v-subheader>
+        <v-subheader v-show="!$apollo.loading && category.length || pages.length || links.length">组成</v-subheader>
         <!-- 分类 -->
         <v-list-group
           prepend-icon="bookmark"
           no-action
-          v-if="!$apollo.loading && category.length !==0"
+          v-if="!$apollo.queries.category.loading && category && category.length"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -86,7 +86,7 @@
         <v-list-group
           prepend-icon="markunread_mailbox"
           no-action
-          v-if="!$apollo.queries.pages.loading && pages.length !==0"
+          v-if="!$apollo.queries.pages.loading && pages && pages.length"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -109,7 +109,7 @@
         <v-list-group
           prepend-icon="link"
           no-action
-          v-if="!$apollo.loading && links.length !==0"
+          v-if="!$apollo.queries.links.loading && links && links.length"
         >
           <template v-slot:activator>
             <v-list-item-content>
@@ -196,6 +196,7 @@ export default {
   },
   apollo: {
     category: {
+      prefetch: true,
       query: gql`
         query {
           category {
@@ -204,13 +205,10 @@ export default {
             article_count
           }
         }
-      `,
-      result(result) {
-        this.category = result.data.category;
-      },
-      prefetch: true
+      `
     },
     pages: {
+      prefetch: true,
       query: gql`
         query {
           pages {
@@ -218,36 +216,24 @@ export default {
             slug
           }
         }
-      `,
-      result(result) {
-        this.pages = result.data.pages;
-      },
-      prefetch: true
+      `
     },
-    links() {
-      return {
-        query: gql`
-          query {
-            links {
-              url
-              name
-              target
-            }
+    links: {
+      prefetch: true,
+      query: gql`
+        query {
+          links {
+            url
+            name
+            target
           }
-        `,
-        result(result) {
-          this.links = result.data.links;
-        },
-        prefetch: true
-      };
+        }
+      `
     }
   },
   transition: "",
   data() {
     return {
-      pages: [],
-      links: [],
-      category: [],
       mini: false,
       drawer: false,
       nav: [

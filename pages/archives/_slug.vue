@@ -1,30 +1,30 @@
 <template>
   <v-container>
+    <v-overlay v-if="$apollo.queries.getArticleBySlug.loading">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
     <v-layout
+      v-if="!$apollo.queries.getArticleBySlug.loading && getArticleBySlug"
       row
       justify-center
       align-center
     >
-      <v-overlay v-if="!article">
-        <v-progress-circular
-          indeterminate
-          size="64"
-        ></v-progress-circular>
-      </v-overlay>
       <v-flex
-        v-else
         xs12
         sm8
         md6
       >
         <v-card flat>
           <v-img
-            v-if="article.cover"
+            v-if="getArticleBySlug.cover"
             src="https://acg.toubiec.cn/random.php"
             :height="280"
           />
-          <v-card-title>{{article.title}}</v-card-title>
-          <v-card-text v-html="article.html" />
+          <v-card-title>{{getArticleBySlug.title}}</v-card-title>
+          <v-card-text v-html="getArticleBySlug.html" />
           <!-- getArticleBySlug -->
         </v-card>
       </v-flex>
@@ -39,6 +39,7 @@ export default {
   apollo: {
     getArticleBySlug() {
       return {
+        prefetch: true,
         query: gql`
           query($slug: String!) {
             getArticleBySlug(slug: $slug) {
@@ -103,11 +104,7 @@ export default {
           return {
             slug: String(this.$route.params.slug)
           };
-        },
-        result(result) {
-          this.article = result.data.getArticleBySlug;
-        },
-        prefetch: true
+        }
       };
     }
   },
@@ -117,13 +114,7 @@ export default {
     };
   },
   data() {
-    return {
-      article: undefined,
-      loading: 0,
-      getArticleBySlug: null,
-      getArticle: "",
-      card_text: "Lorem i"
-    };
+    return {};
   },
   methods: {
     prettyDate(dateString) {

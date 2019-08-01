@@ -77,9 +77,7 @@
 </template>
 
 <script>
-export default {
-  layout: "error_base"
-};
+export default {};
 </script>
 
 <style scoped>
