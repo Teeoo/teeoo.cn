@@ -5,6 +5,7 @@ require('dotenv').config()
 const webpack = require('webpack');
 
 module.exports = {
+
   mode: 'universal',
 
   modern: true,
@@ -122,26 +123,27 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    // splitChunks: {
-    //   layouts: true,
-    //   pages: true,
-    //   commons: true
-    // },
-    // optimizeCSS: true,
-    // cssSourceMap: true,
-    // // maxChunkSize: 100000,
-    // extractCSS: true,
-    // optimization: {
-    //   // minimize: true,
-    //   splitChunks: {
-    //     chunks: 'all',
-    //     automaticNameDelimiter: '.',
-    //     name: true,
-    //     cacheGroups: {},
-    //     minSize: 100000,
-    //     maxSize: 100000
-    //   },
-    // },
+    analyze: false,
+    splitChunks: {
+      layouts: true,
+      pages: true,
+      commons: true
+    },
+    optimizeCSS: true,
+    cssSourceMap: false,
+    maxChunkSize: 100000,
+    extractCSS: true,
+    hardSource: true,
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        automaticNameDelimiter: '.',
+        name: undefined,
+        cacheGroups: {},
+        minSize: 100000,
+        maxSize: 100000
+      },
+    },
     plugins: [
       new webpack.ProvidePlugin({
         '$': 'jquery',

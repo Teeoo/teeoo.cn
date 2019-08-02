@@ -28,8 +28,8 @@
             :height="280"
           />
           <v-list-item>
-            <v-list-item-avatar color="grey">
-              <img src="http://q1.qlogo.cn/g?b=qq&nk=1982890538&s=100">
+            <v-list-item-avatar>
+              <img src="/avatar.jpeg">
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="headline">lee</v-list-item-title>

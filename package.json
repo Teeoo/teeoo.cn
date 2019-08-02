@@ -25,7 +25,7 @@
     "stylus-loader": "^3.0.2"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.1.0",
+    "@nuxtjs/vuetify": "^1.1.1",
     "nodemon": "^1.19.1"
   }
 }

@@ -13,7 +13,7 @@
       >
         <v-list-item>
           <v-list-item-avatar>
-            <img src="http://q1.qlogo.cn/g?b=qq&nk=1982890538&s=100">
+            <img src="/avatar.jpeg">
           </v-list-item-avatar>
 
           <v-list-item-content>
@@ -172,7 +172,10 @@
       </v-toolbar-title>
 
       <template v-slot:extension>
-        <v-subheader class="white--text">{{subheader}}</v-subheader>
+        <v-subheader
+          style="overflow:hidden;white-space:nowrap;"
+          class="white--text"
+        >{{subheader}}</v-subheader>
       </template>
 
       <v-spacer></v-spacer>

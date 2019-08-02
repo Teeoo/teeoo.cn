@@ -18,6 +18,7 @@
         md6
       >
         <v-card
+          class="mt-4"
           hover
           flat
           v-for="(data,index) in article"
