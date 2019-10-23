@@ -11,21 +11,22 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc10",
-    "@nuxtjs/dotenv": "^1.4.0",
-    "@nuxtjs/pwa": "^3.0.0-beta.16",
-    "cross-env": "^5.2.0",
-    "fastify": "^2.7.1",
+    "@nuxtjs/apollo": "^4.0.0-rc16",
+    "@nuxtjs/pwa": "^3.0.0-beta.19",
+    "consola": "^2.10.1",
+    "cross-env": "^6.0.3",
     "graphql-tag": "^2.10.1",
-    "jquery": "^3.4.1",
+    "koa": "^2.10.0",
     "material-design-icons-iconfont": "^5.0.1",
-    "nuxt": "^2.8.1",
-    "roboto-fontface": "^0.10.0",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.2"
+    "nuxt": "^2.10.2",
+    "roboto-fontface": "^0.10.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.2.1",
-    "nodemon": "^1.19.1"
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/vuetify": "^1.9.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.18.2"
   }
 }
