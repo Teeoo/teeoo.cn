@@ -4,6 +4,18 @@
     justify="center"
     align="center"
   >
+    <v-snackbar
+      v-model="snackbar"
+    >
+      假的,没数据因为我还没写完!!
+      <v-btn
+        color="pink"
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-col
       cols="12"
       sm="8"
@@ -17,56 +29,44 @@
         v-for="data in article" :key="data.id"
       >
         <v-card
+          class="article_list"
           flat
-          hover
           :loading="$apollo.loading"
         >
           <v-img
             class="white--text align-end"
-            height="250px"
-            src="https://api.dujin.org/bing/1920.php"
+            height="220px"
+            src="https://api.ixiaowai.cn/api/api.php"
           >
-            <v-card-title>{{data.title}}</v-card-title>
+            <v-card-title>
+              <v-chip
+                v-if="data.isTop"
+                color="secondary"
+                class="ma-2"
+                small
+                label
+              >
+                置顶
+              </v-chip>
+              {{data.title}}
+            </v-card-title>
           </v-img>
-          <v-card-subtitle class="pb-0">{{ data.html | summary }}</v-card-subtitle>
-          <v-card-actions>
-            <v-layout align-center>
-              <v-btn
-                text
-                icon
-                small
-                color="blue lighten-2"
-              >
-                <v-icon small>message</v-icon>
-              </v-btn>
-              <span class="subheading mr-2 ">0</span>
-              <span class="mr-1">·</span>
-              <v-btn
-                text
-                small
-                icon
-                color="red lighten-2"
-              >
-                <v-icon small>timer</v-icon>
-              </v-btn>
-              <span class="subheading">
-                {{data.createdAt | prettyDate}}
-              </span>
-            </v-layout>
-            <v-layout
-              align-center
-              justify-end
-            >
-              <v-btn
-                text
-                small
-                color="pink"
-                :to="`archives/${data.slug}`"
-              >去围观</v-btn>
-            </v-layout>
-          </v-card-actions>
+          <v-card-subtitle>
+            <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
+          </v-card-subtitle>
+          <v-card-text>{{ data.html | summary }} ···</v-card-text>
         </v-card>
       </v-skeleton-loader>
+    </v-col>
+    <v-col
+      cols="12"
+      sm="12"
+      md="12"
+      xs="12"
+    >
+      <div class="text-center mt-8">
+        <v-btn rounded color="primary" dark @click="snackbar=true">加载更多</v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -89,6 +89,10 @@
               createdAt
               updatedAt
               title
+              isTop
+              category{
+                label
+              }
             }
           }
         `,
@@ -103,8 +107,20 @@
     },
     data() {
       return {
+        snackbar:false,
         article: []
       }
     }
   }
 </script>
+<style>
+  .article_list:after {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    width: 150px;
+    margin-left: -75px;
+    content: "";
+    border-bottom: 2px solid #DDD;
+  }
+</style>

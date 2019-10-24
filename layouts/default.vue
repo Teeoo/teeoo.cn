@@ -95,12 +95,15 @@
     </v-app-bar>
     <v-content>
       <v-container fluid>
-        <nuxt />
+        <transition name="scroll-y-transition">
+          <nuxt />
+        </transition>
       </v-container>
     </v-content>
     <v-footer
       dark
       app
+      absolute
     >
       <v-row
         justify="center"
@@ -155,13 +158,13 @@ export default {
       `,
       result({ data, loading, networkStatus }) {
         // console.log({ data, loading, networkStatus })
-      },
+      }
     }
   },
   data() {
     return {
       mini: false,
-      drawer: false,
+      drawer: true,
       nav: [
         { icon: 'home', text: '首页', link: '/' },
         { icon: 'bookmark', text: '分类', link: '/category' },
@@ -171,3 +174,4 @@ export default {
   }
 }
 </script>
+

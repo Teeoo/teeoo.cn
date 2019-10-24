@@ -37,7 +37,9 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    '@/assets/css/markdown.css',
+  ],
   /*
    ** Plugins to load before mounting the App
    */
