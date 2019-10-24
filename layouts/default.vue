@@ -98,7 +98,36 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer app>
+    <v-footer
+      dark
+      app
+    >
+      <v-row
+        justify="center"
+        no-gutters
+      >
+        <v-col
+          class="py-4 text-center"
+          cols="12"
+          sm="6"
+          md="6"
+          xs="12"
+        >
+          &copy; {{ new Date().getFullYear() }} · <strong>lee</strong>
+          蜀ICP备18011318号-1
+        </v-col>
+        <v-col
+          class="py-4 text-center d-none d-lg-block d-print-block"
+          cols="12"
+          sm="6"
+          md="6"
+          xs="12"
+        >
+          <v-icon>home</v-icon>
+          <v-icon>email</v-icon>
+          <v-icon>rss_feed</v-icon>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -123,13 +152,16 @@ export default {
             }
           }
         }
-      `
+      `,
+      result({ data, loading, networkStatus }) {
+        // console.log({ data, loading, networkStatus })
+      },
     }
   },
   data() {
     return {
       mini: false,
-      drawer: true,
+      drawer: false,
       nav: [
         { icon: 'home', text: '首页', link: '/' },
         { icon: 'bookmark', text: '分类', link: '/category' },

@@ -11,45 +11,59 @@
       xs="12"
     >
       <v-skeleton-loader
-        :loading="this.$apollo.loading"
+        class="mt-4"
+        :loading="$apollo.loading"
         type="card-avatar"
+        v-for="data in article" :key="data.id"
       >
         <v-card
           flat
-          v-for="(data,index) in article"
-          :key="index"
+          hover
+          :loading="$apollo.loading"
         >
           <v-img
             class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            height="250px"
+            src="https://api.dujin.org/bing/1920.php"
           >
             <v-card-title>{{data.title}}</v-card-title>
           </v-img>
-
-          <v-card-subtitle class="pb-0">
-            {{data.createdAt}}
-          </v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-
-            <div>Whitsunday Island, Whitsunday Islands</div>
-          </v-card-text>
+          <v-card-subtitle class="pb-0">{{ data.html | summary }}</v-card-subtitle>
           <v-card-actions>
-            <v-btn
-              color="orange"
-              text
+            <v-layout align-center>
+              <v-btn
+                text
+                icon
+                small
+                color="blue lighten-2"
+              >
+                <v-icon small>message</v-icon>
+              </v-btn>
+              <span class="subheading mr-2 ">0</span>
+              <span class="mr-1">·</span>
+              <v-btn
+                text
+                small
+                icon
+                color="red lighten-2"
+              >
+                <v-icon small>timer</v-icon>
+              </v-btn>
+              <span class="subheading">
+                {{data.createdAt | prettyDate}}
+              </span>
+            </v-layout>
+            <v-layout
+              align-center
+              justify-end
             >
-              Share
-            </v-btn>
-
-            <v-btn
-              color="orange"
-              text
-            >
-              Explore
-            </v-btn>
+              <v-btn
+                text
+                small
+                color="pink"
+                :to="`archives/${data.slug}`"
+              >去围观</v-btn>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-skeleton-loader>
@@ -58,24 +72,39 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+  import gql from 'graphql-tag'
 
-export default {
-  apollo: {
-    article: {
-      query: gql`
-        query {
-          article {
-            id
-            order
-            desc
-            createdAt
-            updatedAt
-            title
+  export default {
+    apollo: {
+      article() {
+        return {
+          prefetch: true,
+          query: gql`
+          query {
+            article {
+              id
+              order
+              html
+              desc
+              createdAt
+              updatedAt
+              title
+            }
+          }
+        `,
+          watchLoading(isLoading, countModifier) {
+            // console.info(isLoading, countModifier)
+          },
+          result({ data, loading, networkStatus }) {
+            // console.info(data, loading, networkStatus)
           }
         }
-      `
+      }
+    },
+    data() {
+      return {
+        article: []
+      }
     }
   }
-}
 </script>
