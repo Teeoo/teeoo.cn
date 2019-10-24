@@ -22,12 +22,14 @@
       md="6"
       xs="12"
     >
+
       <v-skeleton-loader
         class="mt-4"
         :loading="$apollo.loading"
         type="card-avatar"
         v-for="data in article" :key="data.id"
       >
+
         <v-card
           class="article_list"
           flat
@@ -38,6 +40,9 @@
             height="220px"
             src="https://api.ixiaowai.cn/api/api.php"
           >
+            <span class="source d-lg-none">
+            原创
+          </span>
             <v-card-title>
               <v-chip
                 v-if="data.isTop"
@@ -54,8 +59,14 @@
           <v-card-subtitle>
             <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
           </v-card-subtitle>
-          <v-card-text>{{ data.html | summary }} ···</v-card-text>
+          <v-card-text>{{ data.html | summary }} ···
+            <v-btn :to="`archives/${data.id}`" color="deep-purple accent-4" small text>阅读全文</v-btn>
+          </v-card-text>
         </v-card>
+        <span class="datecircle d-none d-lg-block d-print-block">
+          <span class="month">11月</span>
+          <span class="day">03</span>
+        </span>
       </v-skeleton-loader>
     </v-col>
     <v-col
@@ -107,7 +118,7 @@
     },
     data() {
       return {
-        snackbar:false,
+        snackbar: false,
         article: []
       }
     }
@@ -123,4 +134,42 @@
     content: "";
     border-bottom: 2px solid #DDD;
   }
+
+  .datecircle {
+    background-color: #6b69d6;
+    border-color: #6b69d6;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    left: -35px;
+    top: -25px;
+    color: #fff;
+    padding-top: 10px;
+  }
+  .month{
+    text-align: center;
+    display: block;
+  }
+  .day{
+    display: block;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+  .source {
+    position: absolute;
+    background-color: #6b69d6;
+    border-color: #6b69d6;
+    top: -8px;
+    left: -28px;
+    display: block;
+    width: 80px;
+    height: 42px;
+    line-height: 58px;
+    transform: rotate(-45deg);
+    text-align: center;
+    font-size: 12px;
+  }
+
 </style>
