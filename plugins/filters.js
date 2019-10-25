@@ -27,10 +27,9 @@ function summary(data){
     .replace(/<[^>]+>/g, '')
     .substring(0, 80)
 }
-
 let filters = {
   prettyDate,
-  summary
+  summary,
 }
 
 Object.keys(filters).forEach(key => {

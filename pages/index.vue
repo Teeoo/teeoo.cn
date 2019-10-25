@@ -50,6 +50,7 @@
                 class="ma-2"
                 small
                 label
+                dark
               >
                 置顶
               </v-chip>
@@ -64,8 +65,8 @@
           </v-card-text>
         </v-card>
         <span class="datecircle d-none d-lg-block d-print-block">
-          <span class="month">11月</span>
-          <span class="day">03</span>
+          <span class="month">{{getMonth(data.createdAt)}}月</span>
+          <span class="day">{{getDate(data.createdAt)}}</span>
         </span>
       </v-skeleton-loader>
     </v-col>
@@ -121,6 +122,18 @@
         snackbar: false,
         article: []
       }
+    },
+    methods: {
+      getMonth(data) {
+        const date = new Date(data)
+        const month = date.getMonth()
+        return month + 1
+      },
+      getDate(data) {
+        const date = new Date(data)
+        const m = date.getDate()
+        return m
+      }
     }
   }
 </script>
@@ -141,22 +154,25 @@
     position: absolute;
     height: 60px;
     width: 60px;
-    border-radius: 50%;
+    border-radius: 100%;
     left: -35px;
     top: -25px;
     color: #fff;
     padding-top: 10px;
   }
-  .month{
+
+  .month {
     text-align: center;
     display: block;
   }
-  .day{
+
+  .day {
     display: block;
     text-align: center;
     font-weight: 700;
     margin-top: 3px;
   }
+
   .source {
     position: absolute;
     background-color: #6b69d6;

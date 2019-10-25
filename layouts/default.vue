@@ -1,5 +1,15 @@
 <template>
   <v-app>
+    <v-dialog v-model="dialog" open-on-hover fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-card flat>
+        <v-toolbar flat>
+          <v-spacer></v-spacer>
+          <v-btn icon @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+      </v-card>
+    </v-dialog>
     <v-navigation-drawer
       app
       floating
@@ -29,6 +39,10 @@
             <v-icon>chevron_left</v-icon>
           </v-btn>
         </v-list-item>
+        <v-tabs fixed-tabs>
+          <v-tab>菜单</v-tab>
+          <v-tab>目录</v-tab>
+        </v-tabs>
         <v-subheader>导航</v-subheader>
         <v-list-item
           :key='index'
@@ -60,7 +74,8 @@
                 v-for="icon in data.fields"
                 :key="icon.id"
                 v-show="icon.name==='icon'"
-              >{{icon.value}}</v-icon>
+              >{{icon.value}}
+              </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>{{data.title}}</v-list-item-title>
@@ -80,9 +95,10 @@
     >
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        迷失的人迷失了,相逢的人会再相逢
+        Mr. Lee's Blog
       </v-toolbar-title>
       <template v-slot:extension>
+        <v-subheader>生如夏花之绚烂，死如秋叶之静美</v-subheader>
       </template>
       <v-spacer></v-spacer>
       <v-btn icon>
@@ -90,13 +106,13 @@
       </v-btn>
 
       <v-btn icon>
-        <v-icon>search</v-icon>
+        <v-icon @click="dialog=true">search</v-icon>
       </v-btn>
     </v-app-bar>
     <v-content>
       <v-container fluid>
         <transition name="scroll-y-transition">
-          <nuxt />
+          <nuxt/>
         </transition>
       </v-container>
     </v-content>
@@ -136,12 +152,12 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+  import gql from 'graphql-tag'
 
-export default {
-  apollo: {
-    pages: {
-      query: gql`
+  export default {
+    apollo: {
+      pages: {
+        query: gql`
         query {
           pages {
             id
@@ -156,22 +172,23 @@ export default {
           }
         }
       `,
-      result({ data, loading, networkStatus }) {
-        // console.log({ data, loading, networkStatus })
+        result({ data, loading, networkStatus }) {
+          // console.log({ data, loading, networkStatus })
+        }
+      }
+    },
+    data() {
+      return {
+        dialog: false,
+        mini: false,
+        drawer: true,
+        nav: [
+          { icon: 'home', text: '首页', link: '/' },
+          { icon: 'bookmark', text: '分类', link: '/category' },
+          { icon: 'local_offer', text: '标签', link: '/tags' }
+        ]
       }
     }
-  },
-  data() {
-    return {
-      mini: false,
-      drawer: true,
-      nav: [
-        { icon: 'home', text: '首页', link: '/' },
-        { icon: 'bookmark', text: '分类', link: '/category' },
-        { icon: 'local_offer', text: '标签', link: '/tags' }
-      ]
-    }
   }
-}
 </script>
 
