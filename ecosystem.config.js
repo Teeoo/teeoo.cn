@@ -4,6 +4,7 @@ module.exports = {
     script: 'yarn',
     args: 'start',
     instances: 1,
+    exec_mode: 'fork',
     autorestart: true,
     watch: ['.nuxt', 'nuxt.config.js'],
     ignore_watch: ['node_modules'],
