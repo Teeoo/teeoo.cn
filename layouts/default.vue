@@ -1,10 +1,19 @@
 <template>
   <v-app>
-    <v-dialog v-model="dialog" open-on-hover fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog
+      v-model="dialog"
+      open-on-hover
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition"
+    >
       <v-card flat>
         <v-toolbar flat>
           <v-spacer></v-spacer>
-          <v-btn icon @click="dialog = false">
+          <v-btn
+            icon
+            @click="dialog = false"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
@@ -39,49 +48,121 @@
             <v-icon>chevron_left</v-icon>
           </v-btn>
         </v-list-item>
-        <v-tabs fixed-tabs>
-          <v-tab>菜单</v-tab>
-          <v-tab>目录</v-tab>
-        </v-tabs>
-        <v-subheader>导航</v-subheader>
-        <v-list-item
-          :key='index'
-          v-for="(data,index) in nav"
-          link
-          :to="data.link"
-        >
-          <v-list-item-icon>
-            <v-icon>{{data.icon}}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{data.text}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-skeleton-loader
-          :loading="this.$apollo.loading"
-          type="list-item-two-line"
-        >
-          <v-subheader v-show="!$apollo.loading && pages.length">组成</v-subheader>
+        <div v-show="!IsToc">
+          <v-subheader>导航</v-subheader>
           <v-list-item
-            v-show="!$apollo.loading && pages.length"
-            :key='data.id'
-            v-for="data in pages"
+            :key='index'
+            v-for="(data,index) in nav"
             link
-            :to="data.id"
+            :to="data.link"
           >
             <v-list-item-icon>
-              <v-icon
-                v-for="icon in data.fields"
-                :key="icon.id"
-                v-show="icon.name==='icon'"
-              >{{icon.value}}
-              </v-icon>
+              <v-icon>{{data.icon}}</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{data.title}}</v-list-item-title>
+              <v-list-item-title>{{data.text}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-        </v-skeleton-loader>
+          <v-skeleton-loader
+            :loading="this.$apollo.loading"
+            type="list-item-two-line"
+          >
+            <v-subheader v-show="!$apollo.loading && pages.length">组成</v-subheader>
+            <v-list-item
+              v-show="!$apollo.loading && pages.length"
+              :key='data.id'
+              v-for="data in pages"
+              link
+              :to="data.id"
+            >
+              <v-list-item-icon>
+                <v-icon
+                  v-for="icon in data.fields"
+                  :key="icon.id"
+                  v-show="icon.name==='icon'"
+                >{{icon.value}}
+                </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>{{data.title}}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-skeleton-loader>
+        </div>
+        <v-tabs
+          fixed-tabs
+          v-model="tabs"
+          v-show="IsToc"
+        >
+          <v-tab nuxt v-for="(mune,index) in munes" :key="index">
+            {{ mune }}
+          </v-tab>
+          <v-tabs-items v-model="tabs">
+            <v-tab-item :key="0">
+              <v-subheader>导航</v-subheader>
+              <v-list-item
+                :key='index'
+                v-for="(data,index) in nav"
+                link
+                :to="data.link"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{data.icon}}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{data.text}}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-skeleton-loader
+                :loading="this.$apollo.loading"
+                type="list-item-two-line"
+              >
+                <v-subheader v-show="!$apollo.loading && pages.length">组成</v-subheader>
+                <v-list-item
+                  v-show="!$apollo.loading && pages.length"
+                  :key='data.id'
+                  v-for="data in pages"
+                  link
+                  :to="data.id"
+                >
+                  <v-list-item-icon>
+                    <v-icon
+                      v-for="icon in data.fields"
+                      :key="icon.id"
+                      v-show="icon.name==='icon'"
+                    >{{icon.value}}
+                    </v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>{{data.title}}</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-skeleton-loader>
+            </v-tab-item>
+            <v-tab-item :key="1">
+              <v-list
+                nav
+                dense
+              >
+                <v-list-item-group color="primary">
+                  <v-list-item
+                    v-for="(item, i) in toc"
+                    :key="i"
+                    nuxt
+                    :to="{hash: '#'+item.anchor}"
+                  >
+                    <v-list-item-icon>
+                      <v-icon>{{i}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.content"></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
       </v-list>
     </v-navigation-drawer>
 
@@ -95,16 +176,15 @@
     >
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        Mr. Lee's Blog
+        {{this.$store.state.title}}
       </v-toolbar-title>
       <template v-slot:extension>
         <v-subheader>生如夏花之绚烂，死如秋叶之静美</v-subheader>
       </template>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon v-show="this.$store.state.qrcode">
         <v-icon>cast</v-icon>
       </v-btn>
-
       <v-btn icon>
         <v-icon @click="dialog=true">search</v-icon>
       </v-btn>
@@ -118,7 +198,6 @@
     </v-content>
     <v-footer
       dark
-      app
       absolute
     >
       <v-row
@@ -153,8 +232,17 @@
 
 <script>
   import gql from 'graphql-tag'
+  import { mapState } from 'vuex'
 
   export default {
+    head() {
+      return {
+        title: this.$store.state.title,
+        meta: [
+          { hid: 'description', name: 'description', content: '生如夏花之绚烂，死如秋叶之静美' }
+        ]
+      }
+    },
     apollo: {
       pages: {
         query: gql`
@@ -179,6 +267,7 @@
     },
     data() {
       return {
+        tabs: 1,
         dialog: false,
         mini: false,
         drawer: true,
@@ -186,7 +275,22 @@
           { icon: 'home', text: '首页', link: '/' },
           { icon: 'bookmark', text: '分类', link: '/category' },
           { icon: 'local_offer', text: '标签', link: '/tags' }
+        ],
+        munes: [
+          '菜单', '目录'
         ]
+      }
+    },
+    computed: {
+      ...mapState({
+        IsToc: state => state.toc.IsToc,
+        toc: state => state.toc.data
+      })
+    },
+    methods: {
+      goAnchor(selector) {
+        const anchor = this.$el.querySelector(selector)
+        document.querySelector('#app').scrollTop = this.$el.querySelector(selector).offsetTop
       }
     }
   }

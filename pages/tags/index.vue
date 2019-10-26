@@ -41,6 +41,14 @@
 
   export default {
     name: 'index',
+    head() {
+      return {
+        title: "标签",
+        meta: [
+          { hid: 'description', name: 'description', content: '生如夏花之绚烂，死如秋叶之静美' }
+        ]
+      }
+    },
     apollo: {
       tags() {
         return {

@@ -9,8 +9,8 @@ module.exports = {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
     meta: [{
-        charset: 'utf-8'
-      },
+      charset: 'utf-8'
+    },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
@@ -32,19 +32,20 @@ module.exports = {
    */
   loading: {
     color: '#ff3e12',
-    height: '5px'
+    height: '2px'
   },
   /*
    ** Global CSS
    */
   css: [
-    '@/assets/css/markdown.css',
+    '@/assets/main.styl',
+    '@/assets/main.css'
   ],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~plugins/filters.js',
+    '~plugins/filters.js'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -60,7 +61,15 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/pwa',
+    ['@nuxtjs/pwa', {
+      icon: true, meta: true, manifest: {
+        name: `Lee\'s Blog`,
+        short_name: `lee的小窝`,
+        description: `生如夏花之绚烂，死如秋叶之静美`,
+        theme_color: `#6200ea`,
+        display: `standalone`
+      }
+    }],
     '@nuxtjs/apollo'
   ],
   /**
@@ -71,16 +80,16 @@ module.exports = {
     defaultOptions: {
       $query: {
         loadingKey: 'loading',
-        fetchPolicy: 'cache-and-network',
-      },
+        fetchPolicy: 'cache-and-network'
+      }
     },
     clientConfigs: {
       default: {
         httpEndpoint: process.env.HTTP_ENDPOINT,
         httpLinkOptions: {
           credentials: 'same-origin'
-        },
-      },
+        }
+      }
     }
   },
   /*
@@ -90,6 +99,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+    }
   }
 }

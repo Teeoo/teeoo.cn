@@ -85,6 +85,7 @@
 
 <script>
   import gql from 'graphql-tag'
+  import { mapMutations } from 'vuex'
 
   export default {
     apollo: {

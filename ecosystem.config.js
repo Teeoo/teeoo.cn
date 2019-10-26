@@ -1,16 +1,12 @@
 module.exports = {
   apps: [{
     name: 'teeoo.cn',
-    script: 'npm',
-    args: 'run start',
+    script: 'yarn',
+    args: 'start',
     instances: 1,
     autorestart: true,
-    watch: [".nuxt", "nuxt.config.js"],
-    ignore_watch: ["node_modules"],
-    watch_options: {
-      "followSymlinks": false,
-      "usePolling": true,
-    },
+    watch: ['.nuxt', 'nuxt.config.js'],
+    ignore_watch: ['node_modules'],
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development'
@@ -18,5 +14,5 @@ module.exports = {
     env_production: {
       NODE_ENV: 'production'
     }
-  }],
-};
+  }]
+}

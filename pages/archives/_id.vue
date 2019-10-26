@@ -10,25 +10,121 @@
       md="6"
       xs="12"
     >
-      <v-card flat>
-        <v-img
-          class="white--text align-end"
-          height="220px"
-          src="https://api.ixiaowai.cn/api/api.php"
-        ><span class="source">
-            原创
-          </span>
-          <v-card-title>
-            我是标题
-          </v-card-title>
-        </v-img>
-      </v-card>
+      <v-article-details
+        :loading="this.$apollo.loading"
+        type="card-avatar, article,article"
+        v-if="ArticleById"
+      >
+        <v-card flat class="article">
+          <v-img
+            class="white--text align-end"
+            height="220px"
+            src="https://api.ixiaowai.cn/api/api.php"
+          ><span class="source">
+                          原创
+                        </span>
+            <v-card-title>
+              {{ArticleById.title}}
+            </v-card-title>
+          </v-img>
+          <v-card-text v-html="ArticleById.html">
+          </v-card-text>
+
+        </v-card>
+      </v-article-details>
     </v-col>
   </v-row>
 </template>
 
 <script>
-  export default {}
+  import gql from 'graphql-tag'
+
+  export default {
+    head() {
+      return {
+        title: this.$store.state.title,
+        meta: [
+          { hid: 'description', name: 'description', content: '生如夏花之绚烂，死如秋叶之静美' }
+        ]
+      }
+    },
+    components: {
+      VArticleDetails: {
+        functional: true,
+        render(h, { data, props, children }) {
+          return h('v-skeleton-loader', {
+            ...data,
+            props: {
+              boilerplate: false,
+              ...props
+            }
+          }, children)
+        }
+      }
+    },
+    apollo: {
+      ArticleById() {
+        return {
+          prefetch: true,
+          query: gql`
+          query($id:String!){
+             ArticleById(id:$id) {
+                  id
+                  order
+                  desc
+                  title
+                  slug
+                  cover
+                  summary
+                  text
+                  html
+                  toc
+                  template
+                  type
+                  status
+                  publish
+                  password
+                  allowComment
+                  isTop
+             }
+        }
+        `,
+          variables() {
+            return {
+              id: String(this.$route.params.id)
+            }
+          },
+          watchLoading(isLoading, countModifier) {
+            // console.info(isLoading, countModifier)
+          },
+          result({ data, loading, networkStatus }) {
+            console.log({ data, loading, networkStatus })
+            if (this.ArticleById && networkStatus === 7) {
+              const toc = this.ArticleById.toc ? { IsToc: true, data: this.ArticleById.toc } : {
+                IsToc: false,
+                data: {}
+              }
+              this.$store.commit('toc/add', toc)
+              this.$store.commit('setTitle', { title: this.ArticleById.title })
+            }
+          }
+        }
+      }
+    },
+    data() {
+      return {
+        ArticleById: null
+      }
+    },
+    created() {
+      this.$store.commit('toggle', { qrcode: true })
+    },
+    destroyed() {
+      this.$store.commit('toc/add', { IsToc: false, data: {} })
+      this.$store.commit('toggle', { qrcode: false })
+      this.$store.commit('setTitle', { title: 'Mr. Lee\'s Blog' })
+    }
+  }
 </script>
 
 <style scoped>
