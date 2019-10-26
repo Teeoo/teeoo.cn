@@ -13,9 +13,8 @@
       <v-article-details
         :loading="this.$apollo.loading"
         type="card-avatar, article,article"
-        v-if="ArticleById"
       >
-        <v-card flat class="article">
+        <v-card :loading="this.$apollo.loading" flat class="article">
           <v-img
             class="white--text align-end"
             height="220px"
@@ -23,11 +22,11 @@
           ><span class="source">
                           原创
                         </span>
-            <v-card-title>
-              {{ArticleById.title}}
+            <v-card-title v-if="data">
+              {{this.data.title}}
             </v-card-title>
           </v-img>
-          <v-card-text v-html="ArticleById.html">
+          <v-card-text v-if="data" v-html="this.data.html">
           </v-card-text>
 
         </v-card>
@@ -98,7 +97,7 @@
             // console.info(isLoading, countModifier)
           },
           result({ data, loading, networkStatus }) {
-            console.log({ data, loading, networkStatus })
+            // console.log({ data, loading, networkStatus })
             if (this.ArticleById && networkStatus === 7) {
               const toc = this.ArticleById.toc ? { IsToc: true, data: this.ArticleById.toc } : {
                 IsToc: false,
@@ -113,7 +112,12 @@
     },
     data() {
       return {
-        ArticleById: null
+        data: undefined
+      }
+    },
+    watch: {
+      ArticleById(val) {
+        this.data = val
       }
     },
     created() {

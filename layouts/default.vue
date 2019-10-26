@@ -198,7 +198,7 @@
     </v-content>
     <v-footer
       dark
-      absolute
+      app
     >
       <v-row
         justify="center"
