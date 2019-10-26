@@ -28,7 +28,15 @@
           </v-img>
           <v-card-text v-if="data" v-html="this.data.html">
           </v-card-text>
+          <v-card-subtitle class="text-center">
+            <blockquote>
+              <div> 本文链接：<a :href="url">{{url}}</a>
+                <br> 本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh"
+                             target="_blank" rel="noopener">CC BY-NC-SA 3.0 Unported</a> 协议进行许可
+              </div>
+            </blockquote>
 
+          </v-card-subtitle>
         </v-card>
       </v-article-details>
     </v-col>
@@ -112,6 +120,7 @@
     },
     data() {
       return {
+        url: ``,
         data: undefined
       }
     },
@@ -121,6 +130,9 @@
       }
     },
     created() {
+      if (process.browser) {
+        this.url = `${window.location.href}`
+      }
       this.$store.commit('toggle', { qrcode: true })
     },
     destroyed() {

@@ -165,7 +165,6 @@
         </v-tabs>
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar
       dark
       app
@@ -195,10 +194,22 @@
           <nuxt/>
         </transition>
       </v-container>
+      <v-fab-transition>
+        <v-btn
+          v-show="backTopShow"
+          @click="backTop"
+          fixed
+          dark
+          fab
+          bottom
+          right
+          color="pink"
+        >
+          <v-icon>keyboard_arrow_up</v-icon>
+        </v-btn>
+      </v-fab-transition>
     </v-content>
     <v-footer
-      dark
-      app
     >
       <v-row
         justify="center"
@@ -267,6 +278,7 @@
     },
     data() {
       return {
+        backTopShow: false,
         tabs: 1,
         dialog: false,
         mini: false,
@@ -291,7 +303,27 @@
       goAnchor(selector) {
         const anchor = this.$el.querySelector(selector)
         document.querySelector('#app').scrollTop = this.$el.querySelector(selector).offsetTop
+      },
+      handleScroll() {
+        if (document.documentElement.scrollTop + document.body.scrollTop > 100) {
+          this.backTopShow = true
+        } else {
+          this.backTopShow = false
+        }
+      },
+      backTop() {
+        let back = setInterval(() => {
+          if (document.body.scrollTop || document.documentElement.scrollTop) {
+            document.body.scrollTop -= 100
+            document.documentElement.scrollTop -= 100
+          } else {
+            clearInterval(back)
+          }
+        })
       }
+    },
+    mounted() {
+      window.addEventListener('scroll', this.handleScroll)
     }
   }
 </script>
