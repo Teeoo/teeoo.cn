@@ -94,7 +94,11 @@
           v-model="tabs"
           v-show="IsToc"
         >
-          <v-tab nuxt v-for="(mune,index) in munes" :key="index">
+          <v-tab
+            nuxt
+            v-for="(mune,index) in munes"
+            :key="index"
+          >
             {{ mune }}
           </v-tab>
           <v-tabs-items v-model="tabs">
@@ -181,7 +185,10 @@
         <v-subheader>生如夏花之绚烂，死如秋叶之静美</v-subheader>
       </template>
       <v-spacer></v-spacer>
-      <v-btn icon v-show="this.$store.state.qrcode">
+      <v-btn
+        icon
+        v-show="this.$store.state.qrcode"
+      >
         <v-icon>cast</v-icon>
       </v-btn>
       <v-btn icon>
@@ -209,8 +216,7 @@
         </v-btn>
       </v-fab-transition>
     </v-content>
-    <v-footer
-    >
+    <v-footer>
       <v-row
         justify="center"
         no-gutters
@@ -244,13 +250,18 @@
 <script>
   import gql from 'graphql-tag'
   import { mapState } from 'vuex'
+  import Favico from 'favico.js'
 
   export default {
     head() {
       return {
         title: this.$store.state.title,
         meta: [
-          { hid: 'description', name: 'description', content: '生如夏花之绚烂，死如秋叶之静美' }
+          {
+            hid: 'description',
+            name: 'description',
+            content: '生如夏花之绚烂，死如秋叶之静美'
+          }
         ]
       }
     },
@@ -279,6 +290,7 @@
     data() {
       return {
         backTopShow: false,
+        rollTimer: null,
         tabs: 1,
         dialog: false,
         mini: false,
@@ -288,9 +300,7 @@
           { icon: 'bookmark', text: '分类', link: '/category' },
           { icon: 'local_offer', text: '标签', link: '/tags' }
         ],
-        munes: [
-          '菜单', '目录'
-        ]
+        munes: ['菜单', '目录']
       }
     },
     computed: {
@@ -300,16 +310,9 @@
       })
     },
     methods: {
-      goAnchor(selector) {
-        const anchor = this.$el.querySelector(selector)
-        document.querySelector('#app').scrollTop = this.$el.querySelector(selector).offsetTop
-      },
       handleScroll() {
-        if (document.documentElement.scrollTop + document.body.scrollTop > 100) {
-          this.backTopShow = true
-        } else {
-          this.backTopShow = false
-        }
+        this.backTopShow =
+          document.documentElement.scrollTop + document.body.scrollTop > 100
       },
       backTop() {
         let back = setInterval(() => {
@@ -320,6 +323,56 @@
             clearInterval(back)
           }
         })
+      },
+      visibilitychange(status) {
+        const setTitle = title => {
+          document.title = title
+          if (title.length <= 10) {
+            return false
+          }
+          const [first, ...content] = title.split('')
+          const newTitle = [...content, first].join('')
+          this.rollTimer = setTimeout(() => setTitle(newTitle), 500)
+        }
+        const setFavicon = link => {
+          let $favicon = document.querySelector('link[rel="icon"]')
+          if ($favicon !== null) {
+            $favicon.href = link
+          } else {
+            $favicon = document.createElement('link')
+            $favicon.rel = 'icon'
+            $favicon.href = link
+            document.head.appendChild($favicon)
+          }
+        }
+        if (status) {
+          setFavicon('/favicon64.ico')
+          this.$store.commit('increment')
+          setTitle(`澳门首家线上赌场上线了，性感荷官在线发牌，陪你嗨翻天！`)
+        } else {
+          clearTimeout(this.rollTimer)
+          document.title = this.$store.state.title
+          setFavicon('/favicon.ico')
+        }
+        const favicon = new Favico({
+          type: 'rectangle',
+          animation: 'slide',
+          bgColor: '#5CB85C',
+          textColor: '#ff0'
+        })
+        favicon.badge(this.$store.state.counter)
+      }
+    },
+    created() {
+      if (process.browser) {
+        document.addEventListener(
+          'visibilitychange',
+          event => {
+            const isHidden = event.target.hidden || event.target.webkitHidden
+            this.visibilitychange(isHidden)
+          },
+          false
+        )
       }
     },
     mounted() {
