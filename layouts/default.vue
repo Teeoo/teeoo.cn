@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
     <v-dialog
       v-model="dialog"
       open-on-hover
@@ -22,6 +23,7 @@
     <v-navigation-drawer
       app
       floating
+      temporary
       v-model="drawer"
       :mini-variant.sync="mini"
     >
@@ -168,6 +170,50 @@
           </v-tabs-items>
         </v-tabs>
       </v-list>
+      <template v-slot:append>
+        <v-row>
+          <v-col
+            class="text-center"
+            cols="4"
+          >
+            <v-btn
+              small
+              text
+            >
+              <v-icon>
+                settings
+              </v-icon>
+            </v-btn>
+          </v-col>
+          <v-col
+            class="text-center"
+            cols="4"
+          >
+            <v-btn
+              small
+              text
+            >
+              <v-icon>
+                rss_feed
+              </v-icon>
+            </v-btn>
+          </v-col>
+          <v-col
+            class="text-center"
+            cols="4"
+          >
+            <v-btn
+              small
+              text
+              @click="toggle"
+            >
+              <v-icon>
+                {{isFullscreen ? 'fullscreen_exit':'fullscreen'}}
+              </v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </template>
     </v-navigation-drawer>
     <v-app-bar
       dark
@@ -177,7 +223,7 @@
       prominent
       color="deep-purple accent-4"
     >
-      <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon id="drawer" @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         {{this.$store.state.title}}
       </v-toolbar-title>
@@ -186,12 +232,13 @@
       </template>
       <v-spacer></v-spacer>
       <v-btn
+        id="qrcode"
         icon
         v-show="this.$store.state.qrcode"
       >
         <v-icon>cast</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon id="search">
         <v-icon @click="dialog=true">search</v-icon>
       </v-btn>
     </v-app-bar>
@@ -203,6 +250,7 @@
       </v-container>
       <v-fab-transition>
         <v-btn
+          id="back-to-top"
           v-show="backTopShow"
           @click="backTop"
           fixed
@@ -244,6 +292,7 @@
         </v-col>
       </v-row>
     </v-footer>
+    <live2d></live2d>
   </v-app>
 </template>
 
@@ -251,6 +300,9 @@
   import gql from 'graphql-tag'
   import { mapState } from 'vuex'
   import Favico from 'favico.js'
+  import screenfull from 'screenfull'
+  import live2d from '~/components/Live2d/Live2d.vue'
+  import anime from 'animejs'
 
   export default {
     head() {
@@ -264,6 +316,9 @@
           }
         ]
       }
+    },
+    components: {
+      live2d
     },
     apollo: {
       pages: {
@@ -289,12 +344,13 @@
     },
     data() {
       return {
+        isFullscreen: false,
         backTopShow: false,
         rollTimer: null,
         tabs: 1,
         dialog: false,
         mini: false,
-        drawer: true,
+        drawer: false,
         nav: [
           { icon: 'home', text: '首页', link: '/' },
           { icon: 'bookmark', text: '分类', link: '/category' },
@@ -310,6 +366,23 @@
       })
     },
     methods: {
+      toggle() {
+        if (screenfull.isEnabled) {
+          screenfull.toggle()
+          screenfull.on('change', () => {
+            this.isFullscreen = screenfull.isFullscreen
+            console.log(
+              'Am I fullscreen?',
+              screenfull.isFullscreen ? 'Yes' : 'No'
+            )
+          })
+          screenfull.on('error', event => {
+            console.error('Failed to enable fullscreen', event)
+          })
+        } else {
+          // Ignore or do something else
+        }
+      },
       handleScroll() {
         this.backTopShow =
           document.documentElement.scrollTop + document.body.scrollTop > 100
@@ -377,7 +450,404 @@
     },
     mounted() {
       window.addEventListener('scroll', this.handleScroll)
+      document.body.oncopy = () => {
+        console.info(`博主码文字不易，要转载的话记得留一个本站的链接哦……`)
+      }
+
+      function updateCoords(e) {
+        pointerX = (e.clientX || e.touches[0].clientX) - canvasEl.getBoundingClientRect().left,
+          pointerY = e.clientY || e.touches[0].clientY - canvasEl.getBoundingClientRect().top
+      }
+
+      function setParticuleDirection(e) {
+        var t = anime.random(0, 360) * Math.PI / 180
+          , a = anime.random(50, 180)
+          , n = [-1, 1][anime.random(0, 1)] * a
+        return {
+          x: e.x + n * Math.cos(t),
+          y: e.y + n * Math.sin(t)
+        }
+      }
+
+      function createParticule(e, t) {
+        var a = {}
+        return a.x = e,
+          a.y = t,
+          a.color = colors[anime.random(0, colors.length - 1)],
+          a.radius = anime.random(16, 32),
+          a.endPos = setParticuleDirection(a),
+          a.draw = function() {
+            ctx.beginPath(),
+              ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0),
+              ctx.fillStyle = a.color,
+              ctx.fill()
+          }
+          ,
+          a
+      }
+
+      function createCircle(e, t) {
+        var a = {}
+        return a.x = e,
+          a.y = t,
+          a.color = '#F00',
+          a.radius = .1,
+          a.alpha = .5,
+          a.lineWidth = 6,
+          a.draw = function() {
+            ctx.globalAlpha = a.alpha,
+              ctx.beginPath(),
+              ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0),
+              ctx.lineWidth = a.lineWidth,
+              ctx.strokeStyle = a.color,
+              ctx.stroke(),
+              ctx.globalAlpha = 1
+          }
+          ,
+          a
+      }
+
+      function renderParticule(e) {
+        for (var t = 0; t < e.animatables.length; t++)
+          e.animatables[t].target.draw()
+      }
+
+      function animateParticules(e, t) {
+        for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++)
+          n.push(createParticule(e, t))
+        anime.timeline().add({
+          targets: n,
+          x: function(e) {
+            return e.endPos.x
+          },
+          y: function(e) {
+            return e.endPos.y
+          },
+          radius: .1,
+          duration: anime.random(1200, 1800),
+          easing: 'easeOutExpo',
+          update: renderParticule
+        }).add({
+          targets: a,
+          radius: anime.random(80, 160),
+          lineWidth: 0,
+          alpha: {
+            value: 0,
+            easing: 'linear',
+            duration: anime.random(600, 800)
+          },
+          duration: anime.random(1200, 1800),
+          easing: 'easeOutExpo',
+          update: renderParticule,
+          offset: 0
+        })
+      }
+
+      function debounce(fn, delay) {
+        var timer
+        return function() {
+          var context = this
+          var args = arguments
+          clearTimeout(timer)
+          timer = setTimeout(function() {
+            fn.apply(context, args)
+          }, delay)
+        }
+      }
+
+      var canvasEl = document.querySelector('.fireworks')
+      if (canvasEl) {
+        var ctx = canvasEl.getContext('2d')
+          , numberOfParticules = 30
+          , pointerX = 0
+          , pointerY = 0
+          , tap = 'mousedown'
+          , colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C']
+          , setCanvasSize = debounce(function() {
+          canvasEl.width = 2 * window.innerWidth,
+            canvasEl.height = 2 * window.innerHeight,
+            canvasEl.style.width = window.innerWidth + 'px',
+            canvasEl.style.height = window.innerHeight + 'px',
+            canvasEl.getContext('2d').scale(2, 2)
+        }, 500)
+          , render = anime({
+          duration: 1 / 0,
+          update: function() {
+            ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
+          }
+        })
+        document.addEventListener(tap, function(e) {
+          'sidebar' !== e.target.id && 'toggle-sidebar' !== e.target.id && 'A' !== e.target.nodeName && 'IMG' !== e.target.nodeName && (render.play(),
+            updateCoords(e),
+            animateParticules(pointerX, pointerY))
+        }, !1),
+          setCanvasSize(),
+          window.addEventListener('resize', setCanvasSize, !1)
+      }
     }
   }
 </script>
+<style>
+  .waifu {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    font-size: 0;
+    -webkit-transform: translateY(3px);
+    transform: translateY(3px);
+  }
+
+  .waifu:hover {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  .waifu-tips {
+    opacity: 0;
+    margin: -20px 20px;
+    padding: 5px 10px;
+    border: 1px solid rgba(224, 186, 140, 0.62);
+    border-radius: 12px;
+    background-color: rgba(236, 217, 188, 0.5);
+    box-shadow: 0 3px 15px 2px rgba(191, 158, 118, 0.2);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: absolute;
+    animation-delay: 5s;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+    animation-name: shake;
+    animation-timing-function: ease-in-out;
+  }
+
+  .waifu-tool {
+    display: none;
+    color: #aaa;
+    top: 50px;
+    right: 10px;
+    position: absolute;
+  }
+
+  .waifu:hover .waifu-tool {
+    display: block;
+  }
+
+  .waifu-tool span {
+    display: block;
+    cursor: pointer;
+    color: #5b6c7d;
+    transition: 0.2s;
+  }
+
+  .waifu-tool span:hover {
+    color: #34495e;
+  }
+
+  .waifu #live2d {
+    position: relative;
+  }
+
+  @keyframes shake {
+    2% {
+      transform: translate(0.5px, -1.5px) rotate(-0.5deg);
+    }
+    4% {
+      transform: translate(0.5px, 1.5px) rotate(1.5deg);
+    }
+    6% {
+      transform: translate(1.5px, 1.5px) rotate(1.5deg);
+    }
+    8% {
+      transform: translate(2.5px, 1.5px) rotate(0.5deg);
+    }
+    10% {
+      transform: translate(0.5px, 2.5px) rotate(0.5deg);
+    }
+    12% {
+      transform: translate(1.5px, 1.5px) rotate(0.5deg);
+    }
+    14% {
+      transform: translate(0.5px, 0.5px) rotate(0.5deg);
+    }
+    16% {
+      transform: translate(-1.5px, -0.5px) rotate(1.5deg);
+    }
+    18% {
+      transform: translate(0.5px, 0.5px) rotate(1.5deg);
+    }
+    20% {
+      transform: translate(2.5px, 2.5px) rotate(1.5deg);
+    }
+    22% {
+      transform: translate(0.5px, -1.5px) rotate(1.5deg);
+    }
+    24% {
+      transform: translate(-1.5px, 1.5px) rotate(-0.5deg);
+    }
+    26% {
+      transform: translate(1.5px, 0.5px) rotate(1.5deg);
+    }
+    28% {
+      transform: translate(-0.5px, -0.5px) rotate(-0.5deg);
+    }
+    30% {
+      transform: translate(1.5px, -0.5px) rotate(-0.5deg);
+    }
+    32% {
+      transform: translate(2.5px, -1.5px) rotate(1.5deg);
+    }
+    34% {
+      transform: translate(2.5px, 2.5px) rotate(-0.5deg);
+    }
+    36% {
+      transform: translate(0.5px, -1.5px) rotate(0.5deg);
+    }
+    38% {
+      transform: translate(2.5px, -0.5px) rotate(-0.5deg);
+    }
+    40% {
+      transform: translate(-0.5px, 2.5px) rotate(0.5deg);
+    }
+    42% {
+      transform: translate(-1.5px, 2.5px) rotate(0.5deg);
+    }
+    44% {
+      transform: translate(-1.5px, 1.5px) rotate(0.5deg);
+    }
+    46% {
+      transform: translate(1.5px, -0.5px) rotate(-0.5deg);
+    }
+    48% {
+      transform: translate(2.5px, -0.5px) rotate(0.5deg);
+    }
+    50% {
+      transform: translate(-1.5px, 1.5px) rotate(0.5deg);
+    }
+    52% {
+      transform: translate(-0.5px, 1.5px) rotate(0.5deg);
+    }
+    54% {
+      transform: translate(-1.5px, 1.5px) rotate(0.5deg);
+    }
+    56% {
+      transform: translate(0.5px, 2.5px) rotate(1.5deg);
+    }
+    58% {
+      transform: translate(2.5px, 2.5px) rotate(0.5deg);
+    }
+    60% {
+      transform: translate(2.5px, -1.5px) rotate(1.5deg);
+    }
+    62% {
+      transform: translate(-1.5px, 0.5px) rotate(1.5deg);
+    }
+    64% {
+      transform: translate(-1.5px, 1.5px) rotate(1.5deg);
+    }
+    66% {
+      transform: translate(0.5px, 2.5px) rotate(1.5deg);
+    }
+    68% {
+      transform: translate(2.5px, -1.5px) rotate(1.5deg);
+    }
+    70% {
+      transform: translate(2.5px, 2.5px) rotate(0.5deg);
+    }
+    72% {
+      transform: translate(-0.5px, -1.5px) rotate(1.5deg);
+    }
+    74% {
+      transform: translate(-1.5px, 2.5px) rotate(1.5deg);
+    }
+    76% {
+      transform: translate(-1.5px, 2.5px) rotate(1.5deg);
+    }
+    78% {
+      transform: translate(-1.5px, 2.5px) rotate(0.5deg);
+    }
+    80% {
+      transform: translate(-1.5px, 0.5px) rotate(-0.5deg);
+    }
+    82% {
+      transform: translate(-1.5px, 0.5px) rotate(-0.5deg);
+    }
+    84% {
+      transform: translate(-0.5px, 0.5px) rotate(1.5deg);
+    }
+    86% {
+      transform: translate(2.5px, 1.5px) rotate(0.5deg);
+    }
+    88% {
+      transform: translate(-1.5px, 0.5px) rotate(1.5deg);
+    }
+    90% {
+      transform: translate(-1.5px, -0.5px) rotate(-0.5deg);
+    }
+    92% {
+      transform: translate(-1.5px, -1.5px) rotate(1.5deg);
+    }
+    94% {
+      transform: translate(0.5px, 0.5px) rotate(-0.5deg);
+    }
+    96% {
+      transform: translate(2.5px, -0.5px) rotate(-0.5deg);
+    }
+    98% {
+      transform: translate(-1.5px, -1.5px) rotate(-0.5deg);
+    }
+    0%,
+    100% {
+      transform: translate(0, 0) rotate(0);
+    }
+  }
+
+  @font-face {
+    font-family: "Flat-UI-Icons";
+    src: url("~assets/font/flat-ui-icons-regular.eot");
+    src: url("~assets/font/flat-ui-icons-regular.eot?#iefix") format("embedded-opentype"),
+    url("~assets/font/flat-ui-icons-regular.woff") format("woff"),
+    url("~assets/font/flat-ui-icons-regular.ttf") format("truetype"),
+    url("~assets/font/flat-ui-icons-regular.svg#flat-ui-icons-regular") format("svg");
+  }
+
+  [class^="fui-"],
+  [class*="fui-"] {
+    font-family: "Flat-UI-Icons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .fui-cross:before {
+    content: "\e609";
+  }
+
+  .fui-info-circle:before {
+    content: "\e60f";
+  }
+
+  .fui-photo:before {
+    content: "\e62a";
+  }
+
+  .fui-eye:before {
+    content: "\e62c";
+  }
+
+  .fui-chat:before {
+    content: "\e62d";
+  }
+
+  .fui-home:before {
+    content: "\e62e";
+  }
+
+  .fui-user:before {
+    content: "\e631";
+  }
+</style>
 

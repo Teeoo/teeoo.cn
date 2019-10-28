@@ -36,6 +36,7 @@
           :loading="$apollo.loading"
         >
           <v-img
+            id="article_list_img"
             class="white--text align-end"
             height="220px"
             lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"

@@ -1,4 +1,5 @@
 require(`dotenv`).config()
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'universal',
@@ -45,7 +46,15 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~plugins/filters.js'
+    '~plugins/filters.js',
+    {
+      src: '~/plugins/live2d/live2d.js',
+      ssr: false
+    },
+    {
+      src: '~/plugins/live2d/waifu.js',
+      ssr: false
+    }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -100,6 +109,14 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery'",
+        "window.$": "jquery"
+      })
+    ],
   }
 }
