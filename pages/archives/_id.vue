@@ -14,7 +14,7 @@
         :loading="this.$apollo.loading"
         type="card-avatar, article,article"
       >
-        <v-card :loading="this.$apollo.loading" flat class="article">
+        <v-card :loading="this.$apollo.loading" flat class="markdown">
           <v-img
             class="white--text align-end"
             height="220px"
@@ -28,6 +28,9 @@
           </v-img>
           <v-card-text v-if="data" v-html="this.data.html">
           </v-card-text>
+          <v-card-text>
+            <pre class="language-javascript line-numbers"><code>var foo = 'bar';</code></pre>
+          </v-card-text>
           <v-card-subtitle class="text-center">
             <blockquote>
               <div> 本文链接：<a :href="url">{{url}}</a>
@@ -35,7 +38,6 @@
                              target="_blank" rel="noopener">CC BY-NC-SA 3.0 Unported</a> 协议进行许可
               </div>
             </blockquote>
-
           </v-card-subtitle>
         </v-card>
       </v-article-details>
@@ -45,6 +47,23 @@
 
 <script>
   import gql from 'graphql-tag'
+  import Prism from 'prismjs'
+  import 'prismjs/components/prism-javascript'
+  import 'prismjs/themes/prism-okaidia.css'
+  import 'prismjs/plugins/line-numbers/prism-line-numbers'
+  import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+  import 'prismjs/plugins/show-language/prism-show-language.min'
+  import 'prismjs/plugins/command-line/prism-command-line'
+  import 'prismjs/plugins/command-line/prism-command-line.css'
+  import 'prismjs/plugins/toolbar/prism-toolbar'
+  import 'prismjs/plugins/toolbar/prism-toolbar.css'
+  import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
+  // import 'prismjs/plugins/previewers/prism-previewers.css'
+  // import 'prismjs/plugins/previewers/prism-previewers.min'
+  import 'prismjs/plugins/command-line/prism-command-line.css'
+  import 'prismjs/plugins/command-line/prism-command-line.min'
+  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
+  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.min'
 
   export default {
     head() {
@@ -103,6 +122,9 @@
           },
           watchLoading(isLoading, countModifier) {
             // console.info(isLoading, countModifier)
+            if (isLoading && this.data) {
+              this.load()
+            }
           },
           result({ data, loading, networkStatus }) {
             // console.log({ data, loading, networkStatus })
@@ -129,11 +151,20 @@
         this.data = val
       }
     },
+    methods: {
+      load() {
+        Prism.highlightAll()
+      }
+    },
     created() {
       if (process.browser) {
         this.url = `${window.location.href}`
       }
       this.$store.commit('toggle', { qrcode: true })
+    },
+    mounted() {
+    },
+    updated() {
     },
     destroyed() {
       this.$store.commit('toc/add', { IsToc: false, data: {} })
@@ -142,20 +173,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .source {
-    position: absolute;
-    background-color: #6b69d6;
-    border-color: #6b69d6;
-    top: -8px;
-    left: -28px;
-    display: block;
-    width: 80px;
-    height: 42px;
-    line-height: 58px;
-    transform: rotate(-45deg);
-    text-align: center;
-    font-size: 12px;
-  }
-</style>

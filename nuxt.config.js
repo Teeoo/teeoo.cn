@@ -1,5 +1,5 @@
 require(`dotenv`).config()
-const webpack = require('webpack');
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'universal',
@@ -39,8 +39,10 @@ module.exports = {
    ** Global CSS
    */
   css: [
+    '@/assets/reset.styl',
+    '@/assets/live2d.styl',
     '@/assets/main.styl',
-    '@/assets/main.css'
+    '@/assets/markdown.styl'
   ],
   /*
    ** Plugins to load before mounting the App
@@ -110,13 +112,15 @@ module.exports = {
      */
     extend(config, ctx) {
     },
+    babel: {
+    },
     plugins: [
       new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "window.jQuery": "jquery'",
-        "window.$": "jquery"
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery\'',
+        'window.$': 'jquery'
       })
-    ],
+    ]
   }
 }

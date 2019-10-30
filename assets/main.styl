@@ -1,0 +1,51 @@
+::-webkit-scrollbar
+  width .5rem
+  height .5rem
+  background hsla(0, 0%, 100%, .6)
+::-webkit-scrollbar-thumb
+  background-color rgba(95, 95, 95, .4)
+  transition all .2s
+  border-radius .5rem
+  &:hover
+    background-color rgba(0, 0, 0, 0.4)
+.article_list
+  &:after
+    position absolute
+    bottom -1px
+    left 50%
+    width 150px
+    margin-left -75px
+    content ""
+    border-bottom 2px solid #DDD
+.datecircle
+  background-color #6b69d6
+  border-color #6b69d6
+  position absolute
+  height 60px
+  width 60px
+  border-radius 100%
+  left -35px
+  top -25px
+  color #fff
+  padding-top 10px
+.month
+  text-align center
+  display block
+.day
+  display block
+  text-align center
+  font-weight 700
+  margin-top 3px
+.source
+  position absolute
+  background-color #6b69d6
+  border-color #6b69d6
+  top -8px
+  left -28px
+  display block
+  width 80px
+  height 42px
+  line-height 58px
+  transform rotate(-45deg)
+  text-align center
+  font-size 12px
