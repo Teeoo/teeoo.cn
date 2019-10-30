@@ -22,14 +22,11 @@
           ><span class="source">
                           原创
                         </span>
-            <v-card-title v-if="data">
-              {{this.data.title}}
+            <v-card-title v-if="ArticleById">
+              {{this.ArticleById.title}}
             </v-card-title>
           </v-img>
-          <v-card-text v-if="data" v-html="this.data.html">
-          </v-card-text>
-          <v-card-text>
-            <pre class="language-javascript line-numbers"><code>var foo = 'bar';</code></pre>
+          <v-card-text v-if="ArticleById" v-html="this.ArticleById.html">
           </v-card-text>
           <v-card-subtitle class="text-center">
             <blockquote>
@@ -91,7 +88,7 @@
     apollo: {
       ArticleById() {
         return {
-          prefetch: true,
+          prefetch: false,
           query: gql`
           query($id:String!){
              ArticleById(id:$id) {
@@ -122,9 +119,6 @@
           },
           watchLoading(isLoading, countModifier) {
             // console.info(isLoading, countModifier)
-            if (isLoading && this.data) {
-              this.load()
-            }
           },
           result({ data, loading, networkStatus }) {
             // console.log({ data, loading, networkStatus })
@@ -143,18 +137,11 @@
     data() {
       return {
         url: ``,
-        data: undefined
       }
     },
     watch: {
-      ArticleById(val) {
-        this.data = val
-      }
     },
     methods: {
-      load() {
-        Prism.highlightAll()
-      }
     },
     created() {
       if (process.browser) {
@@ -163,8 +150,10 @@
       this.$store.commit('toggle', { qrcode: true })
     },
     mounted() {
+      Prism.highlightAll()
     },
     updated() {
+      Prism.highlightAll()
     },
     destroyed() {
       this.$store.commit('toc/add', { IsToc: false, data: {} })

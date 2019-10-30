@@ -1,13 +1,5 @@
 <template>
-  <v-app>
-    <v-content>
-      <v-container fluid>
-        <transition name="scroll-y-transition">
-          <nuxt/>
-        </transition>
-      </v-container>
-    </v-content>
-  </v-app>
+  <nuxt/>
 </template>
 
 <script>

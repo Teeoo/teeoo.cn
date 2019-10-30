@@ -1,25 +1,67 @@
 <template>
-  <v-container fluid fill-height>
-    <v-row>
-      <v-col cols="12">
+  <v-app id="inspire">
+    <v-content>
+      <v-container
+        class="fill-height"
+        fluid
+      >
         <v-row
-          justify="center"
           align="center"
+          justify="center"
         >
-          <h1 class="display-2 primary--text">404</h1>
-          <p>404</p>
-          <v-btn
-            to="/dashboard"
-            color="primary"
-          >000</v-btn>
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
+            <v-card flat >
+              <v-toolbar
+                color="primary"
+                dark
+                flat
+              >
+                <v-toolbar-title>404</v-toolbar-title>
+                <v-spacer/>
+              </v-toolbar>
+              <v-card-text>
+                <pre>
+                  // 404 page not found.
+                  if (!found) {
+                    throw ("未找到页面，返回首页");
+                  }
+                </pre>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer/>
+                <v-btn to="/" text color="primary">返回首页</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
         </v-row>
-      </v-col>
-    </v-row>
-
-  </v-container>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
+  import Prism from 'prismjs'
+  import 'prismjs/components/prism-javascript'
+  import 'prismjs/themes/prism-okaidia.css'
+  import 'prismjs/plugins/line-numbers/prism-line-numbers'
+  import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
+  import 'prismjs/plugins/show-language/prism-show-language.min'
+  import 'prismjs/plugins/command-line/prism-command-line'
+  import 'prismjs/plugins/command-line/prism-command-line.css'
+  import 'prismjs/plugins/toolbar/prism-toolbar'
+  import 'prismjs/plugins/toolbar/prism-toolbar.css'
+  import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
+  // import 'prismjs/plugins/previewers/prism-previewers.css'
+  // import 'prismjs/plugins/previewers/prism-previewers.min'
+  import 'prismjs/plugins/command-line/prism-command-line.css'
+  import 'prismjs/plugins/command-line/prism-command-line.min'
+  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
+  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.min'
+
   export default {
     layout: 'fullscreen',
     props: {
@@ -37,11 +79,17 @@
     },
     data() {
       return {
-        pageNotFound: '',
+        pageNotFound: '404 Not Found',
         otherError: 'An error occurred'
       }
     },
+    methods: {
+      to() {
+        this.$router.push('/')
+      }
+    },
     mounted() {
+      Prism.highlightAll()
     }
   }
 </script>
