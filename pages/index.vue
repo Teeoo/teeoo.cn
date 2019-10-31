@@ -46,7 +46,7 @@
             <span class="source d-lg-none">
             原创
           </span>
-            <v-card-title>
+            <v-card-title style="background:rgba(0, 0, 0, 0.4);">
               <v-chip
                 v-if="data.isTop"
                 color="secondary"

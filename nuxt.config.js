@@ -50,6 +50,10 @@ module.exports = {
   plugins: [
     '~plugins/filters.js',
     {
+      src: '~/plugins/viewer.js',
+      ssr: false
+    },
+    {
       src: '~/plugins/live2d/live2d.js',
       ssr: false
     },
