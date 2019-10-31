@@ -78,7 +78,6 @@
         <v-card
           flat
           class="mt-4"
-          v-viewer="{movable: false}"
         >
           <v-subheader>赏赞支持
           </v-subheader>
