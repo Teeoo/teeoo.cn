@@ -14,7 +14,11 @@
         :loading="this.$apollo.loading"
         type="card-avatar, article,article"
       >
-        <v-card :loading="this.$apollo.loading" flat class="markdown">
+        <v-card
+          :loading="this.$apollo.loading"
+          flat
+          class="markdown"
+        >
           <div v-if="ArticleById">
             <v-img
               lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
@@ -22,7 +26,10 @@
               height="300px"
               src="https://api.ixiaowai.cn/api/api.php"
             ><span class="source">原创</span>
-              <v-card-title class="text-center" style="background:rgba(0, 0, 0, 0.4);">
+              <v-card-title
+                class="text-center"
+                style="background:rgba(0, 0, 0, 0.4);"
+              >
                 {{this.ArticleById.title}}
               </v-card-title>
             </v-img>
@@ -38,8 +45,11 @@
                   <br>
                   <strong>
                     本文采用
-                    <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh"
-                       target="_blank" rel="noopener">CC BY-NC-SA 3.0 Unported</a> 协议进行许可
+                    <a
+                      href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh"
+                      target="_blank"
+                      rel="noopener"
+                    >CC BY-NC-SA 3.0 Unported</a> 协议进行许可
                   </strong>
                 </p>
               </blockquote>
@@ -49,7 +59,10 @@
             </v-card-subtitle>
           </div>
         </v-card>
-        <v-card flat class="mt-4">
+        <v-card
+          flat
+          class="mt-4"
+        >
           <v-menu transition="scale-transition">
             <template v-slot:activator="{ on }">
               <v-btn
@@ -64,7 +77,7 @@
               </v-btn>
             </template>
             <v-list>
-              <v-list-item @click="share_img">
+              <v-list-item>
                 <v-list-item-icon>
                   <v-icon>collections</v-icon>
                 </v-list-item-icon>
@@ -82,29 +95,42 @@
           <v-subheader>赏赞支持
           </v-subheader>
           <v-row>
-            <v-col cols="12"
-                   md="6"
-                   xs="12"
-                   sm="12">
+            <v-col
+              cols="12"
+              md="6"
+              xs="12"
+              sm="12"
+            >
               <v-row
-                justify="center" align="center"
+                justify="center"
+                align="center"
               >
-                <v-img max-height="200" max-width="200" src="/img/1572506124831.png">
+                <v-img
+                  max-height="200"
+                  max-width="200"
+                  src="/img/1572506124831.png"
+                >
                   <div class="text-center">微信</div>
                 </v-img>
               </v-row>
             </v-col>
-            <v-col cols="12"
-                   md="6"
-                   xs="12"
-                   sm="12">
+            <v-col
+              cols="12"
+              md="6"
+              xs="12"
+              sm="12"
+            >
               <v-row
-                justify="center" align="center"
+                justify="center"
+                align="center"
               >
-                <v-img max-height="200" max-width="200" src="/img/1572506124832.jpg">
+                <v-img
+                  max-height="200"
+                  max-width="200"
+                  src="/img/1572506124832.jpg"
+                >
                 </v-img>
               </v-row>
-
             </v-col>
           </v-row>
         </v-card>
@@ -123,17 +149,13 @@
           <v-card-text>
             <v-form>
               <v-row>
-                <v-col
-                  cols="12"
-                >
+                <v-col cols="12">
                   <v-textarea
                     prepend-icon="textsms"
                     label="快来写下你的骚操作吧"
                   ></v-textarea>
                 </v-col>
-                <v-col
-                  cols="12"
-                >
+                <v-col cols="12">
                   <v-text-field
                     prepend-icon="account_circle"
                     label="昵称"
@@ -181,7 +203,9 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-        <v-card flat class="mt-4"
+        <v-card
+          flat
+          class="mt-4"
         >
           <v-list-item>
             <v-list-item-avatar color="grey"></v-list-item-avatar>
@@ -221,13 +245,14 @@
                   Read
                 </v-btn>
               </v-card-actions>
-            </v-card-text><v-list-item>
-            <v-list-item-avatar color="grey"></v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title class="headline">MisakaTech</v-list-item-title>
-              <v-list-item-subtitle>2016-01-07 02:54</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+            </v-card-text>
+            <v-list-item>
+              <v-list-item-avatar color="grey"></v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="headline">MisakaTech</v-list-item-title>
+                <v-list-item-subtitle>2016-01-07 02:54</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
             <v-card-text>
               Visit ten places on our planet that are undergoing the biggest changes today.
               <v-card-actions>
@@ -293,7 +318,11 @@
       return {
         title: this.$store.state.title,
         meta: [
-          { hid: 'description', name: 'description', content: '生如夏花之绚烂，死如秋叶之静美' }
+          {
+            hid: 'description',
+            name: 'description',
+            content: '生如夏花之绚烂，死如秋叶之静美'
+          }
         ]
       }
     },
@@ -301,13 +330,17 @@
       VArticleDetails: {
         functional: true,
         render(h, { data, props, children }) {
-          return h('v-skeleton-loader', {
-            ...data,
-            props: {
-              boilerplate: false,
-              ...props
-            }
-          }, children)
+          return h(
+            'v-skeleton-loader',
+            {
+              ...data,
+              props: {
+                boilerplate: false,
+                ...props
+              }
+            },
+            children
+          )
         }
       }
     },
@@ -316,36 +349,36 @@
         return {
           prefetch: true,
           query: gql`
-          query($id:String!){
-             ArticleById(id:$id) {
-                  id
-                  order
-                  desc
-                  title
-                  slug
-                  cover
-                  summary
-                  text
-                  html
-                  toc
-                  template
-                  type
-                  status
-                  publish
-                  password
-                  allowComment
-                  isTop
-                  updatedAt
-                  author{
-                    avatarUrl
-                    nickname
-                  }
-                  tags{
-                     id
-                     label
-                  }
-             }
-        }
+          query($id: String!) {
+            ArticleById(id: $id) {
+              id
+              order
+              desc
+              title
+              slug
+              cover
+              summary
+              text
+              html
+              toc
+              template
+              type
+              status
+              publish
+              password
+              allowComment
+              isTop
+              updatedAt
+              author {
+                avatarUrl
+                nickname
+              }
+              tags {
+                id
+                label
+              }
+            }
+          }
         `,
           variables() {
             return {
@@ -358,10 +391,12 @@
           result({ data, loading, networkStatus }) {
             // console.log({ data, loading, networkStatus })
             if (this.ArticleById && networkStatus === 7) {
-              const toc = this.ArticleById.toc ? { IsToc: true, data: this.ArticleById.toc } : {
-                IsToc: false,
-                data: {}
-              }
+              const toc = this.ArticleById.toc
+                ? { IsToc: true, data: this.ArticleById.toc }
+                : {
+                  IsToc: false,
+                  data: {}
+                }
               this.$store.commit('toc/add', toc)
               this.$store.commit('setTitle', { title: this.ArticleById.title })
             }
@@ -372,18 +407,12 @@
     data() {
       return {
         url: ``,
-        links: false
+        links: false,
+        imageUrl: require('../../static/icon.png')
       }
     },
     watch: {},
     methods: {
-      share_img() {
-        let html2canvas = null
-        if (process.browser) {
-          html2canvas = require('html2canvas')
-          //  TODO:
-        }
-      },
       qrcode(text) {
         let QRCode = null
         if (process.browser) {
@@ -396,7 +425,7 @@
       if (process.browser) {
         this.url = `${window.location.href}`
       }
-      this.$store.commit('toggle', { qrcode: true })
+      this.$store.commit('toggle', { qrcode: true, qrcodeUrl: this.url })
     },
     mounted() {
       Prism.highlightAll()
@@ -406,7 +435,7 @@
     },
     destroyed() {
       this.$store.commit('toc/add', { IsToc: false, data: {} })
-      this.$store.commit('toggle', { qrcode: false })
+      this.$store.commit('toggle', { qrcode: false, qrcodeUrl: '' })
       this.$store.commit('setTitle', { title: 'Mr. Lee\'s Blog' })
     }
   }

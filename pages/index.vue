@@ -4,9 +4,7 @@
     justify="center"
     align="center"
   >
-    <v-snackbar
-      v-model="snackbar"
-    >
+    <v-snackbar v-model="snackbar">
       假的,没数据因为我还没写完!!
       <v-btn
         color="pink"
@@ -27,9 +25,9 @@
         class="mt-4"
         :loading="$apollo.loading"
         type="card-avatar"
-        v-for="data in article" :key="data.id"
+        v-for="data in article"
+        :key="data.id"
       >
-
         <v-card
           class="article_list"
           flat
@@ -44,8 +42,8 @@
             src="https://api.ixiaowai.cn/api/api.php"
           >
             <span class="source d-lg-none">
-            原创
-          </span>
+              原创
+            </span>
             <v-card-title style="background:rgba(0, 0, 0, 0.4);">
               <v-chip
                 v-if="data.isTop"
@@ -61,10 +59,16 @@
             </v-card-title>
           </v-img>
           <v-card-subtitle>
-            <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
+            <!-- <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论 -->
           </v-card-subtitle>
           <v-card-text>{{ data.html | summary }} ···
-            <v-btn :to="`archives/${data.id}`" color="deep-purple accent-4" small text>阅读全文</v-btn>
+            <v-btn
+              :to="`archives/${data.id}`"
+              color="deep-purple accent-4"
+              small
+              text
+            >阅读全文
+            </v-btn>
           </v-card-text>
         </v-card>
         <span class="datecircle d-none d-lg-block d-print-block">
@@ -80,7 +84,13 @@
       xs="12"
     >
       <div class="text-center mt-8">
-        <v-btn rounded color="primary" dark @click="snackbar=true">加载更多</v-btn>
+        <v-btn
+          rounded
+          color="primary"
+          dark
+          @click="snackbar=true"
+        >加载更多
+        </v-btn>
       </div>
     </v-col>
   </v-row>
@@ -106,7 +116,7 @@
               updatedAt
               title
               isTop
-              category{
+              category {
                 label
               }
             }

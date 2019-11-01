@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <!-- 搜索 -->
     <v-dialog
       v-model="dialog"
       open-on-hover
@@ -20,201 +20,9 @@
         </v-toolbar>
       </v-card>
     </v-dialog>
-    <v-navigation-drawer
-      app
-      floating
-      temporary
-      v-model="drawer"
-      :mini-variant.sync="mini"
-    >
-      <v-list
-        dense
-        nav
-        rounded
-      >
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-img src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"></v-img>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>lee</v-list-item-title>
-            <v-list-item-subtitle>
-              oo.ee.ooe.teeoo@gmail.com
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-btn
-            icon
-            @click.stop="mini = !mini"
-            small
-          >
-            <v-icon>chevron_left</v-icon>
-          </v-btn>
-        </v-list-item>
-        <div v-show="!IsToc">
-          <v-subheader>导航</v-subheader>
-          <v-list-item
-            :key='index'
-            v-for="(data,index) in nav"
-            link
-            :to="data.link"
-          >
-            <v-list-item-icon>
-              <v-icon>{{data.icon}}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{data.text}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-skeleton-loader
-            :loading="this.$apollo.loading"
-            type="list-item-two-line"
-          >
-            <v-subheader v-show="!$apollo.loading && pages.length">组成</v-subheader>
-            <v-list-item
-              v-show="!$apollo.loading && pages.length"
-              :key='data.id'
-              v-for="data in pages"
-              link
-              :to="data.id"
-            >
-              <v-list-item-icon>
-                <v-icon
-                  v-for="icon in data.fields"
-                  :key="icon.id"
-                  v-show="icon.name==='icon'"
-                >{{icon.value}}
-                </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>{{data.title}}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-skeleton-loader>
-        </div>
-        <v-tabs
-          fixed-tabs
-          v-model="tabs"
-          v-show="IsToc"
-        >
-          <v-tab
-            nuxt
-            v-for="(mune,index) in munes"
-            :key="index"
-          >
-            {{ mune }}
-          </v-tab>
-          <v-tabs-items v-model="tabs">
-            <v-tab-item :key="0">
-              <v-subheader>导航</v-subheader>
-              <v-list-item
-                :key='index'
-                v-for="(data,index) in nav"
-                link
-                :to="data.link"
-              >
-                <v-list-item-icon>
-                  <v-icon>{{data.icon}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>{{data.text}}</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-skeleton-loader
-                :loading="this.$apollo.loading"
-                type="list-item-two-line"
-              >
-                <v-subheader v-show="!$apollo.loading && pages.length">组成</v-subheader>
-                <v-list-item
-                  v-show="!$apollo.loading && pages.length"
-                  :key='data.id'
-                  v-for="data in pages"
-                  link
-                  :to="data.id"
-                >
-                  <v-list-item-icon>
-                    <v-icon
-                      v-for="icon in data.fields"
-                      :key="icon.id"
-                      v-show="icon.name==='icon'"
-                    >{{icon.value}}
-                    </v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>{{data.title}}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-skeleton-loader>
-            </v-tab-item>
-            <v-tab-item :key="1">
-              <v-list
-                nav
-                dense
-              >
-                <v-list-item-group color="primary">
-                  <v-list-item
-                    v-for="(item, i) in toc"
-                    :key="i"
-                    nuxt
-                    :to="{hash: '#'+item.anchor}"
-                  >
-                    <v-list-item-icon>
-                      <v-icon>{{i}}</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title v-text="item.content"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-tab-item>
-          </v-tabs-items>
-        </v-tabs>
-      </v-list>
-      <template v-slot:append>
-        <v-row>
-          <v-col
-            class="text-center"
-            cols="4"
-          >
-            <v-btn
-              small
-              text
-            >
-              <v-icon>
-                settings
-              </v-icon>
-            </v-btn>
-          </v-col>
-          <v-col
-            class="text-center"
-            cols="4"
-          >
-            <v-btn
-              small
-              text
-            >
-              <v-icon>
-                rss_feed
-              </v-icon>
-            </v-btn>
-          </v-col>
-          <v-col
-            class="text-center"
-            cols="4"
-          >
-            <v-btn
-              small
-              text
-              @click="toggle"
-            >
-              <v-icon>
-                {{isFullscreen ? 'fullscreen_exit':'fullscreen'}}
-              </v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </template>
-    </v-navigation-drawer>
+    <!-- 左侧菜单 -->
+    <layout-drawer v-model="drawer"/>
+    <!-- bar -->
     <v-app-bar
       dark
       app
@@ -223,6 +31,7 @@
       prominent
       color="deep-purple accent-4"
     >
+
       <v-app-bar-nav-icon id="drawer" @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         {{this.$store.state.title}}
@@ -231,20 +40,14 @@
         <v-subheader>生如夏花之绚烂，死如秋叶之静美</v-subheader>
       </template>
       <v-spacer></v-spacer>
-      <v-btn
-        id="qrcode"
-        icon
-        v-show="this.$store.state.qrcode"
-      >
-        <v-icon>cast</v-icon>
-      </v-btn>
       <v-btn icon id="search">
         <v-icon @click="dialog=true">search</v-icon>
       </v-btn>
     </v-app-bar>
     <v-content>
       <v-container fluid>
-        <transition name="scroll-y-transition">
+        <transition name="fade-transform" mode="out-in">
+          <div v-if="$nuxt.isOffline">You are offline</div>
           <nuxt/>
         </transition>
       </v-container>
@@ -264,45 +67,16 @@
         </v-btn>
       </v-fab-transition>
     </v-content>
-    <v-footer>
-      <v-row
-        justify="center"
-        no-gutters
-      >
-        <v-col
-          class="py-4 text-center"
-          cols="12"
-          sm="6"
-          md="6"
-          xs="12"
-        >
-          &copy; {{ new Date().getFullYear() }} · <strong>lee</strong>
-          蜀ICP备18011318号-1
-        </v-col>
-        <v-col
-          class="py-4 text-center d-none d-lg-block d-print-block"
-          cols="12"
-          sm="6"
-          md="6"
-          xs="12"
-        >
-          <v-icon>home</v-icon>
-          <v-icon>email</v-icon>
-          <v-icon>rss_feed</v-icon>
-        </v-col>
-      </v-row>
-    </v-footer>
-    <live2d class="d-none d-lg-block d-print-block"></live2d>
+    <!-- footer -->
+    <layout-footer/>
   </v-app>
 </template>
 
 <script>
-  import gql from 'graphql-tag'
-  import { mapState } from 'vuex'
+  import drawer from '../components/layout/drawer/drawer'
+  import footer from '../components/layout/footer/footer'
   import Favico from 'favico.js'
-  import screenfull from 'screenfull'
-  import live2d from '~/components/Live2d/Live2d.vue'
-  import anime from 'animejs'
+  import { mapState } from 'vuex'
 
   export default {
     head() {
@@ -318,71 +92,22 @@
       }
     },
     components: {
-      live2d
-    },
-    apollo: {
-      pages: {
-        query: gql`
-        query {
-          pages {
-            id
-            title
-            slug
-            template
-            fields {
-              id
-              name
-              value
-            }
-          }
-        }
-      `,
-        result({ data, loading, networkStatus }) {
-          // console.log({ data, loading, networkStatus })
-        }
-      }
+      'layout-footer': footer,
+      'layout-drawer': drawer
     },
     data() {
       return {
-        isFullscreen: false,
         backTopShow: false,
         rollTimer: null,
-        tabs: 1,
         dialog: false,
-        mini: false,
-        drawer: false,
-        nav: [
-          { icon: 'home', text: '首页', link: '/' },
-          { icon: 'bookmark', text: '分类', link: '/category' },
-          { icon: 'local_offer', text: '标签', link: '/tags' }
-        ],
-        munes: ['菜单', '目录']
+        drawer: false
       }
     },
     computed: {
-      ...mapState({
-        IsToc: state => state.toc.IsToc,
-        toc: state => state.toc.data
-      })
+      ...mapState({})
     },
+    watch: {},
     methods: {
-      toggle() {
-        if (screenfull.isEnabled) {
-          screenfull.toggle()
-          screenfull.on('change', () => {
-            this.isFullscreen = screenfull.isFullscreen
-            console.log(
-              'Am I fullscreen?',
-              screenfull.isFullscreen ? 'Yes' : 'No'
-            )
-          })
-          screenfull.on('error', event => {
-            console.error('Failed to enable fullscreen', event)
-          })
-        } else {
-          // Ignore or do something else
-        }
-      },
       handleScroll() {
         this.backTopShow =
           document.documentElement.scrollTop + document.body.scrollTop > 100

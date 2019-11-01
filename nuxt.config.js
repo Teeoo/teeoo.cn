@@ -9,9 +9,10 @@ module.exports = {
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
-    meta: [{
-      charset: 'utf-8'
-    },
+    meta: [
+      {
+        charset: 'utf-8'
+      },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
@@ -22,11 +23,13 @@ module.exports = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{
-      rel: 'icon',
-      type: 'image/x-icon',
-      href: '/favicon.ico'
-    }]
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -53,38 +56,47 @@ module.exports = {
       src: '~/plugins/viewer.js',
       ssr: false
     },
-    {
-      src: '~/plugins/live2d/live2d.js',
-      ssr: false
-    },
-    {
-      src: '~/plugins/live2d/waifu.js',
-      ssr: false
-    }
+    { src: '@/plugins/qrcode.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
-    ['@nuxtjs/vuetify', {
-      customVariables: ['~/assets/variables.scss'],
-      optionsPath: './config/vuetify.options.js'
-    }],
+    [
+      '@nuxtjs/vuetify',
+      {
+        customVariables: ['~/assets/variables.scss'],
+        optionsPath: './config/vuetify.options.js'
+      }
+    ],
     ['@nuxtjs/dotenv', {}]
   ],
+  /*
+   ** router
+   */
+  router: {
+    scrollBehavior: function (to, from, savedPosition) {
+      return { x: 0, y: 0 }
+    }
+  },
   /*
    ** Nuxt.js modules
    */
   modules: [
-    ['@nuxtjs/pwa', {
-      icon: true, meta: true, manifest: {
-        name: `Lee\'s Blog`,
-        short_name: `lee的小窝`,
-        description: `生如夏花之绚烂，死如秋叶之静美`,
-        theme_color: `#6200ea`,
-        display: `standalone`
+    [
+      '@nuxtjs/pwa',
+      {
+        icon: true,
+        meta: true,
+        manifest: {
+          name: `Lee\'s Blog`,
+          short_name: `lee的小窝`,
+          description: `生如夏花之绚烂，死如秋叶之静美`,
+          theme_color: `#6200ea`,
+          display: `standalone`
+        }
       }
-    }],
+    ],
     '@nuxtjs/apollo'
   ],
   /**
@@ -116,8 +128,7 @@ module.exports = {
      */
     extend(config, ctx) {
     },
-    babel: {
-    },
+    babel: {},
     plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',

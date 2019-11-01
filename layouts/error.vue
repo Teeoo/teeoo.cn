@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-    <v-content>
       <v-container
         class="fill-height"
         fluid
@@ -14,22 +13,24 @@
             sm="8"
             md="4"
           >
-            <v-card flat >
+            <v-card flat>
               <v-toolbar
                 color="primary"
                 dark
                 flat
               >
-                <v-toolbar-title>404</v-toolbar-title>
+                <v-toolbar-title>// 404 page not found.</v-toolbar-title>
                 <v-spacer/>
               </v-toolbar>
               <v-card-text>
-                <pre>
-                  // 404 page not found.
-                  if (!found) {
-                    throw ("未找到页面，返回首页");
-                  }
-                </pre>
+                  <pre class=" language-javascript">
+                    <code class=" language-javascript" style="display: contents;">
+// 404 page not found.
+if (!found) {
+  throw ("未找到页面，返回首页");
+}
+                    </code>
+                  </pre>
               </v-card-text>
               <v-card-actions>
                 <v-spacer/>
@@ -39,7 +40,6 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
   </v-app>
 </template>
 
@@ -55,15 +55,8 @@
   import 'prismjs/plugins/toolbar/prism-toolbar'
   import 'prismjs/plugins/toolbar/prism-toolbar.css'
   import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
-  // import 'prismjs/plugins/previewers/prism-previewers.css'
-  // import 'prismjs/plugins/previewers/prism-previewers.min'
-  import 'prismjs/plugins/command-line/prism-command-line.css'
-  import 'prismjs/plugins/command-line/prism-command-line.min'
-  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
-  import 'prismjs/plugins/diff-highlight/prism-diff-highlight.min'
-
   export default {
-    layout: 'fullscreen',
+    layout: 'empty',
     props: {
       error: {
         type: Object,
@@ -82,14 +75,9 @@
         pageNotFound: '404 Not Found',
         otherError: 'An error occurred'
       }
-    },
-    methods: {
-      to() {
-        this.$router.push('/')
-      }
-    },
-    mounted() {
-      Prism.highlightAll()
     }
   }
 </script>
+
+<style scoped>
+</style>
