@@ -39,7 +39,7 @@
             height="220px"
             lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
             aspect-ratio="1"
-            src="https://api.ixiaowai.cn/api/api.php"
+            :src="data.cover?data.cover:'https://api.ixiaowai.cn/api/api.php'"
           >
             <span class="source d-lg-none">
               原创
@@ -97,15 +97,15 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
-  import { mapMutations } from 'vuex'
+import gql from 'graphql-tag'
+import { mapMutations } from 'vuex'
 
-  export default {
-    apollo: {
-      article() {
-        return {
-          prefetch: true,
-          query: gql`
+export default {
+  apollo: {
+    article() {
+      return {
+        prefetch: true,
+        query: gql`
           query {
             article {
               id
@@ -116,38 +116,39 @@
               updatedAt
               title
               isTop
+              cover
               category {
                 label
               }
             }
           }
         `,
-          watchLoading(isLoading, countModifier) {
-            // console.info(isLoading, countModifier)
-          },
-          result({ data, loading, networkStatus }) {
-            // console.info(data, loading, networkStatus)
-          }
+        watchLoading(isLoading, countModifier) {
+          // console.info(isLoading, countModifier)
+        },
+        result({ data, loading, networkStatus }) {
+          // console.info(data, loading, networkStatus)
         }
       }
+    }
+  },
+  data() {
+    return {
+      snackbar: false,
+      article: []
+    }
+  },
+  methods: {
+    getMonth(data) {
+      const date = new Date(data)
+      const month = date.getMonth()
+      return month + 1
     },
-    data() {
-      return {
-        snackbar: false,
-        article: []
-      }
-    },
-    methods: {
-      getMonth(data) {
-        const date = new Date(data)
-        const month = date.getMonth()
-        return month + 1
-      },
-      getDate(data) {
-        const date = new Date(data)
-        const m = date.getDate()
-        return m
-      }
+    getDate(data) {
+      const date = new Date(data)
+      const m = date.getDate()
+      return m
     }
   }
+}
 </script>

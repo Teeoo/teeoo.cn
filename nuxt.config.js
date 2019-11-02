@@ -72,14 +72,6 @@ module.exports = {
     ['@nuxtjs/dotenv', {}]
   ],
   /*
-   ** router
-   */
-  router: {
-    scrollBehavior: function (to, from, savedPosition) {
-      return { x: 0, y: 0 }
-    }
-  },
-  /*
    ** Nuxt.js modules
    */
   modules: [
@@ -126,14 +118,13 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
-    },
+    extend(config, ctx) {},
     babel: {},
     plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
-        'window.jQuery': 'jquery\'',
+        'window.jQuery': "jquery'",
         'window.$': 'jquery'
       })
     ]
