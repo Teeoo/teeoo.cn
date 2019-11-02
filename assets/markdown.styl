@@ -1,323 +1,163 @@
-body {
-  font-family: Helvetica, Arial, "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "tohoma,sans-serif";
-}
-
-.markdown h1 {
-  font-size: 2.2em;
-  font-weight: 700;
-  line-height: 1.1;
-  padding-top: 16px;
-  margin-bottom: 4px;
-}
-
-.markdown h2, h3, h4, h5, h6 {
-  line-height: 1.5em;
-  margin-top: 2.2em;
-  margin-bottom: 4px;
-}
-
-.markdown h2 {
-  font-size: 1.4em;
-  margin: 40px 10px 20px 0;
-  padding-left: 9px;
-  border-left: 6px solid #ff7e79;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.markdown h3 {
-  font-weight: 700;
-  font-size: 1.2em;
-  line-height: 1.4;
-  margin: 10px 0 5px;
-  padding-top: 10px;
-}
-
-.markdown h4 {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 1.1em;
-  line-height: 1.4;
-  margin: 10px 0 5px;
-  padding-top: 10px
-}
-
-.markdown h5, h6 {
-  font-size: .9em;
-}
-
-.markdown h5 {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.markdown h6 {
-  font-weight: normal;
-  color: #AAA;
-}
-.markdown a {
-  color: #8172ef !important;
-}
-.markdown>h1,
-.markdown h2,
-.markdown h3 {
-  padding: 0 10px 2px;
-  transition: border-color 0.3s !important;
-}
-.markdown>h1:hover,
-.markdown h2:hover,
-.markdown h3:hover {
-  border-color: #bbbbbb;
-}
-.markdown>h1:hover:before,
-.markdown h2:hover:before,
-.markdown h3:hover:before {
-  color: #828282;
-}
-.markdown>h1:before,
-.markdown h2:before,
-.markdown h3:before {
-  content: '# ';
-  font-weight: lighter;
-  color: #bbbbbb;
-  transition: all 0.3s;
-}
-
-.markdown img {
-  width: 100%;
-  border-radius: 5px;
-  display: block;
-  margin-bottom: 15px;
-  height: auto;
-}
-
-.markdown dl, ol, ul {
-  margin-top: 12px;
-  margin-bottom: 20px;
-  padding-left: 5%;
-  line-height: 1.8;
-}
-
-.markdown p {
-  margin: 0 0 20px;
-  padding: 0;
-  line-height: 1.8;
-}
-
-.markdown a {
-  color: #f22f27;
-  text-decoration: none;
-}
-
-.markdown a:hover {
-  color: #f55852;
-  text-decoration: underline;
-}
-
-.markdown a:focus {
-  outline-offset: -2px;
-}
-
-.markdown blockquote {
-  font-size: 1em;
-  font-style: normal;
-  padding: 30px 38px;
-  margin: 0 0 15px;
-  position: relative;
-  line-height: 1.8;
-  text-indent: 0;
-  border: none;
-  color: #888;
-  border-left: 3px solid #3b99f5;
-  transition: all 0.15s;
-}
-
-.markdown blockquote:hover {
-  border-left-width: 5px;
-}
-
-.markdown blockquote:before {
-  content: "“";
-  left: 12px;
-  top: 0;
-  color: #E0E0E0;
-  font-size: 4em;
-  font-family: Arial, serif;
-  line-height: 1em;
-  font-weight: 700;
-  position: absolute;
-}
-
-.markdown blockquote:after {
-  content: "”";
-  right: 12px;
-  bottom: -26px;
-  color: #E0E0E0;
-  font-size: 4em;
-  font-family: Arial, serif;
-  line-height: 1em;
-  font-weight: 700;
-  position: absolute;
-  bottom: -31px;
-}
-
-.markdown strong, dfn {
-  font-weight: 700;
-}
-
-.markdown em, dfn {
-  font-style: italic;
-  font-weight: 400;
-}
-
-.markdown del {
-  text-decoration: line-through;
-}
-
-.markdown pre {
-}
-
-.markdown code {
-
-}
-
-.markdown p > code {
-
-}
-
-.markdown figure {
-  margin: 1em 0;
-}
-
-.markdown figcaption {
-  font-size: 0.75em;
-  padding: 0.5em 2em;
-  margin-bottom: 2em;
-}
-
-.markdown figure img {
-  margin-bottom: 0px;
-}
-
-.markdown hr {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 0;
-  border-top: 1px solid #eee;
-}
-
-.markdown ol p, ul p {
-  margin-bottom: 0px;
-}
-
-.markdown li {
-  margin-bottom: 0.75em;
-  margin-top: 0.75em;
-}
-
-.markdown ol#footnotes {
-  font-size: 0.95em;
-  padding-top: 1em;
-  margin-top: 1em;
-  margin-left: 0;
-  border-top: 1px solid #eaeaea;
-  counter-reset: footer-counter;
-  list-style: none;
-  color: #555;
-  padding-left: 5%;
-  margin: 20px 0;
-}
-
-.markdown ol#footnotes li {
-  margin-bottom: 10px;
-  margin-left: 16px;
-  font-weight: 400;
-  line-height: 2;
-  list-style-type: none;
-}
-
-.markdown ol#footnotes li:before {
-  content: counter(footer-counter) ". ";
-  counter-increment: footer-counter;
-  font-weight: 800;
-  font-size: .95em;
-}
-.markdown a:target, ol#footnotes li:target, sup a:target {
-  animation-name: highfade;
-  animation-duration: 2s;
-  animation-iteration-count: 1;
-  animation-timing-function: ease-in-out;
-  -webkit-animation-name: highfade;
-  -webkit-animation-duration: 2s;
-  -webkit-animation-iteration-count: 1;
-  -webkit-animation-timing-function: ease-in-out;
-}
-
-.markdown a:target {
-  border: 0;
-  outline: 0;
-}
-@keyframes highfade {
-  0% {
-    background-color: transparent;
-  }
-  20% {
-    background-color: yellow;
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-
-@-webkit-keyframes highfade {
-  0% {
-    background-color: transparent;
-  }
-  20% {
-    background-color: yellow;
-  }
-  100% {
-    background-color: transparent;
-  }
-}
-@keyframes roll-in {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-@keyframes roll-out {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-@keyframes notify-show-hide {
-  0% {
-    opacity: 0;
-    transform: translate(100vw,0);
-    margin-bottom: 15px;
-  }
-  15% {
-    opacity: 1;
-    transform: translate(0,0);
-    margin-bottom: 15px;
-  }
-  85% {
-    opacity: 1;
-    transform: translate(0,0);
-    margin-bottom: 15px;
-  }
-  100% {
-    opacity: 0;
-    margin-bottom: -68px;
-  }
-}
+body
+  font-size 15px
+  font-family Helvetica, Arial, "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "tohoma,sans-serif"
+h1
+  font-size 2.2em
+  font-weight 700
+  line-height 1.1
+  padding-top 16px
+  margin-bottom 4px
+h2,
+h3,
+h4,
+h5,
+h6
+  line-height 1.5em
+  margin-top 2.2em
+  margin-bottom 4px
+h2
+  font-size 1.4em
+  margin 40px 10px 20px 0
+  padding-left 9px
+  border-left 6px solid #ff7e79
+  font-weight 700
+  line-height 1.4
+h3
+  font-weight 700
+  font-size 1.2em
+  line-height 1.4
+  margin 10px 0 5px
+  padding-top 10px
+h4
+  font-weight 700
+  text-transform uppercase
+  font-size 1.1em
+  line-height 1.4
+  margin 10px 0 5px
+  padding-top 10px
+h5,
+h6
+  font-size 0.9em
+h5
+  font-weight bold
+  text-transform uppercase
+h6
+  font-weight normal
+  color #aaa
+h1:hover,
+h2:hover,
+h3:hover
+  border-color #bbbbbb
+h1:hover:before,
+h2:hover:before,
+h3:hover:before
+  color #828282
+h1:before,
+h2:before,
+h3:before
+  content '# '
+  font-weight lighter
+  color #bbbbbb
+  transition all 0.3s
+img
+  width 100%
+  border-radius 5px
+  display block
+  margin-bottom 15px
+  height auto
+dl,
+ol,
+ul
+  margin-top 12px
+  margin-bottom 20px
+  padding-left 5%
+  line-height 1.8
+p
+  margin 0 0 20px
+  padding 0
+  line-height 1.8
+blockquote
+  font-size 1em
+  font-style normal
+  padding 30px 38px
+  margin 0 0 15px
+  position relative
+  line-height 1.8
+  text-indent 0
+  border none
+  color #888
+  border-left 3px solid #3b99f5
+  transition all 0.15s
+  &:before
+    content "“"
+    left 12px
+    top 0
+    color #e0e0e0
+    font-size 4em
+    font-family Arial, serif
+    line-height 1em
+    font-weight 700
+    position absolute
+  &:after
+    content "”"
+    right 12px
+    bottom -26px
+    color #e0e0e0
+    font-size 4em
+    font-family Arial, serif
+    line-height 1em
+    font-weight 700
+    position absolute
+  &:hover
+    border-left-width 5px
+strong,
+dfn
+  font-weight 700
+em,
+dfn
+  font-style italic
+  font-weight 400
+del
+  text-decoration line-through
+code,
+pre
+  font-family Monaco, Andale Mono, Courier New, monospace
+  font-feature-settings "calt" 1
+figure
+  margin 1em 0
+figcaption
+  font-size 0.75em
+  padding 0.5em 2em
+  margin-bottom 2em
+hr
+  margin-top 20px
+  margin-bottom 20px
+  border 0
+  border-top 1px solid #eee
+ol p,
+ul p
+  margin-bottom 0
+li
+  margin-bottom 0.75em
+  margin-top 0.75em
+  overflow hidden
+ol#footnotes
+  font-size 0.95em
+  padding-top 1em
+  border-top 1px solid #eaeaea
+  counter-reset footer-counter
+  list-style none
+  color #555
+  padding-left 5%
+  margin 20px 0
+  li
+    margin-bottom 10px
+    margin-left 16px
+    font-weight 400
+    line-height 2
+    list-style-type none
+    &:before
+      content counter(footer-counter) ". "
+      counter-increment footer-counter
+      font-weight 800
+      font-size 0.95em

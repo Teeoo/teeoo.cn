@@ -42,10 +42,7 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    '@/assets/reset.styl',
-    '@/assets/live2d.styl',
     '@/assets/main.styl',
-    '@/assets/markdown.styl'
   ],
   /*
    ** Plugins to load before mounting the App

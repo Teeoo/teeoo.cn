@@ -299,6 +299,7 @@
 </template>
 
 <script>
+import '@/assets/markdown.styl'
 import gql from 'graphql-tag'
 export default {
   head() {

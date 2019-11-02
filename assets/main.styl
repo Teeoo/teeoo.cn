@@ -1,3 +1,6 @@
+::selection
+  background rgba(193,193,193,1) !important
+  color #f7f7f7 !important
 ::-webkit-scrollbar
   width .5rem
   height .5rem
@@ -49,20 +52,12 @@
   transform rotate(-45deg)
   text-align center
   font-size 12px
-
 .fade-transform-leave-active,
-.fade-transform-enter-active {
-  transition: all 0.5s;
-}
-.fade-transform-enter {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-.fade-transform-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-::selection {
-  background: #00c4b6 !important;
-  color: #f7f7f7 !important;
-}
+.fade-transform-enter-active
+  transition all 0.5s
+.fade-transform-enter
+  opacity 0
+  transform translateX(-30px)
+.fade-transform-leave-to
+  opacity 0
+  transform translateX(30px)

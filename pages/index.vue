@@ -75,7 +75,7 @@
             </v-img>
           </v-hover>
           <v-card-subtitle>
-            <!-- <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论 -->
+             <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
           </v-card-subtitle>
           <v-card-text>{{ data.html | summary }} ···
             <v-btn
@@ -100,8 +100,9 @@
       md="12"
       xs="12"
     >
-      <div class="text-center mt-8">
+      <div class="text-center mt-8 mb-8">
         <v-btn
+          small
           rounded
           color="primary"
           dark

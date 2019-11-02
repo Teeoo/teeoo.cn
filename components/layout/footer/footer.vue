@@ -1,9 +1,43 @@
 <template>
-  <v-footer>
+  <v-footer dark>
     <v-row
       justify="center"
       no-gutters
+      class="mt-8"
     >
+      <v-btn
+        small
+        absolute
+        fab
+        top
+      >
+        <v-icon>swap_vertical_circle</v-icon>
+      </v-btn>
+      <v-col cols="12"
+             sm="3"
+             md="3"
+             xs="3">
+        <v-subheader class="headline">标签云</v-subheader>
+      </v-col>
+      <v-col cols="12"
+             sm="3"
+             md="3"
+             xs="3">
+
+        <v-subheader class="headline">最热文章</v-subheader>
+      </v-col>
+      <v-col cols="12"
+             sm="3"
+             md="3"
+             xs="3">
+        <v-subheader class="headline">最新文章</v-subheader>
+      </v-col>
+      <v-col cols="12"
+             sm="3"
+             md="3"
+             xs="3">
+        <v-subheader class="headline">还没想好放啥</v-subheader>
+      </v-col>
       <v-col
         class="py-4 text-center"
         cols="12"
