@@ -300,24 +300,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import Prism from 'prismjs'
-import 'prismjs/components/prism-javascript'
-import 'prismjs/themes/prism-okaidia.css'
-import 'prismjs/plugins/line-numbers/prism-line-numbers'
-import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
-import 'prismjs/plugins/show-language/prism-show-language.min'
-import 'prismjs/plugins/command-line/prism-command-line'
-import 'prismjs/plugins/command-line/prism-command-line.css'
-import 'prismjs/plugins/toolbar/prism-toolbar'
-import 'prismjs/plugins/toolbar/prism-toolbar.css'
-import 'prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard'
-// import 'prismjs/plugins/previewers/prism-previewers.css'
-// import 'prismjs/plugins/previewers/prism-previewers.min'
-import 'prismjs/plugins/command-line/prism-command-line.css'
-import 'prismjs/plugins/command-line/prism-command-line.min'
-import 'prismjs/plugins/diff-highlight/prism-diff-highlight.css'
-import 'prismjs/plugins/diff-highlight/prism-diff-highlight.min'
-
 export default {
   head() {
     return {
@@ -432,12 +414,6 @@ export default {
       this.url = `${window.location.href}`
     }
     this.$store.commit('toggle', { qrcode: true, qrcodeUrl: this.url })
-  },
-  mounted() {
-    Prism.highlightAll()
-  },
-  updated() {
-    Prism.highlightAll()
   },
   destroyed() {
     this.$store.commit('toc/add', { IsToc: false, data: {} })

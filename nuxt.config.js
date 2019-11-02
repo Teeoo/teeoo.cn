@@ -52,11 +52,8 @@ module.exports = {
    */
   plugins: [
     '~plugins/filters.js',
-    {
-      src: '~/plugins/viewer.js',
-      ssr: false
-    },
-    { src: '@/plugins/qrcode.js', ssr: false }
+    { src: '~/plugins/viewer.js', ssr: false },
+    { src: '@/plugins/prism.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

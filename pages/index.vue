@@ -25,39 +25,55 @@
         class="mt-4"
         :loading="$apollo.loading"
         type="card-avatar"
-        v-for="data in article"
-        :key="data.id"
+        v-for="(data,index) in article"
+        :key="index"
       >
         <v-card
           class="article_list"
           flat
           :loading="$apollo.loading"
         >
-          <v-img
-            id="article_list_img"
-            class="white--text align-end"
-            height="220px"
-            lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
-            aspect-ratio="1"
-            :src="data.cover?data.cover:'https://api.ixiaowai.cn/api/api.php'"
-          >
-            <span class="source d-lg-none">
-              原创
-            </span>
-            <v-card-title style="background:rgba(0, 0, 0, 0.4);">
-              <v-chip
-                v-if="data.isTop"
-                color="secondary"
-                class="ma-2"
-                small
-                label
-                dark
-              >
-                置顶
-              </v-chip>
-              {{data.title}}
-            </v-card-title>
-          </v-img>
+          <v-hover v-slot:default="{ hover }">
+            <v-img
+              class="white--text align-end"
+              height="220px"
+              lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
+              aspect-ratio="1"
+              :src="data.cover?data.cover:'https://api.ixiaowai.cn/api/api.php'"
+            >
+                <span class="source d-lg-none">
+                  原创
+                </span>
+              <transition name="scroll-x-reverse-transition">
+                <v-overlay
+                  v-if="hover"
+                  absolute
+                >
+                  <v-btn color="deep-purple accent-4"
+                         small
+                         rounded :to="`archives/${data.id}`">READ
+                  </v-btn>
+                </v-overlay>
+              </transition>
+              <v-card-title style="background:rgba(0, 0, 0, 0.4);">
+                <v-chip
+                  v-if="data.isTop"
+                  color="secondary"
+                  class="ma-2"
+                  small
+                  label
+                  dark
+                >
+                  置顶
+                </v-chip>
+                <span
+                  class="ch"
+                  v-for="(ch,key) in data.title"
+                  :key="key"
+                >{{ch}}</span>
+              </v-card-title>
+            </v-img>
+          </v-hover>
           <v-card-subtitle>
             <!-- <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论 -->
           </v-card-subtitle>
@@ -71,6 +87,7 @@
             </v-btn>
           </v-card-text>
         </v-card>
+
         <span class="datecircle d-none d-lg-block d-print-block">
           <span class="month">{{getMonth(data.createdAt)}}月</span>
           <span class="day">{{getDate(data.createdAt)}}</span>
@@ -97,15 +114,15 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { mapMutations } from 'vuex'
+  import gql from 'graphql-tag'
+  import { mapMutations } from 'vuex'
 
-export default {
-  apollo: {
-    article() {
-      return {
-        prefetch: true,
-        query: gql`
+  export default {
+    apollo: {
+      article() {
+        return {
+          prefetch: true,
+          query: gql`
           query {
             article {
               id
@@ -123,32 +140,50 @@ export default {
             }
           }
         `,
-        watchLoading(isLoading, countModifier) {
-          // console.info(isLoading, countModifier)
-        },
-        result({ data, loading, networkStatus }) {
-          // console.info(data, loading, networkStatus)
+          watchLoading(isLoading, countModifier) {
+            // console.info(isLoading, countModifier)
+          },
+          result({ data, loading, networkStatus }) {
+            // console.info(data, loading, networkStatus)
+          }
         }
       }
-    }
-  },
-  data() {
-    return {
-      snackbar: false,
-      article: []
-    }
-  },
-  methods: {
-    getMonth(data) {
-      const date = new Date(data)
-      const month = date.getMonth()
-      return month + 1
     },
-    getDate(data) {
-      const date = new Date(data)
-      const m = date.getDate()
-      return m
+    data() {
+      return {
+        snackbar: false,
+        article: []
+      }
+    },
+    methods: {
+      getMonth(data) {
+        const date = new Date(data)
+        const month = date.getMonth()
+        return month + 1
+      },
+      getDate(data) {
+        const date = new Date(data)
+        const m = date.getDate()
+        return m
+      }
     }
   }
-}
 </script>
+<style>
+  .ch {
+    transition: 300ms;
+    position: relative;
+    top: 0;
+    cursor: default;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    display: inline-block;
+  }
+
+  .ch:hover {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+  }
+</style>

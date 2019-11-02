@@ -31,7 +31,12 @@
         </v-btn>
       </v-list-item>
       <v-subheader>导航</v-subheader>
-      <v-list-item :key='index' v-for="(data,index) in nav" link :to="data.link">
+      <v-list-item
+        :key='index'
+        v-for="(data,index) in nav"
+        link
+        :to="data.link"
+      >
         <v-list-item-icon>
           <v-icon>{{data.icon}}</v-icon>
         </v-list-item-icon>
@@ -40,7 +45,11 @@
         </v-list-item-content>
       </v-list-item>
       <v-subheader v-if="this.pages">组成</v-subheader>
-      <v-list-item link v-for="data in this.pages" :key="data.id">
+      <v-list-item
+        link
+        v-for="data in this.pages"
+        :key="data.id"
+      >
         <v-list-item-icon>
           <v-icon
             v-for="icon in data.fields"
@@ -102,14 +111,14 @@
 </template>
 
 <script>
-  import screenfull from 'screenfull'
-  import gql from 'graphql-tag'
+import screenfull from 'screenfull'
+import gql from 'graphql-tag'
 
-  export default {
-    name: 'layout',
-    apollo: {
-      pages: {
-        query: gql`
+export default {
+  name: 'layout',
+  apollo: {
+    pages: {
+      query: gql`
         query {
           pages {
             id
@@ -124,49 +133,48 @@
           }
         }
       `,
-        result({ data, loading, networkStatus }) {}
-      }
-    },
-    props: {
-      value: {
-        type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {
-        pages: [],
-        isFullscreen: false,
-        mini: false,
-        nav: [
-          { icon: 'home', text: '首页', link: '/' },
-          { icon: 'bookmark', text: '分类', link: '/01' },
-          { icon: 'local_offer', text: '标签', link: '/02' }
-        ]
-      }
-    },
-    methods: {
-      toggle() {
-        if (screenfull.isEnabled) {
-          screenfull.toggle()
-          screenfull.on('change', () => {
-            this.isFullscreen = screenfull.isFullscreen
-            console.log(
-              'Am I fullscreen?',
-              screenfull.isFullscreen ? 'Yes' : 'No'
-            )
-          })
-          screenfull.on('error', event => {
-            console.error('Failed to enable fullscreen', event)
-          })
-        } else {
-          // Ignore or do something else
-        }
+      result({ data, loading, networkStatus }) {}
+    }
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      pages: [],
+      isFullscreen: false,
+      mini: false,
+      nav: [
+        { icon: 'home', text: '首页', link: '/' },
+        { icon: 'bookmark', text: '分类', link: '/01' },
+        { icon: 'local_offer', text: '标签', link: '/02' }
+      ]
+    }
+  },
+  methods: {
+    toggle() {
+      if (screenfull.isEnabled) {
+        screenfull.toggle()
+        screenfull.on('change', () => {
+          this.isFullscreen = screenfull.isFullscreen
+          console.log(
+            'Am I fullscreen?',
+            screenfull.isFullscreen ? 'Yes' : 'No'
+          )
+        })
+        screenfull.on('error', event => {
+          console.error('Failed to enable fullscreen', event)
+        })
+      } else {
+        // Ignore or do something else
       }
     }
   }
+}
 </script>
 
 <style scoped>
-
 </style>
