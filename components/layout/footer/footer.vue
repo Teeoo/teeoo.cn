@@ -1,11 +1,12 @@
 <template>
-  <v-footer dark>
+  <v-footer app absolute dark>
     <v-row
       justify="center"
       no-gutters
-      class="mt-8"
+      class="mt-2"
     >
       <v-btn
+        class="d-none d-lg-block d-print-block"
         small
         absolute
         fab
@@ -13,26 +14,26 @@
       >
         <v-icon>swap_vertical_circle</v-icon>
       </v-btn>
-      <v-col cols="12"
+      <v-col class="d-none d-lg-block d-print-block" cols="12"
              sm="3"
              md="3"
              xs="3">
         <v-subheader class="headline">标签云</v-subheader>
       </v-col>
-      <v-col cols="12"
+      <v-col class="d-none d-lg-block d-print-block" cols="12"
              sm="3"
              md="3"
              xs="3">
 
         <v-subheader class="headline">最热文章</v-subheader>
       </v-col>
-      <v-col cols="12"
+      <v-col class="d-none d-lg-block d-print-block" cols="12"
              sm="3"
              md="3"
              xs="3">
         <v-subheader class="headline">最新文章</v-subheader>
       </v-col>
-      <v-col cols="12"
+      <v-col class="d-none d-lg-block d-print-block" cols="12"
              sm="3"
              md="3"
              xs="3">
