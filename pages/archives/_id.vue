@@ -98,45 +98,45 @@
           >
             <v-subheader>赏赞支持
             </v-subheader>
-<!--            <v-row>-->
-<!--              <v-col-->
-<!--                cols="12"-->
-<!--                md="6"-->
-<!--                xs="12"-->
-<!--                sm="12"-->
-<!--              >-->
-<!--                <v-row-->
-<!--                  justify="center"-->
-<!--                  align="center"-->
-<!--                >-->
-<!--                  <v-img-->
-<!--                    max-height="200"-->
-<!--                    max-width="200"-->
-<!--                    src="/img/1572506124831.png"-->
-<!--                  >-->
-<!--                    <div class="text-center">微信</div>-->
-<!--                  </v-img>-->
-<!--                </v-row>-->
-<!--              </v-col>-->
-<!--              <v-col-->
-<!--                cols="12"-->
-<!--                md="6"-->
-<!--                xs="12"-->
-<!--                sm="12"-->
-<!--              >-->
-<!--                <v-row-->
-<!--                  justify="center"-->
-<!--                  align="center"-->
-<!--                >-->
-<!--                  <v-img-->
-<!--                    max-height="200"-->
-<!--                    max-width="200"-->
-<!--                    src="/img/1572506124832.jpg"-->
-<!--                  >-->
-<!--                  </v-img>-->
-<!--                </v-row>-->
-<!--              </v-col>-->
-<!--            </v-row>-->
+            <!--            <v-row>-->
+            <!--              <v-col-->
+            <!--                cols="12"-->
+            <!--                md="6"-->
+            <!--                xs="12"-->
+            <!--                sm="12"-->
+            <!--              >-->
+            <!--                <v-row-->
+            <!--                  justify="center"-->
+            <!--                  align="center"-->
+            <!--                >-->
+            <!--                  <v-img-->
+            <!--                    max-height="200"-->
+            <!--                    max-width="200"-->
+            <!--                    src="/img/1572506124831.png"-->
+            <!--                  >-->
+            <!--                    <div class="text-center">微信</div>-->
+            <!--                  </v-img>-->
+            <!--                </v-row>-->
+            <!--              </v-col>-->
+            <!--              <v-col-->
+            <!--                cols="12"-->
+            <!--                md="6"-->
+            <!--                xs="12"-->
+            <!--                sm="12"-->
+            <!--              >-->
+            <!--                <v-row-->
+            <!--                  justify="center"-->
+            <!--                  align="center"-->
+            <!--                >-->
+            <!--                  <v-img-->
+            <!--                    max-height="200"-->
+            <!--                    max-width="200"-->
+            <!--                    src="/img/1572506124832.jpg"-->
+            <!--                  >-->
+            <!--                  </v-img>-->
+            <!--                </v-row>-->
+            <!--              </v-col>-->
+            <!--            </v-row>-->
           </v-card>
           <v-card
             flat
@@ -220,28 +220,36 @@
             class="mt-4"
           >
             <div v-for="(data,index) in this.ArticleById.comments" :key="index">
-              <v-list-item>
+              <v-list-item three-line>
                 <v-list-item-avatar>
                   <v-img :src="data.avatar"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title class="headline">{{data.username}}</v-list-item-title>
-                  <v-list-item-subtitle>{{data.createdAt | prettyDate}}</v-list-item-subtitle>
+                  <v-list-item-title class="headline">{{data.username}}
+                    <v-btn
+                      small
+                      rounded
+                      text
+                      color="deep-purple accent-4"
+                    >
+                      回复
+                    </v-btn>
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{data.createdAt | prettyDate}} </v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-              <v-card-text>
+              <v-card-text class="font-weight-medium">
                 {{data.text}}
-                <v-card-actions>
-                  <v-btn
-                    small
-                    rounded
-                    text
-                    color="deep-purple accent-4"
-                  >
-                    回复
-                  </v-btn>
-                </v-card-actions>
               </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn icon>
+                  <v-icon>mdi-heart</v-icon>
+                </v-btn>
+                <v-btn icon>
+                  <v-icon>mdi-share-variant</v-icon>
+                </v-btn>
+              </v-card-actions>
             </div>
           </v-card>
         </div>

@@ -49,6 +49,7 @@
         link
         v-for="data in this.pages"
         :key="data.id"
+        :to="`/pages/default/${data.id}`"
       >
         <v-list-item-icon>
           <v-icon
