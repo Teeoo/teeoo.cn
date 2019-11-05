@@ -21,6 +21,14 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
+      },
+      {
+        name: 'google-site-verification',
+        content: '2EE4QrPTXaJtHQVmdcq-Gkgj6BEPeIwPYFbDiWdeTI8'
+      },
+      {
+        name: 'baidu-site-verification',
+        content: 'CAN00oG0DD'
       }
     ],
     link: [
@@ -38,12 +46,17 @@ module.exports = {
     color: '#ff3e12',
     height: '2px'
   },
+  /**
+   ** cache
+   */
+  cache: {
+    max: 100,
+    maxAge: 1000 * 60 * 15
+  },
   /*
    ** Global CSS
    */
-  css: [
-    '@/assets/main.styl',
-  ],
+  css: ['@/assets/main.styl'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -112,6 +125,8 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+    maxChunkSize: 360000,
+    extractCSS: true,
     extend(config, ctx) {},
     babel: {},
     plugins: [

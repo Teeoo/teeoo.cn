@@ -41,17 +41,20 @@
               aspect-ratio="1"
               :src="data.cover?data.cover:'https://api.ixiaowai.cn/api/api.php'"
             >
-                <span class="source d-lg-none">
-                  原创
-                </span>
+              <span class="source d-lg-none">
+                原创
+              </span>
               <transition name="scroll-x-reverse-transition">
                 <v-overlay
                   v-if="hover"
                   absolute
                 >
-                  <v-btn color="deep-purple accent-4"
-                         small
-                         rounded :to="`archives/${data.id}`">READ
+                  <v-btn
+                    color="deep-purple accent-4"
+                    small
+                    rounded
+                    :to="`archives/${data.id}`"
+                  >READ
                   </v-btn>
                 </v-overlay>
               </transition>
@@ -75,7 +78,7 @@
             </v-img>
           </v-hover>
           <v-card-subtitle>
-             <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
+            <a>{{data.category.label}}</a> / {{data.createdAt | prettyDate}} / 0 条评论
           </v-card-subtitle>
           <v-card-text>{{ data.html | summary }} ···
             <v-btn
@@ -115,15 +118,15 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
-  import { mapMutations } from 'vuex'
+import gql from 'graphql-tag'
+import { mapMutations } from 'vuex'
 
-  export default {
-    apollo: {
-      article() {
-        return {
-          prefetch: true,
-          query: gql`
+export default {
+  apollo: {
+    article() {
+      return {
+        prefetch: true,
+        query: gql`
           query {
             article {
               id
@@ -141,50 +144,50 @@
             }
           }
         `,
-          watchLoading(isLoading, countModifier) {
-            // console.info(isLoading, countModifier)
-          },
-          result({ data, loading, networkStatus }) {
-            // console.info(data, loading, networkStatus)
-          }
+        watchLoading(isLoading, countModifier) {
+          // console.info(isLoading, countModifier)
+        },
+        result({ data, loading, networkStatus }) {
+          // console.info(data, loading, networkStatus)
         }
       }
+    }
+  },
+  data() {
+    return {
+      snackbar: false,
+      article: []
+    }
+  },
+  methods: {
+    getMonth(data) {
+      const date = new Date(data)
+      const month = date.getMonth()
+      return month + 1
     },
-    data() {
-      return {
-        snackbar: false,
-        article: []
-      }
-    },
-    methods: {
-      getMonth(data) {
-        const date = new Date(data)
-        const month = date.getMonth()
-        return month + 1
-      },
-      getDate(data) {
-        const date = new Date(data)
-        const m = date.getDate()
-        return m
-      }
+    getDate(data) {
+      const date = new Date(data)
+      const m = date.getDate()
+      return m
     }
   }
+}
 </script>
 <style>
-  .ch {
-    transition: 300ms;
-    position: relative;
-    top: 0;
-    cursor: default;
-    transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    display: inline-block;
-  }
+.ch {
+  transition: 300ms;
+  position: relative;
+  top: 0;
+  cursor: default;
+  transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  display: inline-block;
+}
 
-  .ch:hover {
-    transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-  }
+.ch:hover {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+}
 </style>

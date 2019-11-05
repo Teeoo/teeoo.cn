@@ -12,14 +12,14 @@
     "analyze": "nuxt build -a"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc16",
+    "@nuxtjs/apollo": "^4.0.0-rc17",
     "@nuxtjs/feed": "^1.1.0",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
     "@nuxtjs/sitemap": "^2.0.0",
     "cross-env": "^6.0.3",
     "favico.js": "^0.3.10",
     "graphql-tag": "^2.10.1",
-    "koa": "^2.10.0",
+    "koa": "^2.11.0",
     "material-design-icons-iconfont": "^5.0.1",
     "nuxt": "^2.10.2",
     "prismjs": "^1.17.1",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/vuetify": "^1.9.0",
-    "eslint-config-prettier": "^6.4.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-prettier": "^3.1.1",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2"
