@@ -37,9 +37,9 @@
             <v-list-item-title class="headline mb-1">
               <span class="ch" v-for="(data ,index) in data.name" :key="index">{{data}}</span>
             </v-list-item-title>
-            <v-list-item-subtitle><span class="ch" v-for="(data,index) in data.desc" :key="index">
-              {{data}}
-            </span></v-list-item-subtitle>
+            <v-list-item-subtitle>
+              {{data.desc}}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-avatar
             size="64"
