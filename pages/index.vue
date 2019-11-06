@@ -20,7 +20,15 @@
       md="6"
       xs="12"
     >
-
+      <v-card flat v-show="!article.length">
+        <v-card-text class="text-center">
+          <v-alert
+            dark
+          >
+            作者还没发布过文章哦!
+          </v-alert>
+        </v-card-text>
+      </v-card>
       <v-skeleton-loader
         class="mt-4"
         :loading="$apollo.loading"
@@ -105,6 +113,7 @@
     >
       <div class="text-center mt-8 mb-8">
         <v-btn
+          v-show="article.length"
           small
           rounded
           color="primary"

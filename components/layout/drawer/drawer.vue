@@ -44,12 +44,12 @@
           <v-list-item-title>{{data.text}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-subheader v-if="this.pages">组成</v-subheader>
+      <v-subheader v-if="this.pages.length">组成</v-subheader>
       <v-list-item
         link
         v-for="data in this.pages"
         :key="data.id"
-        :to="`/pages/default/${data.id}`"
+        :to="`/pages/${data.template}/${data.id}`"
       >
         <v-list-item-icon>
           <v-icon
