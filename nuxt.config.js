@@ -1,6 +1,9 @@
 require(`dotenv`).config()
 const webpack = require('webpack')
-
+let url = ''
+if (process.browser) {
+   url = `${location.hostname}`
+}
 module.exports = {
   mode: 'universal',
   /*
@@ -96,8 +99,23 @@ module.exports = {
         }
       }
     ],
+    ['@nuxtjs/robots', {
+      UserAgent: '*',
+      Disallow: '/',
+      Allow: '/',
+      Sitemap: 'https://teeoo.cn/sitemap.xml'
+    }],
+    '@nuxtjs/sitemap',
     '@nuxtjs/apollo'
   ],
+  /**
+   * sitemap config
+   */
+  sitemap: {
+    hostname: url,
+    gzip: true,
+    routes: []
+  },
   /**
    * apollo config
    */
@@ -127,13 +145,14 @@ module.exports = {
      */
     maxChunkSize: 360000,
     extractCSS: true,
-    extend(config, ctx) {},
+    extend(config, ctx) {
+    },
     babel: {},
     plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
-        'window.jQuery': "jquery'",
+        'window.jQuery': 'jquery\'',
         'window.$': 'jquery'
       })
     ]
