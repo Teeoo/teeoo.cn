@@ -1,12 +1,14 @@
 body
   font-size 15px
   font-family Helvetica, Arial, "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "tohoma,sans-serif"
+
 h1
   font-size 2.2em
   font-weight 700
   line-height 1.1
   padding-top 16px
   margin-bottom 4px
+
 h2,
 h3,
 h4,
@@ -15,6 +17,7 @@ h6
   line-height 1.5em
   margin-top 2.2em
   margin-bottom 4px
+
 h2
   font-size 1.4em
   margin 40px 10px 20px 0
@@ -22,12 +25,14 @@ h2
   border-left 6px solid #ff7e79
   font-weight 700
   line-height 1.4
+
 h3
   font-weight 700
   font-size 1.2em
   line-height 1.4
   margin 10px 0 5px
   padding-top 10px
+
 h4
   font-weight 700
   text-transform uppercase
@@ -35,23 +40,29 @@ h4
   line-height 1.4
   margin 10px 0 5px
   padding-top 10px
+
 h5,
 h6
   font-size 0.9em
+
 h5
   font-weight bold
   text-transform uppercase
+
 h6
   font-weight normal
   color #aaa
+
 h1:hover,
 h2:hover,
 h3:hover
   border-color #bbbbbb
+
 h1:hover:before,
 h2:hover:before,
 h3:hover:before
   color #828282
+
 h1:before,
 h2:before,
 h3:before
@@ -59,12 +70,14 @@ h3:before
   font-weight lighter
   color #bbbbbb
   transition all 0.3s
+
 img
   width 100%
   border-radius 5px
   display block
   margin-bottom 15px
   height auto
+
 dl,
 ol,
 ul
@@ -72,10 +85,12 @@ ul
   margin-bottom 20px
   padding-left 5%
   line-height 1.8
+
 p
   margin 0 0 20px
   padding 0
   line-height 1.8
+
 blockquote
   font-size 1em
   font-style normal
@@ -88,6 +103,7 @@ blockquote
   color #888
   border-left 3px solid #3b99f5
   transition all 0.15s
+
   &:before
     content "“"
     left 12px
@@ -98,6 +114,7 @@ blockquote
     line-height 1em
     font-weight 700
     position absolute
+
   &:after
     content "”"
     right 12px
@@ -108,39 +125,52 @@ blockquote
     line-height 1em
     font-weight 700
     position absolute
+
   &:hover
     border-left-width 5px
+
 strong,
 dfn
   font-weight 700
+
 em,
 dfn
   font-style italic
   font-weight 400
+
 del
   text-decoration line-through
+
 code,
 pre
   font-family Monaco, Andale Mono, Courier New, monospace
   font-feature-settings "calt" 1
+
 figure
   margin 1em 0
+
 figcaption
   font-size 0.75em
   padding 0.5em 2em
   margin-bottom 2em
+
 hr
   margin-top 20px
   margin-bottom 20px
-  border 0
-  border-top 1px solid #eee
+  height 3px
+  border none
+  background-color #ddd
+  background-image repeating-linear-gradient(-45deg, #fff, #fff 4px, transparent 4px, transparent 8px)
+
 ol p,
 ul p
   margin-bottom 0
+
 li
   margin-bottom 0.75em
   margin-top 0.75em
   overflow hidden
+
 ol#footnotes
   font-size 0.95em
   padding-top 1em
@@ -150,12 +180,14 @@ ol#footnotes
   color #555
   padding-left 5%
   margin 20px 0
+
   li
     margin-bottom 10px
     margin-left 16px
     font-weight 400
     line-height 2
     list-style-type none
+
     &:before
       content counter(footer-counter) ". "
       counter-increment footer-counter

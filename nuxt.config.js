@@ -1,9 +1,5 @@
 require(`dotenv`).config()
 const webpack = require('webpack')
-let url = ''
-if (process.browser) {
-   url = `${location.hostname}`
-}
 module.exports = {
   mode: 'universal',
   /*
@@ -66,7 +62,8 @@ module.exports = {
   plugins: [
     '~plugins/filters.js',
     { src: '~/plugins/viewer.js', ssr: false },
-    { src: '@/plugins/prism.js', ssr: false }
+    { src: '@/plugins/prism.js', ssr: false },
+    { src: '~/plugins/event.js' }
   ],
   /*
    ** Nuxt.js dev-modules
@@ -112,7 +109,7 @@ module.exports = {
    * sitemap config
    */
   sitemap: {
-    hostname: url,
+    hostname: 'https://teeoo.cn',
     gzip: true,
     routes: []
   },

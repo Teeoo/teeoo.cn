@@ -127,38 +127,13 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import { mapMutations } from 'vuex'
-
+import { ARTICLE } from '../graphql/query'
 export default {
   apollo: {
     article() {
       return {
         prefetch: true,
-        query: gql`
-          query {
-            article {
-              id
-              order
-              html
-              desc
-              createdAt
-              updatedAt
-              title
-              isTop
-              cover
-              category {
-                label
-              }
-            }
-          }
-        `,
-        watchLoading(isLoading, countModifier) {
-          // console.info(isLoading, countModifier)
-        },
-        result({ data, loading, networkStatus }) {
-          // console.info(data, loading, networkStatus)
-        }
+        query: ARTICLE,
       }
     }
   },
@@ -182,21 +157,3 @@ export default {
   }
 }
 </script>
-<style>
-.ch {
-  transition: 300ms;
-  position: relative;
-  top: 0;
-  cursor: default;
-  transform: rotate(0deg);
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  display: inline-block;
-}
-
-.ch:hover {
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-}
-</style>
