@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         name: 'baidu-site-verification',
-        content: 'CAN00oG0DD'
+        content: 'sT2F6gXlfg'
       }
     ],
     link: [

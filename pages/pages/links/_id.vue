@@ -27,10 +27,8 @@
         class="p2-2 ma-2"
         flat
         :loading="$apollo.loading"
+        hover
       >
-        <v-hover v-slot:default="{ hover }">
-          <!--            {{hover}}-->
-        </v-hover>
         <v-list-item three-line>
           <v-list-item-content>
             <div class="overline mb-4">👬 左邻右舍</div>
