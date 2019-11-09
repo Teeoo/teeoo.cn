@@ -1,12 +1,11 @@
 <template>
-  <nuxt/>
+  <nuxt />
 </template>
 
 <script>
-  export default {
-    name: 'fullscreen'
-  }
+export default {
+  name: 'Empty'
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
