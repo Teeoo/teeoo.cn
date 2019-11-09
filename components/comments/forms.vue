@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-card-text>
-      <v-form
-        ref="form"
-        v-model="valid"
-      >
+      <v-form ref="form" v-model="valid">
         <v-row>
           <v-col cols="12">
             <v-textarea
@@ -20,57 +17,23 @@
             ></v-textarea>
           </v-col>
           <v-col cols="12">
-            <v-text-field
-              v-model="username"
-              counter="8"
-              prepend-icon="account_circle"
-              label="昵称"
-              :rules="nameRules"
-            ></v-text-field>
+            <v-text-field v-model="username" counter="8" prepend-icon="account_circle" label="昵称" :rules="nameRules"></v-text-field>
           </v-col>
-          <v-col
-            cols="12"
-            :md="links ? 6 : 12"
-            xs="12"
-            sm="12"
-          >
-            <v-text-field
-              v-model="email"
-              prepend-icon="email"
-              label="邮箱"
-              :rules="emailRules"
-            ></v-text-field>
+          <v-col cols="12" :md="links ? 6 : 12" xs="12" sm="12">
+            <v-text-field v-model="email" prepend-icon="email" label="邮箱" :rules="emailRules"></v-text-field>
           </v-col>
-          <v-col
-            v-if="links"
-            cols="12"
-            md="6"
-            xs="12"
-            sm="12"
-          >
-            <v-text-field
-              v-model="link"
-              prepend-icon="link"
-              label="网站（如果有）http(s)://"
-            ></v-text-field>
+          <v-col v-if="links" cols="12" md="6" xs="12" sm="12">
+            <v-text-field v-model="link" prepend-icon="link" label="网站（如果有）http(s)://"></v-text-field>
           </v-col>
         </v-row>
       </v-form>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn
-        icon
-        @click="links = !links"
-      >
+      <v-btn icon @click="links = !links">
         <v-icon>link</v-icon>
       </v-btn>
-      <v-btn
-        text
-        dark
-        color="pink"
-        @click="push"
-      >提交</v-btn>
+      <v-btn text dark color="pink" @click="push">提交</v-btn>
     </v-card-actions>
   </div>
 </template>
