@@ -1,13 +1,11 @@
 <template>
-    <span>default</span>
+  <span>default</span>
 </template>
 
 <script>
-  export default {
-    name: '_id'
-  }
+export default {
+  name: 'Default'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

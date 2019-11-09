@@ -1,52 +1,69 @@
 <template>
-  <v-card
-    flat
-    class="mt-4"
-  >
-    <div v-for="(data,index) in comments" :key="index">
-      <v-list-item three-line>
-        <v-list-item-avatar>
-          <v-img :src="data.avatar"></v-img>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title class="headline">{{data.username}}
-            <v-btn
-              small
-              rounded
-              text
-              color="deep-purple accent-4"
+  <v-comments-list :loading="loading" type="list-item-avatar-three-line,article">
+    <v-card flat>
+      <div v-for="(data, index) in comments" :key="index">
+        <v-list-item three-line>
+          <v-list-item-avatar>
+            <v-img :src="data.avatar"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title class="headline"
+              >{{ data.username }}
+              <v-btn small rounded text color="deep-purple accent-4">
+                回复
+              </v-btn>
+            </v-list-item-title>
+            <v-list-item-subtitle
+              >{{ data.createdAt | formatDate }} {{ parser(data.agent).device.model ? parser(data.agent).device.model : parser(data.agent).os.name }}
+              {{ parser(data.agent).browser.name }}</v-list-item-subtitle
             >
-              回复
-            </v-btn>
-          </v-list-item-title>
-          <v-list-item-subtitle>{{data.createdAt | prettyDate}}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-      <v-card-text v-html="data.text" class="font-weight-medium">
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-share-variant</v-icon>
-        </v-btn>
-      </v-card-actions>
-    </div>
-  </v-card>
+          </v-list-item-content>
+        </v-list-item>
+        <v-card-text class="font-weight-medium" v-html="data.text"> </v-card-text>
+      </div>
+    </v-card>
+  </v-comments-list>
 </template>
 
 <script>
-  export default {
-    name: 'comments_list',
-    props: {
-      comments: Object | Array,
-      required: true
+import parser from 'ua-parser-js'
+import { mapState, mapGetters } from 'vuex'
+
+export default {
+  name: 'List',
+  components: {
+    VCommentsList: {
+      functional: true,
+      render(h, { data, props, children }) {
+        return h(
+          'v-skeleton-loader',
+          {
+            ...data,
+            props: {
+              boilerplate: false,
+              ...props
+            }
+          },
+          children
+        )
+      }
+    }
+  },
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapState('article', {
+      comments: (state) => state.details.comments
+    }),
+    ...mapGetters('article', ['loading'])
+  },
+  methods: {
+    parser(str) {
+      return parser(str)
     }
   }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

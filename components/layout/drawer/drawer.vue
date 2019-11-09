@@ -1,17 +1,6 @@
 <template>
-  <v-navigation-drawer
-    app
-    floating
-    temporary
-    v-bind:value="value"
-    v-on:input="$emit('input', $event)"
-    :mini-variant.sync="mini"
-  >
-    <v-list
-      dense
-      nav
-      rounded
-    >
+  <v-navigation-drawer app floating temporary :value="value" :mini-variant.sync="mini" @input="$emit('input', $event)">
+    <v-list dense nav rounded>
       <v-list-item>
         <v-list-item-avatar>
           <v-img src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"></v-img>
@@ -22,87 +11,49 @@
             oo.ee.ooe.teeoo@gmail.com
           </v-list-item-subtitle>
         </v-list-item-content>
-        <v-btn
-          icon
-          @click.stop="mini = !mini"
-          small
-        >
+        <v-btn icon small @click.stop="mini = !mini">
           <v-icon>chevron_left</v-icon>
         </v-btn>
       </v-list-item>
-      <v-subheader>导航</v-subheader>
-      <v-list-item
-        :key='index'
-        v-for="(data,index) in nav"
-        link
-        :to="data.link"
-      >
+      <v-list-item v-for="(data, index) in nav" :key="index" link :to="data.link">
         <v-list-item-icon>
-          <v-icon>{{data.icon}}</v-icon>
+          <v-icon>{{ data.icon }}</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{data.text}}</v-list-item-title>
+          <v-list-item-title>{{ data.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-subheader v-if="this.pages.length">组成</v-subheader>
-      <v-list-item
-        link
-        v-for="data in this.pages"
-        :key="data.id"
-        :to="`/pages/${data.template}/${data.id}`"
-      >
-        <v-list-item-icon>
-          <v-icon
-            v-for="icon in data.fields"
-            :key="icon.id"
-            v-show="icon.name==='icon'"
-          >{{icon.value}}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{data.title}}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-skeleton-loader v-for="data in this.$store.state.drawer.pages" :key="data.id" :loading="$apollo.loading" type="list-item-two-line">
+        <v-list-item link :to="`/pages/${data.template}/${data.id}`">
+          <v-list-item-icon>
+            <v-icon v-for="icon in data.fields" v-show="icon.name === 'icon'" :key="icon.id">{{ icon.value }} </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ data.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-skeleton-loader>
     </v-list>
     <template v-slot:append>
       <v-row>
-        <v-col
-          class="text-center"
-          cols="4"
-        >
-          <v-btn
-            small
-            text
-          >
+        <v-col class="text-center" cols="4">
+          <v-btn small text>
             <v-icon>
               settings
             </v-icon>
           </v-btn>
         </v-col>
-        <v-col
-          class="text-center"
-          cols="4"
-        >
-          <v-btn
-            small
-            text
-          >
+        <v-col class="text-center" cols="4">
+          <v-btn small text>
             <v-icon>
               rss_feed
             </v-icon>
           </v-btn>
         </v-col>
-        <v-col
-          class="text-center"
-          cols="4"
-        >
-          <v-btn
-            small
-            text
-            @click="toggle"
-          >
+        <v-col class="text-center" cols="4">
+          <v-btn small text @click="toggle">
             <v-icon>
-              {{isFullscreen ? 'fullscreen_exit':'fullscreen'}}
+              {{ isFullscreen ? 'fullscreen_exit' : 'fullscreen' }}
             </v-icon>
           </v-btn>
         </v-col>
@@ -112,13 +63,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import screenfull from 'screenfull'
 import gql from 'graphql-tag'
-
 export default {
-  name: 'layout',
+  name: 'Drawer',
   apollo: {
     pages: {
+      prefetch: true,
       query: gql`
         query {
           pages {
@@ -134,7 +86,11 @@ export default {
           }
         }
       `,
-      result({ data, loading, networkStatus }) {}
+      result({ data, loading, networkStatus }) {
+        if (!loading && networkStatus === 7) {
+          this.setDrawerPages(data.pages)
+        }
+      }
     }
   },
   props: {
@@ -161,21 +117,12 @@ export default {
         screenfull.toggle()
         screenfull.on('change', () => {
           this.isFullscreen = screenfull.isFullscreen
-          console.log(
-            'Am I fullscreen?',
-            screenfull.isFullscreen ? 'Yes' : 'No'
-          )
         })
-        screenfull.on('error', event => {
-          console.error('Failed to enable fullscreen', event)
-        })
-      } else {
-        // Ignore or do something else
       }
-    }
+    },
+    ...mapActions('drawer', ['setDrawerPages'])
   }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

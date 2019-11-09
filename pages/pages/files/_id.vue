@@ -1,13 +1,11 @@
 <template>
-<span>归档</span>
+  <span>归档</span>
 </template>
 
 <script>
-  export default {
-    name: '_id'
-  }
+export default {
+  name: 'Files'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,13 +1,11 @@
 <template>
-<span>时光机</span>
+  <span>时光机</span>
 </template>
 
 <script>
-  export default {
-    name: '_id'
-  }
+export default {
+  name: 'Cross'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

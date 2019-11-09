@@ -1,13 +1,11 @@
 <template>
-<span>项目</span>
+  <span>项目</span>
 </template>
 
 <script>
-  export default {
-    name: '_id'
-  }
+export default {
+  name: 'Github'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

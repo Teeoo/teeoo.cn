@@ -1,13 +1,11 @@
 <template>
-    <span>留言板</span>
+  <span>留言板</span>
 </template>
 
 <script>
-  export default {
-    name: '_id'
-  }
+export default {
+  name: 'Message'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
