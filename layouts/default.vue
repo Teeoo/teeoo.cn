@@ -2,11 +2,11 @@
   <v-app>
     <v-snackbar v-model="snackbar" right top>
       {{ text }}
-      <v-btn text @click="snackbar = false">
+      <v-btn @click="snackbar = false" text>
         关闭
       </v-btn>
     </v-snackbar>
-    <audio v-show="false" ref="audio" src="/ready.ogg" autoplay controls>
+    <audio ref="audio" v-show="false" src="/ready.ogg" autoplay controls>
       <p>Your browser does not support the <code>audio</code> element.</p>
     </audio>
     <!-- 左侧菜单 -->

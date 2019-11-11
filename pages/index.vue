@@ -5,18 +5,18 @@
         <v-card class="article_list" flat>
           <v-hover v-slot:default="{ hover }">
             <v-img
+              :src="data.cover ? data.cover : 'https://api.ixiaowai.cn/api/api.php'"
               class="white--text align-end"
               height="220px"
               lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
               aspect-ratio="1"
-              :src="data.cover ? data.cover : 'https://api.ixiaowai.cn/api/api.php'"
             >
               <span class="source d-lg-none">
                 原创
               </span>
               <transition name="slide-y-transition">
                 <v-overlay v-if="hover" absolute>
-                  <v-btn color="deep-purple accent-4" small rounded :to="`archives/${data.id}`">READ</v-btn>
+                  <v-btn :to="`archives/${data.id}`" color="deep-purple accent-4" small rounded>READ</v-btn>
                 </v-overlay>
               </transition>
               <v-card-title style="background:rgba(0, 0, 0, 0.4);">

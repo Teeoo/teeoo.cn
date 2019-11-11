@@ -3,10 +3,10 @@
     <v-col cols="12" sm="8" md="7" xs="12">
       <v-card :loading="this.$apollo.loading" flat class="markdown">
         <v-img
-          lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
-          class="white--text align-end"
           :height="300"
           :src="details.cover ? details.cover : 'https://api.ixiaowai.cn/api/api.php'"
+          lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
+          class="white--text align-end"
           ><span class="source">原创</span>
           <v-card-title class="text-center" style="background:rgba(0, 0, 0, 0.4);">
             {{ details.title }}
@@ -17,7 +17,7 @@
         <v-card-text>
           <v-row no-gutters justify="center" align="center">
             <v-col v-for="(data, index) in list" :key="index" sm="12" md="4" xs="12" lg="4" xl="4">
-              <v-card class="p2-2 ma-2" flat :loading="$apollo.loading" hover>
+              <v-card :loading="$apollo.loading" class="p2-2 ma-2" flat hover>
                 <v-list-item three-line>
                   <v-list-item-content>
                     <div class="overline mb-4">👬 左邻右舍</div>
@@ -29,7 +29,7 @@
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-list-item-avatar size="64">
-                    <v-img class="logo" :src="data.logo" />
+                    <v-img :src="data.logo" class="logo" />
                   </v-list-item-avatar>
                 </v-list-item>
                 <v-card-actions>
