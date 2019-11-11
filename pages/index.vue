@@ -1,14 +1,8 @@
 <template>
   <v-row no-gutters justify="center" align="center">
     <v-col cols="12" sm="8" md="6" xs="12">
-      <v-skeleton-loader
-        v-for="(data, index) in this.$store.state.article.list"
-        :key="index"
-        class="mt-4"
-        :loading="$apollo.loading"
-        type="card-avatar"
-      >
-        <v-card class="article_list" flat :loading="$apollo.loading">
+      <v-skeleton-loader :loading="$apollo.loading" v-for="(data, index) in article" :key="index" class="mt-4" type="card-avatar">
+        <v-card class="article_list" flat>
           <v-hover v-slot:default="{ hover }">
             <v-img
               class="white--text align-end"
@@ -20,9 +14,9 @@
               <span class="source d-lg-none">
                 原创
               </span>
-              <transition name="scroll-x-reverse-transition">
+              <transition name="slide-y-transition">
                 <v-overlay v-if="hover" absolute>
-                  <v-btn color="deep-purple accent-4" small rounded :to="`archives/${data.id}`">READ </v-btn>
+                  <v-btn color="deep-purple accent-4" small rounded :to="`archives/${data.id}`">READ</v-btn>
                 </v-overlay>
               </transition>
               <v-card-title style="background:rgba(0, 0, 0, 0.4);">
@@ -38,10 +32,9 @@
           </v-card-subtitle>
           <v-card-text
             >{{ data.html | summary }} ···
-            <v-btn :to="`archives/${data.id}`" color="deep-purple accent-4" small text>阅读全文 </v-btn>
+            <v-btn :to="`archives/${data.id}`" color="deep-purple accent-4" small text>阅读全文</v-btn>
           </v-card-text>
         </v-card>
-
         <span class="datecircle d-none d-lg-block d-print-block">
           <span class="month">{{ getMonth(data.createdAt) }}月</span>
           <span class="day">{{ getDate(data.createdAt) }}</span>
@@ -54,6 +47,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { ARTICLE } from '../graphql/query'
+
 export default {
   apollo: {
     article() {
@@ -62,7 +56,7 @@ export default {
         query: ARTICLE,
         result({ data, loading, networkStatus }) {
           if (!loading && networkStatus === 7) {
-            this.setArticleList(data.article)
+            this.setArticleList(data ? data.article : [])
           }
         }
       }

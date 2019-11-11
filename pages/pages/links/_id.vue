@@ -5,7 +5,7 @@
         <v-img
           lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
           class="white--text align-end"
-          height="300px"
+          :height="300"
           :src="details.cover ? details.cover : 'https://api.ixiaowai.cn/api/api.php'"
           ><span class="source">原创</span>
           <v-card-title class="text-center" style="background:rgba(0, 0, 0, 0.4);">

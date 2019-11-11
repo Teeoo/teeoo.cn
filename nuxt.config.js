@@ -36,7 +36,13 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ['@/assets/main.styl'],
+  css: [
+    '@/assets/main.styl',
+    {
+      src: 'animate.css/animate.css',
+      lang: 'css'
+    }
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -83,8 +89,12 @@ module.exports = {
     defaultOptions: {
       $query: {
         loadingKey: 'loading',
+        // fetchPolicy: 'no-cache'
         fetchPolicy: 'cache-and-network'
       }
+      // $watchQuery: {
+      //   fetchPolicy: 'no-cache',
+      // },
     },
     errorHandler: '~/plugins/apolloError.js',
     clientConfigs: {

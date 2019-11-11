@@ -26,7 +26,7 @@
     </v-app-bar>
     <v-content>
       <v-container fluid>
-        <transition name="fade-transform" mode="out-in">
+        <transition name="scroll-y-transition" mode="out-in">
           <div v-if="$nuxt.isOffline">
             <v-overlay absolute>
               <v-row class="fill-height" align-content="center" justify="center">
