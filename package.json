@@ -23,7 +23,7 @@
     "@nuxtjs/apollo": "4.0.0-rc17",
     "@nuxtjs/pwa": "3.0.0-beta.19",
     "add": "2.0.6",
-    "animate.css": "^3.7.2",
+    "animate.css": "3.7.2",
     "cross-env": "6.0.3",
     "favico.js": "0.3.10",
     "graphql-tag": "2.10.1",
