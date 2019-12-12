@@ -15,6 +15,14 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
+      },
+      {
+        name: 'google-site-verification',
+        content: process.env._GOOGLE
+      },
+      {
+        name: 'baidu-site-verification',
+        content: process.env._BAIDU
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
