@@ -1,17 +1,15 @@
 <template>
-  <v-row no-gutters justify="center" align="center">
-    <v-col cols="12" sm="8" md="7" xs="12">
-      <v-card flat>
-        <v-card-text>
-          <pre class="line-numbers language-javascript">
-            <code class="language-javascript">
-              var a=0
-            </code>
-          </pre>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-app dark>
+    <h1 v-if="error.statusCode === 404">
+      {{ pageNotFound }}
+    </h1>
+    <h1 v-else>
+      {{ otherError }}
+    </h1>
+    <NuxtLink to="/">
+      Home page
+    </NuxtLink>
+  </v-app>
 </template>
 
 <script>
@@ -23,16 +21,17 @@ export default {
       default: null
     }
   },
-  head() {
-    const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  },
   data() {
     return {
       pageNotFound: '404 Not Found',
       otherError: 'An error occurred'
+    }
+  },
+  head() {
+    const title =
+      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    return {
+      title
     }
   }
 }
