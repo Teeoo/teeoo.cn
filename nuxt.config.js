@@ -47,7 +47,22 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/pwa',
+    [
+      '@nuxtjs/pwa',
+      {
+        icon: true,
+        workbox: {},
+        meta: {},
+        manifest: {
+          name: `Lee 's Blog`,
+          short_name: `lee的小窝`,
+          description: `愿你历尽千帆,归来仍是少年`,
+          theme_color: `#6200ea`,
+          start_url: `/`,
+          display: `standalone`
+        }
+      }
+    ],
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://github.com/nuxt-community/apollo-module
@@ -93,6 +108,9 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+    analyze: false,
+    maxChunkSize: 360000,
+    extractCSS: true,
     extend(config, ctx) {}
   }
 }

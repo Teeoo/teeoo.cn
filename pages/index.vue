@@ -24,7 +24,7 @@
                     color="deep-purple accent-4"
                     small
                     rounded
-                    >阅读</v-btn
+                    >Read more</v-btn
                   >
                 </v-overlay>
               </transition>
@@ -38,9 +38,9 @@
                   dark
                   >置顶</v-chip
                 >
-                <span v-for="(ch, key) in data.title" :key="key" class="ch">
-                  {{ ch }}
-                </span>
+                <span v-for="(ch, key) in data.title" :key="key" class="ch">{{
+                  ch
+                }}</span>
               </v-card-title>
             </v-img>
           </v-hover>

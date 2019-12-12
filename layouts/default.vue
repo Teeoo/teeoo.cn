@@ -9,7 +9,6 @@
       shrink-on-scroll
       elevate-on-scroll
       fade-img-on-scroll
-      prominent
       color="deep-purple accent-4"
       src="https://api.ixiaowai.cn/api/api.php"
     >
@@ -32,12 +31,12 @@
     <v-content>
       <!-- Provides the application the proper gutter -->
       <v-container fluid>
-        <transition name="scroll-y-transition" mode="out-in">
+        <transition name="flow" mode="out-in">
           <nuxt />
         </transition>
       </v-container>
     </v-content>
-    <v-footer app></v-footer>
+    <!-- <v-footer app></v-footer> -->
   </v-app>
 </template>
 
