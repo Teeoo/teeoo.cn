@@ -12,13 +12,15 @@
         >
           <v-list-item>
             <v-list-item-avatar>
-              <img src="http://q1.qlogo.cn/g?b=qq&nk=1982890538&s=640" />
+              <img
+                src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"
+              />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title class="headline">lee</v-list-item-title>
-              <v-list-item-subtitle>{{
-                articleDetails.createdAt
-              }}</v-list-item-subtitle>
+              <v-list-item-subtitle>
+                {{ articleDetails.createdAt }}
+              </v-list-item-subtitle>
             </v-list-item-content>
             <v-btn icon>
               <v-icon>class</v-icon>
