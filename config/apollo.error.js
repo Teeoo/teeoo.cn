@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
 export default (error, nuxtContext) => {
-  console.error(1, { error })
+  nuxtContext.error(error.gqlError)
+  console.error(error.gqlError)
 }

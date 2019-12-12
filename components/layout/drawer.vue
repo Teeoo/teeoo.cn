@@ -42,30 +42,42 @@
           <v-list-item-title>{{ data.text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-subheader>页面</v-subheader>
-      <v-list-item link>
-        <v-list-item-icon>
-          <v-icon>links</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>友情链接</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+      <v-subheader v-show="page.length !== 0">页面</v-subheader>
+      <v-skeleton-loader
+        v-for="data in page"
+        :key="data.id"
+        :loading="$apollo.loading"
+        type="list-item-two-line"
+      >
+        <v-list-item link :to="`/page/${data.template}/${data.id}`">
+          <v-list-item-icon>
+            <v-icon
+              v-for="icon in data.fields"
+              v-show="icon.name === 'icon'"
+              :key="icon.id"
+              >{{ icon.value }}</v-icon
+            >
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>{{ data.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-skeleton-loader>
       <v-subheader>统计</v-subheader>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>文章总数</v-list-item-title>
         </v-list-item-content>
-        <v-list-item-action-text
-          ><v-chip label small color="red" text-color="white">0 </v-chip>
+        <v-list-item-action-text>
+          <v-chip label small color="red" text-color="white">0</v-chip>
         </v-list-item-action-text>
       </v-list-item>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title>评论总数</v-list-item-title>
         </v-list-item-content>
-        <v-list-item-action-text
-          ><v-chip label small color="red" text-color="white">0 </v-chip>
+        <v-list-item-action-text>
+          <v-chip label small color="red" text-color="white">0</v-chip>
         </v-list-item-action-text>
       </v-list-item>
     </v-list>
@@ -96,11 +108,34 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
 import screenfull from 'screenfull'
-// import gql from 'graphql-tag'
+import gql from 'graphql-tag'
 export default {
   name: 'Drawer',
+  apollo: {
+    page: {
+      prefetch: true,
+      query: gql`
+        query {
+          page {
+            id
+            title
+            template
+            fields {
+              id
+              name
+              value
+            }
+          }
+        }
+      `,
+      variables() {
+        return {
+          id: String(this.$route.params.id)
+        }
+      }
+    }
+  },
   props: {
     value: {
       type: Boolean,
@@ -109,7 +144,7 @@ export default {
   },
   data() {
     return {
-      pages: [],
+      page: [],
       isFullscreen: false,
       mini: false,
       nav: [
@@ -128,7 +163,6 @@ export default {
         })
       }
     }
-    // ...mapActions('drawer', ['setDrawerPages'])
   }
 }
 </script>
