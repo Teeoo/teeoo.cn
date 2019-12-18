@@ -4,11 +4,12 @@
       <v-skeleton-loader
         v-for="(data, index) in article.data"
         :key="index"
-        :loading="$apollo.loading"
+        :loading="$apollo.queries.article.loading"
+        transition="flow"
         type="card-avatar"
         class="mt-4"
       >
-        <v-card :loading="$apollo.loading" flat>
+        <v-card :loading="$apollo.queries.article.loading" flat>
           <v-hover v-slot:default="{ hover }">
             <v-img
               height="220px"
@@ -44,9 +45,9 @@
               </v-card-title>
             </v-img>
           </v-hover>
-          <v-card-subtitle>
-            <a>{{ data.category.label }}</a>
-            / {{ data.createdAt }} / 0 条评论
+          <v-card-subtitle class="font-weight-medium">
+            <a class="font-weight-medium">{{ data.category.label }}</a>
+            / {{ data.createdAt | formatDate }} / 0 条评论
           </v-card-subtitle>
           <v-card-text v-html="data.summary"></v-card-text>
         </v-card>
@@ -84,6 +85,7 @@ export default {
               category {
                 label
               }
+              isTop
               createdAt
             }
           }

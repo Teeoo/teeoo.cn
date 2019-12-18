@@ -2,7 +2,6 @@
   <v-app>
     <!-- 左侧菜单 -->
     <layout-drawer v-model="drawer" />
-
     <v-app-bar
       dark
       app

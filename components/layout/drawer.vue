@@ -3,31 +3,38 @@
     app
     floating
     :value="value"
-    :mini-variant.sync="mini"
     @input="$emit('input', $event)"
   >
+    <v-img
+      :src="`https://api.ixiaowai.cn/api/api.php?${new Date().getFullYear()}`"
+    >
+      <v-row align="end" class="lightbox white--text pa-2 fill-height">
+        <v-list dense nav rounded>
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-img
+                src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"
+              ></v-img>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>lee</v-list-item-title>
+              <v-list-item-subtitle
+                >oo.ee.ooe.teeoo@gmail.com</v-list-item-subtitle
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-row>
+    </v-img>
     <v-list dense nav rounded>
-      <v-list-item>
-        <v-list-item-avatar>
-          <v-img
-            src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"
-          ></v-img>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>lee</v-list-item-title>
-          <v-list-item-subtitle>oo.ee.ooe.teeoo@gmail.com</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-btn icon small @click.stop="mini = !mini">
-          <v-icon>chevron_left</v-icon>
-        </v-btn>
+      <v-subheader class="d-lg-none">搜索</v-subheader>
+      <v-list-item class="d-lg-none">
+        <v-text-field
+          flat
+          label="查找"
+          prepend-inner-icon="search"
+        ></v-text-field>
       </v-list-item>
-      <v-text-field
-        class="d-lg-none"
-        flat
-        label="查找"
-        prepend-inner-icon="search"
-        solo-inverted
-      ></v-text-field>
       <v-subheader>导航</v-subheader>
       <v-list-item
         v-for="(data, index) in nav"
@@ -46,8 +53,9 @@
       <v-skeleton-loader
         v-for="data in page"
         :key="data.id"
-        :loading="$apollo.loading"
-        type="list-item-two-line"
+        :loading="$apollo.queries.page.loading"
+        transition="flow"
+        type="list-item-avatar"
       >
         <v-list-item link :to="`/page/${data.template}/${data.id}`">
           <v-list-item-icon>
@@ -146,7 +154,6 @@ export default {
     return {
       page: [],
       isFullscreen: false,
-      mini: false,
       nav: [
         { icon: 'home', text: '首页', link: '/' },
         { icon: 'bookmark', text: '分类', link: '/01' },

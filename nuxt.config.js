@@ -39,6 +39,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    '~plugins/filters.js',
     { src: '~/plugins/toast.js', ssr: false },
     { src: '~/plugins/viewer.js', ssr: false }
   ],
