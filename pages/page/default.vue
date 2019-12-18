@@ -1,3 +1,0 @@
-<template>
-  <span>default</span>
-</template>
