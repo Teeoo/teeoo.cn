@@ -79,32 +79,13 @@ module.exports = {
       '@nuxtjs/apollo',
       // Give apollo module option
       {
-        includeNodeModules: true, // optional, default: false (this includes graphql-tag for node_modules folder)
-        // (Optional) Default 'apollo' definition
-        defaultOptions: {
-          // See 'apollo' definition
-          // For example: default query options
-          $query: {
-            loadingKey: 'loading',
-            fetchPolicy: 'cache-and-network'
-          }
-        },
-        // optional
+        includeNodeModules: true,
         watchLoading: '~/config/apollo.loading.js',
-        // optional
         errorHandler: '~/config/apollo.error.js',
-        // required
         clientConfigs: {
           default: {
-            // required
             httpEndpoint: process.env.HTTP_ENDPOINT,
-            // optional
-            // See https://www.apollographql.com/docs/link/links/http.html#options
-            httpLinkOptions: {
-              credentials: 'same-origin'
-            },
-            // Enable Automatic Query persisting with Apollo Engine
-            persisting: false // Optional
+            persisting: false
           }
         }
       }

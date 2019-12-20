@@ -1,15 +1,11 @@
 <template>
   <v-row no-gutters justify="center" align="center">
     <v-col cols="12" sm="8" md="7" xs="12">
-      <v-links-details
+      <v-skeleton-loader
         :loading="$apollo.queries.pageDetails.loading"
-        type="date-picker,date-picker,date-picker,date-picker"
+        type="list-item-avatar-three-line,article,article,image,article,date-picker,date-picker,date-picker,date-picker"
       >
-        <v-card
-          :loading="$apollo.queries.pageDetails.loading"
-          flat
-          class="markdown"
-        >
+        <v-card flat class="markdown">
           <v-list-item>
             <v-list-item-avatar>
               <img
@@ -19,7 +15,7 @@
             <v-list-item-content>
               <v-list-item-title class="headline">lee</v-list-item-title>
               <v-list-item-subtitle>
-                {{ pageDetails.createdAt }}
+                {{ pageDetails.createdAt | formatDate }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-btn icon>
@@ -75,7 +71,7 @@
             </v-row>
           </v-card-text>
         </v-card>
-      </v-links-details>
+      </v-skeleton-loader>
     </v-col>
   </v-row>
 </template>
@@ -85,24 +81,6 @@ import gql from 'graphql-tag'
 import '@/assets/markdown.styl'
 export default {
   name: 'Links',
-  components: {
-    VLinksDetails: {
-      functional: true,
-      render(h, { data, props, children }) {
-        return h(
-          'v-skeleton-loader',
-          {
-            ...data,
-            props: {
-              boilerplate: false,
-              ...props
-            }
-          },
-          children
-        )
-      }
-    }
-  },
   apollo: {
     pageDetails: {
       prefetch: true,
@@ -162,6 +140,30 @@ export default {
     return {
       pageDetails: {},
       links: []
+    }
+  },
+  head() {
+    return {
+      title: this.pageDetails.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: '愿你历尽千帆,归来仍是少年'
+        },
+        {
+          itemprop: 'name',
+          content: this.pageDetails.title
+        },
+        {
+          itemprop: 'description',
+          content: '愿你历尽千帆,归来仍是少年'
+        },
+        {
+          itemprop: 'image',
+          content: `https://api.ixiaowai.cn/api/api.php?${Math.random()}`
+        }
+      ]
     }
   }
 }

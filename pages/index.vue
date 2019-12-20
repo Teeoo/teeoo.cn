@@ -9,12 +9,12 @@
         type="card-avatar"
         class="mt-4"
       >
-        <v-card :loading="$apollo.queries.article.loading" flat>
+        <v-card flat>
           <v-hover v-slot:default="{ hover }">
             <v-img
               height="220px"
               lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
-              :src="`https://api.ixiaowai.cn/api/api.php?${index}`"
+              :src="`https://api.ixiaowai.cn/api/api.php?${data.id}`"
               class="white--text align-end"
             >
               <span class="source">原创</span>
@@ -95,14 +95,36 @@ export default {
   },
   data() {
     return {
-      article: {},
-      title: '往事不提',
-      colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange']
+      article: {}
     }
   },
   methods: {
     lazy() {
       //
+    }
+  },
+  head() {
+    return {
+      title: `lee的小窝`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: '愿你历尽千帆,归来仍是少年'
+        },
+        {
+          itemprop: 'name',
+          content: `lee的小窝`
+        },
+        {
+          itemprop: 'description',
+          content: '愿你历尽千帆,归来仍是少年'
+        },
+        {
+          itemprop: 'image',
+          content: `https://api.ixiaowai.cn/api/api.php?${Math.random()}`
+        }
+      ]
     }
   }
 }

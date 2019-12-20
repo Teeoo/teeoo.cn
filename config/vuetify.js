@@ -2,6 +2,9 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@mdi/font/css/materialdesignicons.css'
 export default {
   customVariables: ['~/assets/variables.scss'],
+  options: {
+    customProperties: true
+  },
   breakpoint: {},
   icons: {
     iconfont: 'md'
@@ -19,5 +22,6 @@ export default {
       warning: '#FFC107'
     }
   },
+  components: {},
   dark: false
 }
