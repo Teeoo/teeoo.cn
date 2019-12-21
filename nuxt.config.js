@@ -39,9 +39,10 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~plugins/filters.js',
-    { src: '~/plugins/toast.js', ssr: false },
-    { src: '~/plugins/viewer.js', ssr: false }
+    '~plugins/filters',
+    { src: '~/plugins/toast', ssr: false },
+    { src: '~/plugins/viewer', ssr: false },
+    { src: '~/plugins/aplayer', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

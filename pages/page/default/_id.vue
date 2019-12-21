@@ -99,7 +99,9 @@ export default {
         },
         {
           itemprop: 'image',
-          content: `https://api.ixiaowai.cn/api/api.php?${Math.random()}`
+          content: `https://api.ixiaowai.cn/api/api.php?${Math.floor(
+            Math.random() * 100
+          )}`
         }
       ]
     }
