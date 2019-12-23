@@ -1,37 +1,18 @@
 import Vue from 'vue'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/zh-cn'
 
-moment.locale('zh-cn')
+dayjs.extend(relativeTime)
 
-function prettyDate(dateString) {
-  const date = new Date(dateString)
-  const d = date.getDate()
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ]
-  const m = monthNames[date.getMonth()]
-  const y = date.getFullYear()
-  return d + ' ' + m + ' ' + y
-}
-
-function formatDate(value) {
-  return moment.utc(String(value)).fromNow()
+function formatRelativeTime(value) {
+  return dayjs()
+    .locale('zh-cn')
+    .to(dayjs(value))
 }
 
 const filters = {
-  formatDate,
-  prettyDate
+  formatRelativeTime
 }
 
 Object.keys(filters).forEach((key) => {

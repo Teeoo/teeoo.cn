@@ -42,7 +42,8 @@ module.exports = {
     '~plugins/filters',
     { src: '~/plugins/toast', ssr: false },
     { src: '~/plugins/viewer', ssr: false },
-    { src: '~/plugins/aplayer', ssr: false }
+    { src: '~/plugins/aplayer', ssr: false },
+    { src: '~/plugins/seniverse', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

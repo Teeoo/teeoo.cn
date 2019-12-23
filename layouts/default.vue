@@ -92,7 +92,6 @@
       <aplayer
         style="box-shadow: none; margin:0"
         order="random"
-        autoplay
         :audio="audio"
         :lrc-type="3"
       />
@@ -132,7 +131,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>生如夏花之绚烂，死如秋叶之静美</v-toolbar-title>
       <template v-slot:extension>
-        <v-subheader>愿你历尽千帆,归来仍是少年</v-subheader>
+        <v-subheader>愿你历尽千帆,归来仍是少年 </v-subheader>
       </template>
       <v-spacer></v-spacer>
       <v-text-field
@@ -142,6 +141,8 @@
         prepend-inner-icon="search"
         solo-inverted
       ></v-text-field>
+      <v-spacer></v-spacer>
+      <div id="widget" class="d-none d-lg-block d-print-block"></div>
     </v-app-bar>
     <!-- Sizes your content based upon application components -->
     <v-content>
@@ -194,72 +195,7 @@ export default {
         { icon: 'bookmark', text: '分类', link: '/01' },
         { icon: 'local_offer', text: '标签', link: '/02' }
       ],
-      audio: [
-        {
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
-          url: 'https://cdn.moefe.org/music/mp3/thing.mp3',
-          cover:
-            'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/thing.lrc'
-        },
-        {
-          name: '响喜乱舞（Cover：MARiA）',
-          artist: '泠鸢yousa',
-          url: 'https://cdn.moefe.org/music/mp3/kyoukiranbu.mp3',
-          cover:
-            'https://p1.music.126.net/AUGVPQ_rVrngDH9ocQrn3Q==/109951163613037822.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/kyoukiranbu.lrc'
-        },
-        {
-          name: '啵唧',
-          artist: 'Hanser',
-          url: 'https://cdn.moefe.org/music/mp3/kiss.mp3',
-          cover:
-            'https://p1.music.126.net/K0-IPcIQ9QFvA0jXTBqoWQ==/109951163636756693.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/kiss.lrc'
-        },
-        {
-          name: '伴宅日记',
-          artist: 'Hanser',
-          url: 'https://cdn.moefe.org/music/mp3/diary.mp3',
-          cover:
-            'https://p1.music.126.net/oW7TW0VjK5PoNjhzdPm1lw==/109951163626390573.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/diary.lrc'
-        },
-        {
-          name: '童遊',
-          artist: 'めらみぽっぷ',
-          url: 'https://cdn.moefe.org/music/mp3/innocenttreasures.mp3',
-          cover:
-            'https://p1.music.126.net/tkazmUdvztqtaL-XDN4D2A==/5947258394962501.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/innocenttreasures.lrc'
-        },
-        {
-          name: 'The Party We Have Never Seen',
-          artist: 'Nana Takahashi',
-          url: 'https://cdn.moefe.org/music/mp3/thepartywehaveneverseen.mp3',
-          cover:
-            'https://p1.music.126.net/IwclpJu4gaqhSZrKunEFWg==/3297435379408525.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/thepartywehaveneverseen.lrc'
-        },
-        {
-          name: 'Let It Go.m3u8',
-          artist: 'Idina Menzel',
-          url: 'https://cdn.moefe.org/music/hls/frozen.m3u8',
-          cover:
-            'https://p1.music.126.net/n72JJkPg2-ENxhB-DsZ2AA==/109951163115400390.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/frozen.lrc'
-        },
-        {
-          name: 'Star Sky',
-          artist: 'Two Steps From Hell',
-          url: 'https://cdn.moefe.org/music/mp3/starsky.mp3',
-          cover:
-            'https://p2.music.126.net/nJROWeZiEp1TUv27amRguQ==/18195817928618786.jpg?param=300y300',
-          lrc: 'https://cdn.moefe.org/music/lrc/starsky.lrc'
-        }
-      ]
+      audio: require('@/assets/netease.json')
     }
   },
   methods: {

@@ -47,7 +47,7 @@
           </v-hover>
           <v-card-subtitle class="font-weight-medium">
             <a class="font-weight-medium">{{ data.category.label }}</a>
-            / {{ data.createdAt | formatDate }} / 0 条评论
+            / {{ data.createdAt | formatRelativeTime }} / 0 条评论
           </v-card-subtitle>
           <v-card-text v-html="data.summary"></v-card-text>
         </v-card>
