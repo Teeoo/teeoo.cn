@@ -30,7 +30,8 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: '~/components/loading.vue',
+  // loading: { color: '#3B8070' },
   /*
    ** Global CSS
    */
@@ -40,10 +41,10 @@ module.exports = {
    */
   plugins: [
     '~plugins/filters',
-    { src: '~/plugins/toast', ssr: false },
-    { src: '~/plugins/viewer', ssr: false },
-    { src: '~/plugins/aplayer', ssr: false },
-    { src: '~/plugins/seniverse', ssr: false }
+    { src: '~plugins/viewer', ssr: false },
+    { src: '~plugins/aplayer', ssr: false },
+    { src: '~plugins/seniverse', ssr: false },
+    { src: '~plugins/quasar', ssr: true }
   ],
   /*
    ** Nuxt.js dev-modules

@@ -46,10 +46,48 @@
                 </strong>
               </p>
             </blockquote>
-            <v-btn icon>
-              <v-icon>mdi-thumb-up</v-icon>
-            </v-btn>
           </v-card-subtitle>
+          <v-card-subtitle>
+            <h3>评论</h3>
+          </v-card-subtitle>
+          <v-card-text>
+            <v-form>
+              <v-row>
+                <v-col cols="12">
+                  <v-textarea
+                    prepend-icon="textsms"
+                    label="快来写下你的骚操作吧"
+                  ></v-textarea>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field
+                    prepend-icon="account_circle"
+                    label="昵称"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" :md="links ? 6 : 12" xs="12" sm="12">
+                  <v-text-field
+                    prepend-icon="email"
+                    label="邮箱"
+                  ></v-text-field>
+                </v-col>
+                <v-col v-if="links" cols="12" md="6" xs="12" sm="12">
+                  <v-text-field
+                    prepend-icon="link"
+                    label="网站（如果有）http(s)://"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="links = !links">
+              <v-icon>link</v-icon>
+            </v-btn>
+            <v-btn text dark color="pink">提交 </v-btn>
+          </v-card-actions>
+          <v-card-text> </v-card-text>
         </v-card>
       </v-skeleton-loader>
     </v-col>
@@ -97,6 +135,7 @@ export default {
   },
   data() {
     return {
+      links: false,
       articleDetails: {}
     }
   },

@@ -12,9 +12,7 @@
           <v-list dense nav rounded>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img
-                  src="https://s.gravatar.com/avatar/54ed5f99a080b72b65da031c53d44578?s=100&r=x&d=retro"
-                ></v-img>
+                <v-img src="https://teeoo.cn/favicon.ico"></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>lee</v-list-item-title>
@@ -27,14 +25,14 @@
         </v-row>
       </v-img>
       <v-list dense nav rounded>
-        <v-subheader class="d-lg-none">搜索</v-subheader>
-        <v-list-item class="d-lg-none">
-          <v-text-field
-            flat
-            label="查找"
-            prepend-inner-icon="search"
-          ></v-text-field>
-        </v-list-item>
+        <!--        <v-subheader class="d-lg-none">搜索</v-subheader>-->
+        <!--        <v-list-item class="d-lg-none">-->
+        <!--          <v-text-field-->
+        <!--            flat-->
+        <!--            label="查找"-->
+        <!--            prepend-inner-icon="search"-->
+        <!--          ></v-text-field>-->
+        <!--        </v-list-item>-->
         <v-subheader>导航</v-subheader>
         <v-list-item
           v-for="(data, index) in nav"
@@ -72,25 +70,22 @@
           </v-list-item>
         </v-skeleton-loader>
         <v-subheader>统计</v-subheader>
-        <v-list-item>
+        <v-list-item
+          v-for="(data, index) in statistics"
+          :key="`${index}${new Date().valueOf()}`"
+        >
           <v-list-item-content>
-            <v-list-item-title>文章总数</v-list-item-title>
+            <v-list-item-title>{{ data.text }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action-text>
-            <v-chip label small color="red" text-color="white">0</v-chip>
-          </v-list-item-action-text>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>评论总数</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-action-text>
-            <v-chip label small color="red" text-color="white">0</v-chip>
+            <v-chip label small color="red" text-color="white">{{
+              data.label
+            }}</v-chip>
           </v-list-item-action-text>
         </v-list-item>
       </v-list>
       <aplayer
-        style="box-shadow: none; margin:0"
+        style="box-shadow: none; margin:0;"
         order="random"
         :audio="audio"
         :lrc-type="3"
@@ -108,13 +103,11 @@
                 <v-icon>rss_feed</v-icon>
               </v-btn>
             </v-col>
-            <v-col class="text-center" cols="4">
-              <v-btn small text @click="toggle">
-                <v-icon>{{
-                  isFullscreen ? 'fullscreen_exit' : 'fullscreen'
-                }}</v-icon>
-              </v-btn>
-            </v-col>
+            <!--            <v-col class="text-center" cols="4">-->
+            <!--              <v-btn small text>-->
+            <!--                <v-icon>{{ isActive }}</v-icon>-->
+            <!--              </v-btn>-->
+            <!--            </v-col>-->
           </v-row>
         </v-toolbar>
       </template>
@@ -152,13 +145,34 @@
           <nuxt />
         </transition>
       </v-container>
+      <v-fab-transition>
+        <v-btn
+          v-show="fab"
+          v-scroll="onScroll"
+          aria-label="Scroll to top"
+          bottom
+          color="pink"
+          dark
+          fab
+          fixed
+          right
+          title="Scroll to top"
+          @click="toTop"
+        >
+          <v-icon>mdi-chevron-up</v-icon>
+        </v-btn>
+      </v-fab-transition>
     </v-content>
-    <!-- <v-footer app></v-footer> -->
+    <v-footer>
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import screenfull from 'screenfull'
+import { QSpinnerFacebook } from 'quasar'
+import dayjs from 'dayjs'
 import gql from 'graphql-tag'
 export default {
   apollo: {
@@ -189,23 +203,57 @@ export default {
     return {
       drawer: false,
       page: [],
-      isFullscreen: false,
       nav: [
         { icon: 'home', text: '首页', link: '/' },
         { icon: 'bookmark', text: '分类', link: '/01' },
         { icon: 'local_offer', text: '标签', link: '/02' }
       ],
+      statistics: [
+        { text: '文章总数', label: 0 },
+        { text: '评论总数', label: 0 },
+        {
+          text: '运行天数',
+          label: parseInt(
+            Math.round(
+              dayjs(new Date()).diff(dayjs('2019-12-11 15:22:46'), 'day', true)
+            )
+          )
+        }
+      ],
+      fab: false,
       audio: require('@/assets/netease.json')
     }
   },
-  methods: {
-    toggle() {
-      if (screenfull.isEnabled) {
-        screenfull.toggle()
-        screenfull.on('change', () => {
-          this.isFullscreen = screenfull.isFullscreen
+  watch: {
+    '$q.fullscreen.isActive'(val) {},
+    '$nuxt.isOffline'(val) {
+      const spinner =
+        typeof QSpinnerFacebook !== 'undefined'
+          ? QSpinnerFacebook
+          : Quasar.components.QSpinnerFacebook
+      if (val) {
+        this.$q.loading.show({
+          spinner,
+          spinnerColor: 'yellow',
+          spinnerSize: 140,
+          backgroundColor: 'purple',
+          message: 'You are offline. Please connect to the network ... ',
+          messageColor: 'black'
         })
+      } else {
+        this.$q.loading.hide()
       }
+    }
+  },
+  methods: {
+    onScroll() {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset || document.documentElement.offsetTop || 0
+      this.fab = top > 150
+    },
+    toTop() {
+      this.$router.push({ hash: '' })
+      this.$vuetify.goTo(0)
     }
   }
 }

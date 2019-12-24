@@ -15,7 +15,7 @@
             <v-list-item-content>
               <v-list-item-title class="headline">lee</v-list-item-title>
               <v-list-item-subtitle>
-                {{ pageDetails.createdAt | formatDate }}
+                {{ pageDetails.createdAt | formatRelativeTime }}
               </v-list-item-subtitle>
             </v-list-item-content>
             <v-btn icon>
