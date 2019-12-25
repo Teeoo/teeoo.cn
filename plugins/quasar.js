@@ -1,31 +1,15 @@
 import Vue from 'vue'
-import Quasar, {
-  QTimeline,
-  QTimelineEntry,
-  QIntersection,
-  Notify,
-  Loading,
-  AppFullscreen,
-  AddressbarColor
-} from 'quasar'
+import Quasar, { AppFullscreen, Notify } from 'quasar'
 import 'quasar/dist/quasar.css'
 Vue.use(Quasar, {
-  components: {
-    QTimeline,
-    QTimelineEntry,
-    QIntersection
-  },
   plugins: {
-    Notify,
-    Loading,
     AppFullscreen,
-    AddressbarColor
+    Notify
   },
   config: {
-    loading: {},
     notify: {
       position: 'top-right',
-      timeout: 3500,
+      timeout: 5000,
       textColor: 'white',
       actions: [{ icon: 'close', color: 'white' }]
     }

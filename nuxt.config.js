@@ -40,7 +40,7 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~plugins/filters',
+    { src: '~plugins/filters', ssr: true },
     { src: '~plugins/viewer', ssr: false },
     { src: '~plugins/aplayer', ssr: false },
     { src: '~plugins/seniverse', ssr: false },

@@ -96,7 +96,7 @@
 <script>
 import '@/assets/markdown.styl'
 import gql from 'graphql-tag'
-
+import { mapActions } from 'vuex'
 export default {
   apollo: {
     articleDetails: {
@@ -138,6 +138,24 @@ export default {
       links: false,
       articleDetails: {}
     }
+  },
+  watch: {
+    articleDetails(val) {
+      this.title(val.title)
+      this.cover(
+        val.cover
+          ? val.cover
+          : `https://api.ixiaowai.cn/api/api.php?${Math.floor(
+              Math.random() * 100
+            )}`
+      )
+    }
+  },
+  destroyed() {
+    this.reset()
+  },
+  methods: {
+    ...mapActions(['title', 'cover', 'reset'])
   },
   head() {
     return {

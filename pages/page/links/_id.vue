@@ -40,6 +40,7 @@
                 xs="12"
                 lg="4"
                 xl="4"
+                cols="12"
               >
                 <v-card class="p2-2 ma-2" flat :loading="$apollo.loading" hover>
                   <v-list-item three-line>

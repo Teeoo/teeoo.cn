@@ -25,14 +25,6 @@
         </v-row>
       </v-img>
       <v-list dense nav rounded>
-        <!--        <v-subheader class="d-lg-none">搜索</v-subheader>-->
-        <!--        <v-list-item class="d-lg-none">-->
-        <!--          <v-text-field-->
-        <!--            flat-->
-        <!--            label="查找"-->
-        <!--            prepend-inner-icon="search"-->
-        <!--          ></v-text-field>-->
-        <!--        </v-list-item>-->
         <v-subheader>导航</v-subheader>
         <v-list-item
           v-for="(data, index) in nav"
@@ -83,34 +75,14 @@
             }}</v-chip>
           </v-list-item-action-text>
         </v-list-item>
+        <v-subheader>音乐</v-subheader>
+        <aplayer
+          style="box-shadow: none; margin:0;"
+          order="random"
+          :audio="audio"
+          :lrc-type="3"
+        />
       </v-list>
-      <aplayer
-        style="box-shadow: none; margin:0;"
-        order="random"
-        :audio="audio"
-        :lrc-type="3"
-      />
-      <template v-slot:append>
-        <v-toolbar>
-          <v-row>
-            <v-col class="text-center" cols="4">
-              <v-btn small text>
-                <v-icon>settings</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col class="text-center" cols="4">
-              <v-btn small text>
-                <v-icon>rss_feed</v-icon>
-              </v-btn>
-            </v-col>
-            <!--            <v-col class="text-center" cols="4">-->
-            <!--              <v-btn small text>-->
-            <!--                <v-icon>{{ isActive }}</v-icon>-->
-            <!--              </v-btn>-->
-            <!--            </v-col>-->
-          </v-row>
-        </v-toolbar>
-      </template>
     </v-navigation-drawer>
     <v-app-bar
       dark
@@ -119,10 +91,10 @@
       elevate-on-scroll
       fade-img-on-scroll
       color="deep-purple accent-4"
-      src="https://api.ixiaowai.cn/api/api.php"
+      :src="this.$store.state.cover"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>生如夏花之绚烂，死如秋叶之静美</v-toolbar-title>
+      <v-toolbar-title>{{ this.$store.state.title }}</v-toolbar-title>
       <template v-slot:extension>
         <v-subheader>愿你历尽千帆,归来仍是少年 </v-subheader>
       </template>
@@ -171,7 +143,6 @@
 </template>
 
 <script>
-import { QSpinnerFacebook } from 'quasar'
 import dayjs from 'dayjs'
 import gql from 'graphql-tag'
 export default {
@@ -225,25 +196,7 @@ export default {
     }
   },
   watch: {
-    '$q.fullscreen.isActive'(val) {},
-    '$nuxt.isOffline'(val) {
-      const spinner =
-        typeof QSpinnerFacebook !== 'undefined'
-          ? QSpinnerFacebook
-          : Quasar.components.QSpinnerFacebook
-      if (val) {
-        this.$q.loading.show({
-          spinner,
-          spinnerColor: 'yellow',
-          spinnerSize: 140,
-          backgroundColor: 'purple',
-          message: 'You are offline. Please connect to the network ... ',
-          messageColor: 'black'
-        })
-      } else {
-        this.$q.loading.hide()
-      }
-    }
+    '$nuxt.isOffline'(val) {}
   },
   methods: {
     onScroll() {
