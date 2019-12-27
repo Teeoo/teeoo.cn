@@ -41,10 +41,11 @@ module.exports = {
    */
   plugins: [
     { src: '~plugins/filters', ssr: true },
-    { src: '~plugins/viewer', ssr: false },
+    { src: '~plugins/viewer', ssr: true },
     { src: '~plugins/aplayer', ssr: false },
     { src: '~plugins/seniverse', ssr: false },
-    { src: '~plugins/quasar', ssr: true }
+    { src: '~plugins/quasar', ssr: true },
+    { src: '~plugins/prism', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

@@ -25,13 +25,16 @@
               <v-icon>share</v-icon>
             </v-btn>
           </v-list-item>
-          <v-card-text v-html="articleDetails.html"></v-card-text>
+          <v-card-text
+            v-viewer="{ movable: false }"
+            v-html="articleDetails.html"
+          ></v-card-text>
           <v-card-subtitle class="text-center">
             <blockquote>
               <p>
                 <strong>
                   本文链接：
-                  <a>url</a>
+                  <a :href="url">{{ url }}</a>
                 </strong>
                 <br />
                 <strong>
@@ -94,7 +97,6 @@
   </v-row>
 </template>
 <script>
-import '@/assets/markdown.styl'
 import gql from 'graphql-tag'
 import { mapActions } from 'vuex'
 export default {
@@ -135,6 +137,7 @@ export default {
   },
   data() {
     return {
+      url: ``,
       links: false,
       articleDetails: {}
     }
@@ -149,6 +152,11 @@ export default {
               Math.random() * 100
             )}`
       )
+    }
+  },
+  created() {
+    if (process.browser) {
+      this.url = `${location.href}`
     }
   },
   destroyed() {

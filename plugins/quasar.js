@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import Quasar, { AppFullscreen, Notify } from 'quasar'
+import Quasar, { AppFullscreen, Notify, Loading } from 'quasar'
 import 'quasar/dist/quasar.css'
 Vue.use(Quasar, {
   plugins: {
     AppFullscreen,
-    Notify
+    Notify,
+    Loading
   },
   config: {
     notify: {

@@ -83,6 +83,29 @@
           :lrc-type="3"
         />
       </v-list>
+      <template v-slot:append>
+        <v-toolbar>
+          <v-row>
+            <v-col class="text-center" cols="4">
+              <v-btn small text>
+                <v-icon>settings</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col class="text-center" cols="4">
+              <v-btn small text>
+                <v-icon>rss_feed</v-icon>
+              </v-btn>
+            </v-col>
+            <v-col class="text-center" cols="4">
+              <v-btn small text @click="$q.fullscreen.toggle()">
+                <v-icon>{{
+                  isActive ? 'fullscreen_exit' : 'fullscreen'
+                }}</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-toolbar>
+      </template>
     </v-navigation-drawer>
     <v-app-bar
       dark
@@ -143,8 +166,10 @@
 </template>
 
 <script>
+import { QSpinnerFacebook } from 'quasar'
 import dayjs from 'dayjs'
 import gql from 'graphql-tag'
+import Prism from 'prismjs'
 export default {
   apollo: {
     page: {
@@ -172,6 +197,7 @@ export default {
   },
   data() {
     return {
+      isActive: false,
       drawer: false,
       page: [],
       nav: [
@@ -196,7 +222,33 @@ export default {
     }
   },
   watch: {
-    '$nuxt.isOffline'(val) {}
+    '$q.fullscreen.isActive'(val) {
+      this.isActive = val
+    },
+    '$nuxt.isOffline'(val) {
+      const spinner =
+        typeof QSpinnerFacebook !== 'undefined'
+          ? QSpinnerFacebook
+          : Quasar.components.QSpinnerFacebook
+      if (val) {
+        this.$q.loading.show({
+          spinner,
+          spinnerColor: 'yellow',
+          spinnerSize: 140,
+          backgroundColor: 'purple',
+          message: 'You are offline. Please connect to the network ... ',
+          messageColor: 'black'
+        })
+      } else {
+        this.$q.loading.hide()
+      }
+    }
+  },
+  mounted() {
+    Prism.highlightAll()
+  },
+  updated() {
+    Prism.highlightAll()
   },
   methods: {
     onScroll() {

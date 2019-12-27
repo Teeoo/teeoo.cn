@@ -37,7 +37,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import '@/assets/markdown.styl'
 export default {
   name: 'Default',
   apollo: {
