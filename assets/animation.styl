@@ -1,0 +1,16 @@
+// 页面切换
+.flow-enter-active, .flow-leave-active
+  transition all .5s
+.flow-enter, .flow-leave
+  transform translateY(-20px)
+  opacity 0
+// 骨架屏切换
+.fade-leave-active,
+.fade-enter-active
+  transition all 0.5s
+.fade-enter
+  opacity 0
+  transform translateX(-30px)
+.fade-leave-to
+  opacity 0
+  transform translateX(30px)

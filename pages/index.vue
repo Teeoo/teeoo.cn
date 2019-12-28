@@ -5,7 +5,7 @@
         v-for="(data, index) in article.data"
         :key="index"
         :loading="$apollo.queries.article.loading"
-        transition="flow"
+        transition="scale"
         type="card-avatar"
         class="mt-4"
       >
@@ -46,6 +46,7 @@
             </v-img>
           </v-hover>
           <v-card-subtitle class="font-weight-medium">
+            - by {{ data.author.name }}
             <a class="font-weight-medium">{{ data.category.label }}</a>
             / {{ data.createdAt | formatRelativeTime }} / 0 条评论
           </v-card-subtitle>
@@ -85,6 +86,9 @@ export default {
               category {
                 label
               }
+              author {
+                name
+              }
               isTop
               createdAt
             }
@@ -96,11 +100,6 @@ export default {
   data() {
     return {
       article: {}
-    }
-  },
-  methods: {
-    lazy() {
-      //
     }
   },
   head() {

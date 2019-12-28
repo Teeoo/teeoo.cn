@@ -50,6 +50,9 @@
               </p>
             </blockquote>
           </v-card-subtitle>
+          <v-card-text>
+            <!--            -->
+          </v-card-text>
           <v-card-subtitle>
             <h3>评论</h3>
           </v-card-subtitle>
@@ -60,6 +63,7 @@
                   <v-textarea
                     prepend-icon="textsms"
                     label="快来写下你的骚操作吧"
+                    append-icon="sentiment_satisfied_alt"
                   ></v-textarea>
                 </v-col>
                 <v-col cols="12">

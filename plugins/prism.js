@@ -1,5 +1,7 @@
 import Prism from 'prismjs'
 import 'prismjs/themes/prism-okaidia.css'
+import 'prismjs/components/prism-markdown'
+import 'prismjs/components/prism-c'
 import 'prismjs/components/prism-scss'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-typescript'

@@ -95,7 +95,7 @@
     margin-bottom 4px
   h2
     font-size 1.4em
-    margin 40px 10px 20px 0
+    margin 10px 10px 10px 0
     padding-left 9px
     border-left 6px solid #ff7e79
     font-weight 700
@@ -104,7 +104,7 @@
     font-weight 700
     font-size 1.2em
     line-height 1.4
-    margin 10px 0 5px
+    //margin 10px 0 5px
     padding-top 10px
   h4
     font-weight 700
@@ -129,6 +129,8 @@
     margin 0 0 20px
     padding 0
     line-height 1.8
+    color #4b4b4b
+    font-size 18px
     & > code
       color #c7264e
       background-color #f9f2f4
@@ -158,6 +160,7 @@
     text-indent 0
     border none
     color #888
+    text-align center !important
     &:before
       content "“"
       left 12px
@@ -181,27 +184,16 @@
       bottom -31px
   del
     text-decoration line-through
-  //pre
-  //  margin 0 0 10px
-  //  font-size 13px
-  //  line-height 1.42857
-  //  word-break break-all
-  //  word-wrap break-word
-  //  border-radius 4px
-  //  white-space pre-wrap
-  //  display block
-  //  background #f8f8f8
-  //  padding 10px 20px
-  //  border none
-  //  margin-bottom 25px
-  //  color #666
-  //  font-family Courier, sans-serif
   code
     -webkit-font-feature-settings "liga" on, "calt" on
     -webkit-font-smoothing antialiased
     text-rendering optimizeLegibility
     font-family "Fira Code VF",Menlo, Monaco, Consolas, "Courier New", monospace
     font-size 15px
+    &:after
+      display none !important
+    &:before
+      display none !important
 
   figure
     margin 1em 0
@@ -219,6 +211,8 @@
   li
     margin-bottom 0.75em
     margin-top 0.75em
+    color #4b4b4b
+    font-size 18px
   ol#footnotes
     font-size 0.95em
     padding-top 1em
@@ -227,7 +221,7 @@
     list-style none
     color #555
     padding-left 5%
-    margin 20px 0
+    //margin 20px 0
     li
       margin-bottom 10px
       margin-left 16px
@@ -245,7 +239,7 @@
 .markdown h5,
 .markdown h6
   line-height 1.5em
-  margin-top 2.2em
+  //margin-top 2.2em
   margin-bottom 4px
 .markdown h5,
 .markdown h6
@@ -254,7 +248,7 @@
 .markdown ol,
 .markdown ul
   margin-top 12px
-  margin-bottom 20px
+  //margin-bottom 20px
   padding-left 5%
   line-height 1.8
 .markdown strong,
@@ -273,7 +267,7 @@
     box-shadow none
 // 滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸
 ::-webkit-scrollbar
-  width 5px
+  width 2px
   height 8px
 // 滚动条轨道
 ::-webkit-scrollbar-track
@@ -282,3 +276,9 @@
 ::-webkit-scrollbar-thumb
   border-radius 10px
   background-color #6200ea
+//  选中文字颜色
+::selection
+  background-color #00c4b6
+  color #f7f7f7
+  text-shadow none
+

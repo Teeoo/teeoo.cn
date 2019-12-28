@@ -2,11 +2,7 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app floating>
       <v-img
-        :src="
-          `https://api.ixiaowai.cn/api/api.php?${Math.floor(
-            Math.random() * 100
-          )}`
-        "
+        src="https://tva4.sinaimg.cn/large/0072Vf1pgy1foxlogttvbj31hc0u0dyf.jpg"
       >
         <v-row align="end" class="lightbox white--text pa-2 fill-height">
           <v-list dense nav rounded>
@@ -44,7 +40,7 @@
           v-for="data in page"
           :key="data.id"
           :loading="$apollo.queries.page.loading"
-          transition="flow"
+          transition="fade"
           type="list-item-avatar"
         >
           <v-list-item link :to="`/page/${data.template}/${data.id}`">
@@ -158,9 +154,16 @@
         </v-btn>
       </v-fab-transition>
     </v-content>
-    <v-footer>
-      <v-spacer></v-spacer>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
+    <v-footer padless>
+      <v-row justify="center" no-gutters>
+        <v-col class="lighten-2 py-4 text-center markdown" cols="12">
+          Copyright © {{ new Date().getFullYear() }}
+          <a href="https://teeoo.cn">teeoo.cn</a> All rights reserved.
+          <v-chip small color="indigo" text-color="white">
+            v1.0.0
+          </v-chip>
+        </v-col>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
