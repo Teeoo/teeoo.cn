@@ -90,7 +90,8 @@ module.exports = {
           default: {
             httpEndpoint: process.env.HTTP_ENDPOINT,
             persisting: false
-          }
+          },
+          github: '~/config/apollo.github.js'
         }
       }
     ]
