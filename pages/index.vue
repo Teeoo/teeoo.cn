@@ -4,10 +4,10 @@
       <v-skeleton-loader
         v-for="(data, index) in article.data"
         :key="index"
+        v-scroll-reveal.reset="{ delay: 250 }"
         :loading="$apollo.queries.article.loading"
         transition="scale"
         type="card-avatar"
-        class="mt-4"
       >
         <v-card flat>
           <v-hover v-slot:default="{ hover }">

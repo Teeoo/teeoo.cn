@@ -25,6 +25,7 @@
     "@nuxtjs/apollo": "^4.0.0-rc19",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
+    "animate.css": "^3.7.2",
     "cross-env": "^6.0.3",
     "dayjs": "^1.8.18",
     "graphql-tag": "^2.10.1",
@@ -35,7 +36,8 @@
     "quasar": "^1.5.11",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "v-viewer": "^1.5.1"
+    "v-viewer": "^1.5.1",
+    "vue-scroll-reveal": "^1.0.11"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
