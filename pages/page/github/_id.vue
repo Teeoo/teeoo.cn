@@ -1,11 +1,13 @@
 <template>
   <v-row no-gutters justify="center" align="center">
     <v-col cols="12" sm="8" md="7" xs="12">
-      <v-card flat class="markdown">
-        <v-card-text>
-          {{ viewer.repositories.edges }}
-        </v-card-text>
-      </v-card>
+      <v-skeleton-loader :loading="$apollo.loading" type="card">
+        <v-card flat class="markdown">
+          <v-card-text>
+            {{ viewer.repositories.edges }}
+          </v-card-text>
+        </v-card>
+      </v-skeleton-loader>
     </v-col>
   </v-row>
 </template>
@@ -42,7 +44,11 @@ export default {
   },
   data() {
     return {
-      viewer: {}
+      viewer: {
+        repositories: {
+          edges: {}
+        }
+      }
     }
   }
 }

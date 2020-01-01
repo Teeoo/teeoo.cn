@@ -128,7 +128,6 @@ export default {
             password
             allowComment
             isTop
-            exinfo
           }
         }
       `,
