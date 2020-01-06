@@ -17,6 +17,30 @@ module.exports = {
         content: process.env.npm_package_description || ''
       },
       {
+        name: 'apple-mobile-web-app-capable',
+        content: 'yes'
+      },
+      {
+        name: 'apple-mobile-web-app-status-bar-style',
+        content: '#6200ea'
+      },
+      {
+        name: 'x5-page-mode',
+        content: 'app'
+      },
+      {
+        name: 'google',
+        content: 'nositelinkssearchbox'
+      },
+      {
+        name: 'google',
+        content: 'notranslate'
+      },
+      {
+        name: 'application-name',
+        content: process.env.npm_package_name || ''
+      },
+      {
         name: 'google-site-verification',
         content: process.env._GOOGLE
       },
@@ -35,7 +59,7 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ['@/assets/main.styl', '@/assets/animation.styl', 'animate.css'],
+  css: ['@/assets/main.styl', '@/assets/animation.styl'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -44,7 +68,6 @@ module.exports = {
     { src: '~plugins/viewer', ssr: true },
     { src: '~plugins/aplayer', ssr: false },
     { src: '~plugins/seniverse', ssr: false },
-    { src: '~plugins/quasar', ssr: true },
     { src: '~plugins/prism', ssr: false },
     { src: '~plugins/scrollreveal', ssr: false }
   ],

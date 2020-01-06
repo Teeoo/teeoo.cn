@@ -9,58 +9,54 @@
         transition="scale"
         class="mt-4"
       >
-        <q-intersection transition="scale">
-          <v-card flat>
-            <v-hover v-slot:default="{ hover }">
-              <v-img
-                height="220px"
-                lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
-                :src="`https://api.ixiaowai.cn/api/api.php?${data.id}`"
-                class="white--text align-end"
-              >
-                <span class="source">原创</span>
-                <transition name="slide-y-transition">
-                  <v-overlay v-if="hover" absolute>
-                    <v-btn
-                      :to="`article/${data.id}`"
-                      color="deep-purple accent-4"
-                      small
-                      rounded
-                      >Read more</v-btn
-                    >
-                  </v-overlay>
-                </transition>
-                <v-card-title style="background:rgba(0, 0, 0, 0.4);">
-                  <v-chip
-                    v-if="data.isTop"
-                    color="secondary"
-                    class="ma-2"
+        <v-card
+          v-scroll-reveal.reset
+          :loading="$apollo.queries.article.loading"
+          flat
+        >
+          <v-hover v-slot:default="{ hover }">
+            <v-img
+              height="220px"
+              lazy-src="https://s2.ax1x.com/2019/10/26/KBflQK.md.png"
+              :src="`https://api.ixiaowai.cn/api/api.php?${data.id}`"
+              class="white--text align-end"
+            >
+              <span class="source">原创</span>
+              <transition name="slide-y-transition">
+                <v-overlay v-if="hover" absolute>
+                  <v-btn
+                    :to="`article/${data.id}`"
+                    color="deep-purple accent-4"
                     small
-                    label
-                    dark
-                    >置顶</v-chip
+                    rounded
+                    >Read more</v-btn
                   >
-                  <span>{{ data.title }}</span>
-                </v-card-title>
-              </v-img>
-            </v-hover>
-            <v-card-subtitle class="font-weight-medium">
-              - by {{ data.author.name }}
-              <a class="font-weight-medium">{{ data.category.label }}</a>
-              / {{ data.createdAt | formatRelativeTime }} / 0 条评论
-            </v-card-subtitle>
-            <v-card-text v-html="data.summary"></v-card-text>
-          </v-card>
-        </q-intersection>
+                </v-overlay>
+              </transition>
+              <v-card-title style="background:rgba(0, 0, 0, 0.4);">
+                <v-chip
+                  v-if="data.isTop"
+                  color="secondary"
+                  class="ma-2"
+                  small
+                  label
+                  dark
+                  >置顶</v-chip
+                >
+                <span>{{ data.title }}</span>
+              </v-card-title>
+            </v-img>
+          </v-hover>
+          <v-card-subtitle class="font-weight-medium">
+            - by {{ data.author.name }}
+            <a class="font-weight-medium">{{ data.category.label }}</a>
+            / {{ data.createdAt | formatRelativeTime }} / 0 条评论
+          </v-card-subtitle>
+          <v-card-text v-html="data.summary"></v-card-text>
+        </v-card>
       </v-skeleton-loader>
       <div class="text-center mt-4">
-        <v-btn
-          rounded
-          color="deep-purple accent-4"
-          dark
-          @click=";`${$q.notify('别点了,这里老夫还没时间写!')}`"
-          >加载更多</v-btn
-        >
+        <v-btn rounded color="deep-purple accent-4" dark>加载更多</v-btn>
       </div>
     </v-col>
   </v-row>

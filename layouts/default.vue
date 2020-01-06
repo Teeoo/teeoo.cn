@@ -169,7 +169,6 @@
 </template>
 
 <script>
-import { QSpinnerFacebook } from 'quasar'
 import dayjs from 'dayjs'
 import gql from 'graphql-tag'
 import Prism from 'prismjs'
@@ -225,27 +224,7 @@ export default {
     }
   },
   watch: {
-    '$q.fullscreen.isActive'(val) {
-      this.isActive = val
-    },
-    '$nuxt.isOffline'(val) {
-      const spinner =
-        typeof QSpinnerFacebook !== 'undefined'
-          ? QSpinnerFacebook
-          : Quasar.components.QSpinnerFacebook
-      if (val) {
-        this.$q.loading.show({
-          spinner,
-          spinnerColor: 'yellow',
-          spinnerSize: 140,
-          backgroundColor: 'purple',
-          message: 'You are offline. Please connect to the network ... ',
-          messageColor: 'black'
-        })
-      } else {
-        this.$q.loading.hide()
-      }
-    }
+    '$nuxt.isOffline'(val) {}
   },
   mounted() {
     Prism.highlightAll()
