@@ -17,12 +17,20 @@ module.exports = {
         content: process.env.npm_package_description || ''
       },
       {
+        name: 'application-name',
+        content: process.env.npm_package_name || ''
+      },
+      {
         name: 'apple-mobile-web-app-capable',
         content: 'yes'
       },
       {
         name: 'apple-mobile-web-app-status-bar-style',
-        content: '#6200ea'
+        content: 'black-translucent'
+      },
+      {
+        name: 'apple-mobile-web-app-title',
+        content: process.env.npm_package_name || ''
       },
       {
         name: 'x5-page-mode',
@@ -35,10 +43,6 @@ module.exports = {
       {
         name: 'google',
         content: 'notranslate'
-      },
-      {
-        name: 'application-name',
-        content: process.env.npm_package_name || ''
       },
       {
         name: 'google-site-verification',
