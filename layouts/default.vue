@@ -132,9 +132,24 @@
     <v-content>
       <!-- Provides the application the proper gutter -->
       <v-container fluid>
-        <transition name="flow" mode="out-in">
-          <nuxt />
-        </transition>
+        <transition-group name="flow" mode="out-in">
+          <v-overlay :key="0" :value="$nuxt.isOffline">
+            <v-row class="fill-height" align-content="center" justify="center">
+              <v-col class="subtitle-1 text-center" cols="12">
+                You are offline. Please connect to the network ...
+              </v-col>
+              <v-col cols="8">
+                <v-progress-linear
+                  color="deep-purple accent-4"
+                  indeterminate
+                  rounded
+                  height="6"
+                ></v-progress-linear>
+              </v-col>
+            </v-row>
+          </v-overlay>
+          <nuxt :key="1" />
+        </transition-group>
       </v-container>
       <v-fab-transition>
         <v-btn
