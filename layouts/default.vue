@@ -93,7 +93,7 @@
               </v-btn>
             </v-col>
             <v-col class="text-center" cols="4">
-              <v-btn small text @click="$q.fullscreen.toggle()">
+              <v-btn small text>
                 <v-icon>{{
                   isActive ? 'fullscreen_exit' : 'fullscreen'
                 }}</v-icon>
@@ -116,6 +116,12 @@
       <v-toolbar-title>{{ this.$store.state.title }}</v-toolbar-title>
       <template v-slot:extension>
         <v-subheader>愿你历尽千帆,归来仍是少年 </v-subheader>
+        <v-progress-linear
+          v-show="scroll !== '0.0'"
+          v-model="scroll"
+          absolute
+          bottom
+        ></v-progress-linear>
       </template>
       <v-spacer></v-spacer>
       <v-text-field
@@ -126,7 +132,7 @@
         solo-inverted
       ></v-text-field>
       <v-spacer></v-spacer>
-      <div id="widget" class="d-none d-lg-block d-print-block"></div>
+      <div id="widget"></div>
     </v-app-bar>
     <!-- Sizes your content based upon application components -->
     <v-content>
@@ -235,11 +241,24 @@ export default {
         }
       ],
       fab: false,
-      audio: require('@/assets/netease.json')
+      audio: require('@/assets/netease.json'),
+      scroll: '0.0'
     }
   },
   watch: {
     '$nuxt.isOffline'(val) {}
+  },
+  beforeMount() {
+    if (process.browser) {
+      // eslint-disable-next-line nuxt/no-globals-in-created
+      window.addEventListener('scroll', this.handleScroll)
+    }
+  },
+  beforeDestroy() {
+    if (process.browser) {
+      // eslint-disable-next-line nuxt/no-globals-in-created
+      window.addEventListener('scroll', this.handleScroll)
+    }
   },
   mounted() {
     Prism.highlightAll()
@@ -256,6 +275,19 @@ export default {
     toTop() {
       this.$router.push({ hash: '' })
       this.$vuetify.goTo(0)
+    },
+    handleScroll(event) {
+      const scrollTop =
+        window.scrollY ||
+        window.pageYOffset ||
+        document.body.scrollTop +
+          ((document.documentElement && document.documentElement.scrollTop) ||
+            0)
+      const documentHeight = document.body.clientHeight
+      const windowHeight = window.innerHeight
+      let scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100
+      scrollPercent = scrollPercent.toFixed(1)
+      this.scroll = scrollPercent
     }
   }
 }

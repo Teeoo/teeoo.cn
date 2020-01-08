@@ -1,5 +1,5 @@
 const state = () => ({
-  title: '生如夏花之绚烂，死如秋叶之静美',
+  title: 'lee的小窝',
   cover: null
 })
 
@@ -19,7 +19,7 @@ const actions = {
     commit('SET_COVER', val)
   },
   reset({ state, commit }, val) {
-    commit('SET_TITLE', '生如夏花之绚烂，死如秋叶之静美')
+    commit('SET_TITLE', 'lee的小窝')
     commit('SET_COVER', null)
   }
 }
