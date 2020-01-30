@@ -23,6 +23,26 @@
       </template>
       <v-spacer></v-spacer>
       <div id="widget"></div>
+      <!-- 搜索 -->
+      <v-dialog
+        v-model="dialog"
+        transition="dialog-bottom-transition"
+        overlay-opacity="0.5"
+      >
+        <v-card flat>
+          <v-card-text>
+            <v-container>
+              <v-text-field
+                flat
+                label="查找"
+                prepend-inner-icon="search"
+                solo-inverted
+              ></v-text-field
+            ></v-container>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <!-- 分享 -->
       <v-bottom-sheet
         v-model="share"
         inset
@@ -54,7 +74,7 @@
                     <v-icon>image</v-icon>
                   </v-btn>
                   <v-col cols="12">
-                    <p>创建画报</p>
+                    <p>画报</p>
                   </v-col>
                 </v-col>
 
@@ -63,7 +83,7 @@
                     <v-icon>link</v-icon>
                   </v-btn>
                   <v-col cols="12">
-                    <p>复制链接</p>
+                    <p>链接</p>
                   </v-col>
                 </v-col>
 
@@ -133,9 +153,9 @@
         </v-card>
       </v-bottom-sheet>
       <v-btn icon @click="share = !share">
-        <v-icon>share</v-icon>
+        <v-icon>keyboard_capslock</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon @click="dialog = !dialog">
         <v-icon>search</v-icon>
       </v-btn>
     </v-app-bar>
@@ -206,8 +226,9 @@ export default {
   data() {
     return {
       share: false,
+      dialog: false,
       isActive: false,
-      drawer: true,
+      drawer: false,
       fab: false,
       scroll: '0.0'
     }

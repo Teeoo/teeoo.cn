@@ -10,12 +10,8 @@ Vue.use(VueScrollReveal, {
   reset: true,
   mobile: false,
   distance: '50px',
-  opacity: 0.001,
-  scale: 0.9,
+  opacity: 0,
+  scale: 0.95,
   interval: 100,
-  easing: 'linear',
-  beforeReveal: () => {},
-  beforeReset: () => {},
-  afterReveal: () => {},
-  afterReset: () => {}
+  easing: 'ease'
 })

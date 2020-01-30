@@ -96,6 +96,9 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
+    analyze: false,
+    maxChunkSize: 360000,
+    extractCSS: true,
     extend(config, ctx) {}
   }
 }
