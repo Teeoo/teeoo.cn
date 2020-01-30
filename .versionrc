@@ -1,6 +1,6 @@
 {
   "changelogHeader": "# Changelog ",
-  "issueUrlFormat": "https://github.com/weisizong/testgit/issues/{{id}}",
+  "issueUrlFormat": "https://github.com/Teeoo/teeoo.cn/issues/{{id}}",
    "types": [
     { "type": "feat", "section": "Features" },
     { "type": "fix", "section": "Bug Fixes" },
