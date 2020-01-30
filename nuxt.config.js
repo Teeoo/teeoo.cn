@@ -15,42 +15,6 @@ module.exports = {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
-      },
-      {
-        name: 'application-name',
-        content: process.env.npm_package_name || ''
-      },
-      {
-        name: 'apple-mobile-web-app-capable',
-        content: 'yes'
-      },
-      {
-        name: 'apple-mobile-web-app-status-bar-style',
-        content: 'black-translucent'
-      },
-      {
-        name: 'apple-mobile-web-app-title',
-        content: process.env.npm_package_name || ''
-      },
-      {
-        name: 'x5-page-mode',
-        content: 'app'
-      },
-      {
-        name: 'google',
-        content: 'nositelinkssearchbox'
-      },
-      {
-        name: 'google',
-        content: 'notranslate'
-      },
-      {
-        name: 'google-site-verification',
-        content: process.env._GOOGLE
-      },
-      {
-        name: 'baidu-site-verification',
-        content: process.env._BAIDU
       }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
@@ -58,21 +22,16 @@ module.exports = {
   /*
    ** Customize the progress-bar color
    */
-  loading: '~/components/loading.vue',
-  // loading: { color: '#3B8070' },
+  loading: { color: 'blue', height: '5px' },
   /*
    ** Global CSS
    */
-  css: ['@/assets/main.styl', '@/assets/animation.styl'],
+  css: ['@/assets/main.styl'],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: [
-    { src: '~plugins/filters', ssr: true },
-    { src: '~plugins/viewer', ssr: true },
-    { src: '~plugins/aplayer', ssr: false },
     { src: '~plugins/seniverse', ssr: false },
-    { src: '~plugins/prism', ssr: false },
     { src: '~plugins/scrollreveal', ssr: false }
   ],
   /*
@@ -81,49 +40,55 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    // Doc: https://github.com/nuxt-community/vuetify-module
+    // Doc: https://github.com/nuxt-community/stylelint-module
+    '@nuxtjs/stylelint-module',
     ['@nuxtjs/vuetify', { optionsPath: '~/config/vuetify.js' }]
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
-    [
-      '@nuxtjs/pwa',
-      {
-        icon: true,
-        workbox: {},
-        meta: {},
-        manifest: {
-          name: `Lee 's Blog`,
-          short_name: `lee的小窝`,
-          description: `愿你历尽千帆,归来仍是少年`,
-          theme_color: `#6200ea`,
-          start_url: `/`,
-          display: `standalone`
-        }
-      }
-    ],
+    '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://github.com/nuxt-community/apollo-module
-    [
-      '@nuxtjs/apollo',
-      // Give apollo module option
-      {
-        includeNodeModules: true,
-        watchLoading: '~/config/apollo.loading.js',
-        errorHandler: '~/config/apollo.error.js',
-        clientConfigs: {
-          default: {
-            httpEndpoint: process.env.HTTP_ENDPOINT,
-            persisting: false
-          },
-          github: '~/config/apollo.github.js'
-        }
-      }
-    ]
+    '@nuxtjs/apollo'
   ],
+
+  /*
+   ** Give apollo module options
+   */
+  apollo: {
+    tokenName: 'yourApolloTokenName',
+    cookieAttributes: {
+      expires: 7,
+      path: '/',
+      domain: 'example.com',
+      secure: false
+    },
+    includeNodeModules: true,
+    authenticationType: 'Basic',
+    defaultOptions: {
+      $query: {
+        loadingKey: 'loading',
+        fetchPolicy: 'cache-and-network'
+      }
+    },
+    // watchLoading: '~/plugins/apollo-watch-loading-handler.js',
+    // errorHandler: '~/plugins/apollo-error-handler.js',
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'http://localhost:3000/graphql',
+        httpLinkOptions: {
+          credentials: 'same-origin'
+        },
+        // wsEndpoint: 'ws://localhost:4000',
+        tokenName: 'apollo-token',
+        persisting: false,
+        websocketsOnly: false
+      }
+    }
+  },
   /*
    ** Build configuration
    */
@@ -131,9 +96,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    analyze: false,
-    maxChunkSize: 360000,
-    extractCSS: true,
     extend(config, ctx) {}
   }
 }

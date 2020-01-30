@@ -3,9 +3,9 @@ import VueScrollReveal from 'vue-scroll-reveal'
 Vue.use(VueScrollReveal)
 
 Vue.use(VueScrollReveal, {
-  class: '.card-avatar',
+  class: '.article',
   duration: 1000,
-  delay: 500,
+  delay: 5000,
   origin: 'bottom',
   reset: true,
   mobile: false,

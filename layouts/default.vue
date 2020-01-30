@@ -1,149 +1,152 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app floating>
-      <v-img
-        src="https://tva4.sinaimg.cn/large/0072Vf1pgy1foxlogttvbj31hc0u0dyf.jpg"
-      >
-        <v-row align="end" class="lightbox white--text pa-2 fill-height">
-          <v-list dense nav rounded>
-            <v-list-item>
-              <v-list-item-avatar>
-                <v-img src="https://teeoo.cn/favicon.ico"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>lee</v-list-item-title>
-                <v-list-item-subtitle
-                  >oo.ee.ooe.teeoo@gmail.com</v-list-item-subtitle
-                >
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-row>
-      </v-img>
-      <v-list dense nav rounded>
-        <v-subheader>导航</v-subheader>
-        <v-list-item
-          v-for="(data, index) in nav"
-          :key="index"
-          link
-          :to="data.link"
-        >
-          <v-list-item-icon>
-            <v-icon>{{ data.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ data.text }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-subheader v-show="page.length !== 0">页面</v-subheader>
-        <v-skeleton-loader
-          v-for="data in page"
-          :key="data.id"
-          :loading="$apollo.queries.page.loading"
-          transition="fade"
-          type="list-item-avatar"
-        >
-          <v-list-item link :to="`/page/${data.template}/${data.id}`">
-            <v-list-item-icon>
-              <v-icon
-                v-for="icon in data.fields"
-                v-show="icon.name === 'icon'"
-                :key="icon.id"
-                >{{ icon.value }}</v-icon
-              >
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ data.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-skeleton-loader>
-        <v-subheader>统计</v-subheader>
-        <v-list-item
-          v-for="(data, index) in statistics"
-          :key="`${index}${new Date().valueOf()}`"
-        >
-          <v-list-item-content>
-            <v-list-item-title>{{ data.text }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-action-text>
-            <v-chip label small color="red" text-color="white">{{
-              data.label
-            }}</v-chip>
-          </v-list-item-action-text>
-        </v-list-item>
-        <v-subheader>音乐</v-subheader>
-        <aplayer
-          style="box-shadow: none; margin:0;"
-          order="random"
-          :audio="audio"
-          :lrc-type="3"
-        />
-      </v-list>
-      <template v-slot:append>
-        <v-toolbar>
-          <v-row>
-            <v-col class="text-center" cols="4">
-              <v-btn small text>
-                <v-icon>settings</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col class="text-center" cols="4">
-              <v-btn small text>
-                <v-icon>rss_feed</v-icon>
-              </v-btn>
-            </v-col>
-            <v-col class="text-center" cols="4">
-              <v-btn small text>
-                <v-icon>{{
-                  isActive ? 'fullscreen_exit' : 'fullscreen'
-                }}</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-toolbar>
-      </template>
-    </v-navigation-drawer>
+    <layout-drawer v-model="drawer" />
     <v-app-bar
+      style="background: linear-gradient(to right,#7a88ff,#a77ff9);"
       dark
       app
       shrink-on-scroll
       elevate-on-scroll
       fade-img-on-scroll
-      color="deep-purple accent-4"
-      :src="this.$store.state.cover"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{ this.$store.state.title }}</v-toolbar-title>
+      <v-toolbar-title>标题</v-toolbar-title>
       <template v-slot:extension>
-        <v-subheader>愿你历尽千帆,归来仍是少年 </v-subheader>
+        <v-subheader>愿你历尽千帆,归来仍是 少年</v-subheader>
         <v-progress-linear
           v-show="scroll !== '0.0'"
           v-model="scroll"
+          color="#ffffff"
           absolute
           bottom
         ></v-progress-linear>
       </template>
       <v-spacer></v-spacer>
-      <v-text-field
-        class="d-none d-lg-block d-print-block"
-        flat
-        label="查找"
-        prepend-inner-icon="search"
-        solo-inverted
-      ></v-text-field>
-      <v-spacer></v-spacer>
       <div id="widget"></div>
+      <v-bottom-sheet
+        v-model="share"
+        inset
+        transition="scroll-y-reverse-transition"
+        overlay-opacity="0.5"
+      >
+        <v-card flat>
+          <v-card-text>
+            <v-container fluid>
+              <v-row
+                no-gutters
+                justify="center"
+                align="center"
+                class="text-center"
+              >
+                <v-col cols="12">
+                  <v-btn text>分享本页</v-btn>
+                </v-col>
+              </v-row>
+
+              <v-row
+                no-gutters
+                justify="center"
+                align="center"
+                class="text-center"
+              >
+                <v-col sm="3">
+                  <v-btn text icon color="pink">
+                    <v-icon>image</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>创建画报</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn text icon color="indigo">
+                    <v-icon>link</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>复制链接</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn text icon color="green">
+                    <v-icon>mdi-wechat</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>微信</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn text icon color="deep-orange">
+                    <v-icon>mdi-email</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>邮箱</p>
+                  </v-col>
+                </v-col>
+              </v-row>
+
+              <v-row
+                no-gutters
+                justify="center"
+                align="center"
+                class="text-center"
+              >
+                <v-col sm="3">
+                  <v-btn icon>
+                    <v-icon>mdi-sina-weibo</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>微博</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn icon>
+                    <v-icon>mdi-star</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>QQ空间</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn icon>
+                    <v-icon>mdi-twitter</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>推特</p>
+                  </v-col>
+                </v-col>
+
+                <v-col sm="3">
+                  <v-btn icon>
+                    <v-icon>mdi-facebook</v-icon>
+                  </v-btn>
+                  <v-col cols="12">
+                    <p>Facebook</p>
+                  </v-col>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+        </v-card>
+      </v-bottom-sheet>
+      <v-btn icon @click="share = !share">
+        <v-icon>share</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>search</v-icon>
+      </v-btn>
     </v-app-bar>
-    <!-- Sizes your content based upon application components -->
     <v-content>
-      <!-- Provides the application the proper gutter -->
       <v-container fluid>
         <transition-group name="flow" mode="out-in">
           <v-overlay :key="0" :value="$nuxt.isOffline">
             <v-row class="fill-height" align-content="center" justify="center">
-              <v-col class="subtitle-1 text-center" cols="12">
-                You are offline. Please connect to the network ...
-              </v-col>
+              <v-col class="subtitle-1 text-center" cols="12"
+                >You are offline. Please connect to the network ...</v-col
+              >
               <v-col cols="8">
                 <v-progress-linear
                   color="deep-purple accent-4"
@@ -165,7 +168,9 @@
           bottom
           color="pink"
           dark
+          text
           fab
+          icon
           fixed
           right
           title="Scroll to top"
@@ -175,14 +180,16 @@
         </v-btn>
       </v-fab-transition>
     </v-content>
-    <v-footer padless>
+    <v-footer elevation="5" color="white" inset padless>
       <v-row justify="center" no-gutters>
-        <v-col class="lighten-2 py-4 text-center markdown" cols="12">
-          Copyright © {{ new Date().getFullYear() }}
-          <a href="https://teeoo.cn">teeoo.cn</a> All rights reserved.
-          <v-chip small color="indigo" text-color="white">
-            v1.0.0
-          </v-chip>
+        <v-col class="py-4 text-center" cols="12">
+          版权所有 © {{ new Date().getFullYear() }}
+          <a href="https://teeoo.cn">teeoo.cn</a> 保留所有权利.
+          <p>
+            <a target="_blank" href="http://beian.miit.gov.cn/"
+              >蜀ICP备18011318号-1</a
+            >
+          </p>
         </v-col>
       </v-row>
     </v-footer>
@@ -190,58 +197,18 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
-import gql from 'graphql-tag'
 import Prism from 'prismjs'
+import drawer from '../components/layout/drawer'
 export default {
-  apollo: {
-    page: {
-      prefetch: true,
-      query: gql`
-        query {
-          page {
-            id
-            title
-            template
-            fields {
-              id
-              name
-              value
-            }
-          }
-        }
-      `,
-      variables() {
-        return {
-          id: String(this.$route.params.id)
-        }
-      }
-    }
+  components: {
+    'layout-drawer': drawer
   },
   data() {
     return {
+      share: false,
       isActive: false,
-      drawer: false,
-      page: [],
-      nav: [
-        { icon: 'home', text: '首页', link: '/' },
-        { icon: 'bookmark', text: '分类', link: '/01' },
-        { icon: 'local_offer', text: '标签', link: '/02' }
-      ],
-      statistics: [
-        { text: '文章总数', label: 0 },
-        { text: '评论总数', label: 0 },
-        {
-          text: '运行天数',
-          label: parseInt(
-            Math.round(
-              dayjs(new Date()).diff(dayjs('2019-12-11 15:22:46'), 'day', true)
-            )
-          )
-        }
-      ],
+      drawer: true,
       fab: false,
-      audio: require('@/assets/netease.json'),
       scroll: '0.0'
     }
   },
@@ -250,13 +217,11 @@ export default {
   },
   beforeMount() {
     if (process.browser) {
-      // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener('scroll', this.handleScroll)
     }
   },
   beforeDestroy() {
     if (process.browser) {
-      // eslint-disable-next-line nuxt/no-globals-in-created
       window.addEventListener('scroll', this.handleScroll)
     }
   },
