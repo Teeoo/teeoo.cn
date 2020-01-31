@@ -19,6 +19,7 @@
     <v-skeleton-loader
       v-for="data in page"
       :key="data.id"
+      :loading="$apollo.queries.page.loading"
       type="list-item-avatar"
     >
       <v-list-item link :to="`/pages/${data.template}/${data.id}`">

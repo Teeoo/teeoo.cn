@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
 import { ARTICLE } from './fragments'
 
+// 页面
 export const PAGE = gql`
   query {
     page {
@@ -9,7 +10,7 @@ export const PAGE = gql`
   }
   ${ARTICLE.ARTICLE}
 `
-
+// 文章列表
 export const ARTICLELIST = gql`
   query {
     article {
@@ -30,6 +31,32 @@ export const ARTICLELIST = gql`
         isTop
         createdAt
       }
+    }
+  }
+`
+
+// 文章详情
+export const ARTICLEDETAILS = gql`
+  query($id: String!) {
+    articleDetails(id: $id) {
+      id
+      order
+      desc
+      createdAt
+      updatedAt
+      title
+      slug
+      cover
+      summary
+      text
+      html
+      template
+      type
+      status
+      publish
+      password
+      allowComment
+      isTop
     }
   }
 `

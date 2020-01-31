@@ -63,7 +63,12 @@
               ><v-icon class="pl-2" small color="#a9b0bc">comment</v-icon> 28
             </span>
             <v-spacer></v-spacer>
-            <v-btn color="deep-purple accent-4" small text>
+            <v-btn
+              :to="`article/${data.id}`"
+              color="deep-purple accent-4"
+              small
+              text
+            >
               阅读全文
             </v-btn>
           </v-card-actions>

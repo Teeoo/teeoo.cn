@@ -45,6 +45,7 @@
     "screenfull": "^5.0.1",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "v-viewer": "^1.5.1",
     "vue-scroll-reveal": "^1.0.11"
   },
   "devDependencies": {
