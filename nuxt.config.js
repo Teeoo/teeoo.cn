@@ -79,7 +79,7 @@ module.exports = {
     // errorHandler: '~/plugins/apollo-error-handler.js',
     clientConfigs: {
       default: {
-        httpEndpoint: 'http://localhost:3000/graphql',
+        httpEndpoint: process.env.HTTP_ENDPOINT,
         httpLinkOptions: {
           credentials: 'same-origin'
         },
