@@ -33,7 +33,9 @@ module.exports = {
   plugins: [
     { src: '~plugins/seniverse', ssr: false },
     { src: '~plugins/scrollreveal', ssr: false },
-    { src: '~plugins/viewer', ssr: true }
+    { src: '~plugins/viewer', ssr: true },
+    { src: '~plugins/filters', ssr: false },
+    { src: '~plugins/prism', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

@@ -6,7 +6,7 @@
         type="article,article,image,article,list-item-avatar-three-line,list-item-avatar-three-line"
       >
         <v-card flat class="markdown">
-          <v-card-text v-html="articleDetails.html"></v-card-text>
+          <v-card-text v-viewer v-html="articleDetails.html"></v-card-text>
         </v-card>
         <v-card-subtitle class="text-center">
           <blockquote>

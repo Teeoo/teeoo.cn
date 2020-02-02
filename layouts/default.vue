@@ -12,7 +12,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>标题</v-toolbar-title>
       <template v-slot:extension>
-        <v-subheader>愿你历尽千帆,归来仍是 少年</v-subheader>
+        <v-subheader>{{ hitokoto }}</v-subheader>
         <v-progress-linear
           v-show="scroll !== '0.0'"
           v-model="scroll"
@@ -230,7 +230,8 @@ export default {
       isActive: false,
       drawer: false,
       fab: false,
-      scroll: '0.0'
+      scroll: '0.0',
+      hitokoto: '愿你历尽千帆,归来仍是 少年'
     }
   },
   watch: {
@@ -248,9 +249,14 @@ export default {
   },
   mounted() {
     Prism.highlightAll()
+    fetch(`https://v1.hitokoto.cn`)
+      .then((res) => res.json())
+      .then((data) => {
+        this.hitokoto = data.hitokoto
+      })
   },
   updated() {
-    Prism.highlightAll()
+    // Prism.highlightAll()
   },
   methods: {
     onScroll() {
